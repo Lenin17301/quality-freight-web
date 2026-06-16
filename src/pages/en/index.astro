@@ -1,0 +1,235 @@
+---
+// src/pages/en/index.astro
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Navbar from '../../components/Navbar.astro';
+import Footer from '../../components/Footer.astro';
+---
+
+<BaseLayout 
+    lang="en" 
+    title="International Logistics & Freight | Quality Freight Service" 
+    description="Comprehensive ocean, air, and ground transportation solutions. We manage your customs clearance with security, speed, and competitive rates."
+>
+    
+    <div slot="header">
+        <Navbar lang="en" />
+    </div>
+
+    <main class="bg-white overflow-hidden">
+        
+        <!-- HERO SECTION -->
+        <section class="relative bg-[#E8ECEE] pt-32 pb-40 px-6 lg:pt-40 lg:pb-56 overflow-hidden rounded-b-[4rem]">
+            <div class="absolute top-0 right-0 w-96 h-96 bg-[#BAD700] rounded-bl-[100%] opacity-80 -translate-y-1/2 translate-x-1/4"></div>
+            <div class="absolute bottom-0 left-0 w-80 h-80 bg-[#002845] rounded-tr-[100%] opacity-90 translate-y-1/4 -translate-x-1/4"></div>
+
+            <div class="relative z-10 max-w-7xl mx-auto flex flex-col-reverse lg:flex-row items-center gap-12">
+                <div class="w-full lg:w-1/2 relative">
+                    <img src="https://images.pexels.com/photos/1095814/pexels-photo-1095814.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Shipping Container" class="w-full drop-shadow-2xl rounded-2xl" />
+                    
+                    <!-- Pestañas flotantes apuntando a las subpáginas en inglés -->
+                    <div class="absolute -bottom-10 left-0 right-0 flex justify-center gap-4 px-4">
+                        <a href="/en/services/air-freight" class="bg-white rounded-2xl p-4 shadow-lg w-32 hover:-translate-y-2 transition-transform block">
+                            <span class="block font-bold text-[#BAD700] text-lg leading-tight">Air<br/>Freight</span>
+                            <span class="text-[10px] text-gray-500">International</span>
+                        </a>
+                        <a href="/en/services/ocean-freight" class="bg-[#BAD700] rounded-2xl p-4 shadow-lg w-32 hover:-translate-y-2 transition-transform scale-110 z-10 block">
+                            <span class="block font-bold text-white text-lg leading-tight">Ocean<br/>Freight</span>
+                            <span class="text-[10px] text-[#002845]">International</span>
+                        </a>
+                        <a href="/en/services/ground-freight" class="bg-white rounded-2xl p-4 shadow-lg w-32 hover:-translate-y-2 transition-transform block">
+                            <span class="block font-bold text-[#BAD700] text-lg leading-tight">Ground<br/>Freight</span>
+                            <span class="text-[10px] text-gray-500">Domestic</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="w-full lg:w-1/2 flex flex-col items-end text-right">
+                    <h1 class="text-5xl md:text-6xl font-light text-[#002845] mb-8 leading-tight">
+                        International Maritime <span class="font-black text-[#BAD700]">Service<br/>Worldwide</span>
+                    </h1>
+                    <a href="/en/consulting" class="bg-[#002845] text-white font-bold text-xl py-3 px-12 rounded-full shadow-lg hover:bg-[#001c30] transition-colors mb-12 relative">
+                        quote now
+                        <span class="absolute -bottom-4 -right-4 text-3xl">🚢</span>
+                    </a>
+
+                    <!-- Tracking Widget Mini -->
+                    <div class="bg-white rounded-3xl shadow-xl p-4 w-72 text-center">
+                        <p class="font-bold text-[#002845] mb-2 text-sm">Real-time tracking</p>
+                        <div class="rounded-xl overflow-hidden h-32 relative group cursor-pointer" onclick="window.location.href='/en/tracking'">
+                            <img src="https://images.pexels.com/photos/1117210/pexels-photo-1117210.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Logistics Tracking" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                            <div class="absolute inset-0 bg-black/20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                <span class="bg-[#BAD700] text-[#002845] font-bold py-1 px-4 rounded-full text-xs">Track</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TRANSPORT SERVICES -->
+        <section class="py-24 px-6">
+            <div class="max-w-7xl mx-auto">
+                <div class="flex flex-col md:flex-row items-center gap-12 mb-16">
+                    <div class="w-full md:w-1/2">
+                        <h2 class="text-4xl md:text-5xl font-light text-[#002845] mb-4">
+                            <span class="text-[#BAD700] font-bold text-5xl mr-2">Q</span>International transport <span class="font-black">service</span>
+                        </h2>
+                        <p class="text-gray-500 mb-8 text-sm md:text-base leading-relaxed">
+                            We design optimized logistics routes so your merchandise reaches its final destination with total security. We have a global network of strategic partners that guarantee agile transit times and highly competitive market rates.
+                        </p>
+                        
+                        <!-- Pestañas apuntando a subpáginas en inglés -->
+                        <div class="flex flex-wrap gap-4 mb-12">
+                            <a href="/en/services/ocean-freight" class="border-2 border-[#BAD700] text-[#002845] font-medium py-2 px-6 rounded-full hover:bg-[#BAD700] hover:text-white transition-colors block text-center">Maritime</a>
+                            <a href="/en/services/air-freight" class="border-2 border-[#BAD700] text-[#002845] font-medium py-2 px-6 rounded-full hover:bg-[#BAD700] hover:text-white transition-colors block text-center">Air</a>
+                            <a href="/en/services/ground-freight" class="border-2 border-[#BAD700] text-[#002845] font-medium py-2 px-6 rounded-full hover:bg-[#BAD700] hover:text-white transition-colors block text-center">Ground</a>
+                        </div>
+                        
+                        <div class="flex justify-between max-w-md">
+                            <div>
+                                <p class="text-4xl font-black text-[#002845]">5000+</p>
+                                <p class="text-[10px] text-gray-400">Successful shipments</p>
+                            </div>
+                            <div>
+                                <p class="text-4xl font-black text-[#002845]">100%</p>
+                                <p class="text-[10px] text-gray-400">Cargo security</p>
+                            </div>
+                            <div>
+                                <p class="text-4xl font-black text-[#002845]">1200+</p>
+                                <p class="text-[10px] text-gray-400">Active clients</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-full md:w-1/2">
+                        <img src="https://images.pexels.com/photos/1095814/pexels-photo-1095814.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Ship" class="rounded-[3rem] w-full object-cover h-96 shadow-xl" />
+                    </div>
+                </div>
+
+                <div class="space-y-8">
+                    <!-- Air -->
+                    <div class="flex flex-col md:flex-row gap-6">
+                        <div class="w-full md:w-2/3">
+                            <img src="https://images.pexels.com/photos/6169046/pexels-photo-6169046.jpeg?auto=compress&cs=tinysrgb&w=1000" alt="Plane" class="rounded-[2rem] w-full h-72 object-cover shadow-md" />
+                        </div>
+                        <div class="w-full md:w-1/3 bg-[#E8ECEE] rounded-[2rem] p-8 flex flex-col justify-center items-end text-right">
+                            <a href="/en/consulting" class="bg-[#BAD700] text-white font-bold py-2 px-8 rounded-full mb-6 hover:bg-[#a0be00] transition-colors">quote now</a>
+                            <h3 class="text-3xl font-black text-[#002845] mb-2">Air Service</h3>
+                            <p class="text-sm text-gray-500">Expedited handling of critical cargo. Alliances with top airlines to secure space and priority for your urgent shipments worldwide.</p>
+                        </div>
+                    </div>
+                    <!-- Ground -->
+                    <div class="flex flex-col md:flex-row-reverse gap-6">
+                        <div class="w-full md:w-2/3">
+                            <img src="https://images.pexels.com/photos/2226458/pexels-photo-2226458.jpeg?auto=compress&cs=tinysrgb&w=1000" alt="Truck" class="rounded-[2rem] w-full h-72 object-cover shadow-md" />
+                        </div>
+                        <div class="w-full md:w-1/3 bg-[#E8ECEE] rounded-[2rem] p-8 flex flex-col justify-center items-start text-left">
+                            <a href="/en/consulting" class="bg-[#BAD700] text-white font-bold py-2 px-8 rounded-full mb-6 hover:bg-[#a0be00] transition-colors">quote now</a>
+                            <h3 class="text-3xl font-black text-[#002845] mb-2">Ground Service</h3>
+                            <p class="text-sm text-gray-500">Efficient national and cross-border distribution. 24/7 monitored fleets to guarantee door-to-door pickups and deliveries in record time.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- WHY CHOOSE US -->
+        <section class="py-16 px-6 bg-white relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-[40rem] h-[40rem] border-[100px] border-[#BAD700] rounded-full opacity-20 translate-x-1/2 -translate-y-1/4"></div>
+            <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-12 relative z-10">
+                <div class="w-full md:w-1/2">
+                    <h2 class="text-4xl md:text-5xl font-light text-[#002845] mb-6">
+                        <span class="text-[#BAD700] font-bold text-5xl mr-2">Q</span>Why choose <span class="font-black">Quality Freight Service?</span>
+                    </h2>
+                    <p class="text-gray-500 text-sm leading-relaxed mb-8">
+                        We are not just a supplier; we are your external logistics department. We anticipate customs challenges, reduce your operational costs, and provide 24/7 personalized attention. Our expertise allows us to bypass bureaucratic obstacles so your supply chain never stops.
+                    </p>
+                    
+                    <!-- Botones Inferiores apuntando a subpáginas en inglés -->
+                    <div class="flex flex-wrap gap-4">
+                        <a href="/en/services/ocean-freight" class="border-2 border-[#BAD700] text-[#002845] font-medium py-2 px-6 rounded-full hover:bg-[#BAD700] hover:text-white transition-colors block text-center">Maritime</a>
+                        <a href="/en/services/air-freight" class="border-2 border-[#BAD700] text-[#002845] font-medium py-2 px-6 rounded-full hover:bg-[#BAD700] hover:text-white transition-colors block text-center">Air</a>
+                        <a href="/en/services/ground-freight" class="border-2 border-[#BAD700] text-[#002845] font-medium py-2 px-6 rounded-full hover:bg-[#BAD700] hover:text-white transition-colors block text-center">Ground</a>
+                    </div>
+                </div>
+                <div class="w-full md:w-1/3 flex flex-col gap-6 text-right">
+                    <div>
+                        <p class="text-5xl font-black text-[#002845]">15+</p>
+                        <p class="text-xs text-gray-400 uppercase tracking-widest mt-1">Years of logistics experience</p>
+                    </div>
+                    <div>
+                        <p class="text-5xl font-black text-[#002845]">99%</p>
+                        <p class="text-xs text-gray-400 uppercase tracking-widest mt-1">On-time deliveries</p>
+                    </div>
+                    <div>
+                        <p class="text-5xl font-black text-[#002845]">24/7</p>
+                        <p class="text-xs text-gray-400 uppercase tracking-widest mt-1">Specialized customs support</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+ <!-- TESTIMONIALS (Adults/Professionals) -->
+        <section class="py-24 px-6 bg-white">
+            <div class="max-w-7xl mx-auto">
+                <h2 class="text-4xl md:text-5xl font-light text-[#002845] text-center mb-16">
+                    <span class="text-[#BAD700] font-bold text-5xl mr-2">Q</span>Customer <span class="font-black">Experiences</span>
+                </h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Card 1 -->
+                    <div class="bg-[#E8ECEE] rounded-3xl p-8 relative overflow-hidden group">
+                        <div class="absolute -bottom-6 -right-6 w-24 h-24 bg-[#BAD700] rounded-full opacity-80 group-hover:scale-150 transition-transform duration-500"></div>
+                        <div class="flex items-center gap-4 mb-4 relative z-10">
+                            <div class="w-14 h-14 bg-gray-300 rounded-full overflow-hidden border-2 border-white shadow-sm">
+                                <img src="https://images.pexels.com/photos/3760370/pexels-photo-3760370.jpeg?auto=compress&cs=tinysrgb&w=150" alt="Executive" class="w-full h-full object-cover" />
+                            </div>
+                            <div>
+                                <h4 class="font-black text-[#002845] leading-tight">Roberto Mendoza</h4>
+                                <p class="text-[#BAD700] font-bold text-sm">Southern Imports Corp.</p>
+                            </div>
+                        </div>
+                        <p class="text-xs text-gray-500 leading-relaxed mb-4 relative z-10">"Quality FS's customs management saved us weeks of waiting at the port. Their team handled all the documentation with an efficiency we hadn't seen before with other operators."</p>
+                        <div class="flex text-[#BAD700] text-xl relative z-10">★★★★★</div>
+                    </div>
+
+                    <!-- Card 2 -->
+                    <div class="bg-[#E8ECEE] rounded-3xl p-8 relative overflow-hidden group">
+                        <div class="absolute -bottom-6 -right-6 w-24 h-24 bg-[#BAD700] rounded-full opacity-80 group-hover:scale-150 transition-transform duration-500"></div>
+                        <div class="flex items-center gap-4 mb-4 relative z-10">
+                            <div class="w-14 h-14 bg-gray-300 rounded-full overflow-hidden border-2 border-white shadow-sm">
+                                <img src="https://images.pexels.com/photos/5805404/pexels-photo-5805404.jpeg?auto=compress&cs=tinysrgb&w=150" alt="Logistics Supervisor" class="w-full h-full object-cover object-top" />
+                            </div>
+                            <div>
+                                <h4 class="font-black text-[#002845] leading-tight">Elena Castillo</h4>
+                                <p class="text-[#BAD700] font-bold text-sm">Global Distributions</p>
+                            </div>
+                        </div>
+                        <p class="text-xs text-gray-500 leading-relaxed mb-4 relative z-10">"Consolidating our cargo from Asia was always a headache until we started working with them. The tracking is precise and the customer service is highly professional at all times."</p>
+                        <div class="flex text-[#BAD700] text-xl relative z-10">★★★★★</div>
+                    </div>
+
+                    <!-- Card 3 -->
+                    <div class="bg-[#E8ECEE] rounded-3xl p-8 relative overflow-hidden group">
+                        <div class="absolute -bottom-6 -right-6 w-24 h-24 bg-[#BAD700] rounded-full opacity-80 group-hover:scale-150 transition-transform duration-500"></div>
+                        <div class="flex items-center gap-4 mb-4 relative z-10">
+                            <div class="w-14 h-14 bg-gray-300 rounded-full overflow-hidden border-2 border-white shadow-sm">
+                                <img src="https://images.pexels.com/photos/3184611/pexels-photo-3184611.jpeg?auto=compress&cs=tinysrgb&w=150" alt="Corporate Team" class="w-full h-full object-cover" />
+                            </div>
+                            <div>
+                                <h4 class="font-black text-[#002845] leading-tight">Andrés Villalobos</h4>
+                                <p class="text-[#BAD700] font-bold text-sm">Retail & Fashion Express</p>
+                            </div>
+                        </div>
+                        <p class="text-xs text-gray-500 leading-relaxed mb-4 relative z-10">"We use their air cargo service on a weekly basis. The rates are unbeatable and the peace of mind knowing the merchandise will reach the shelves on time is priceless."</p>
+                        <div class="flex text-[#BAD700] text-xl relative z-10">★★★★★</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+    
+    <div slot="footer">
+        <Footer lang="en" />
+    </div>
+</BaseLayout>

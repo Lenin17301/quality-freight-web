@@ -1,0 +1,46 @@
+---
+// src/components/ContactForm.astro
+---
+<section class="py-24 px-6 bg-stone-50 border-t border-stone-200">
+    <div class="max-w-4xl mx-auto bg-white p-10 md:p-16 rounded-[2.5rem] shadow-sm border border-stone-100">
+        <div class="mb-12">
+            <span class="text-brand-orange font-bold tracking-[0.2em] uppercase text-xs mb-4 block">Consulta Gratis</span>
+            <h2 class="text-3xl md:text-5xl font-light text-slate-900 mb-6">Solicitar una <span class="font-black">cotización</span></h2>
+            <p class="text-slate-500 font-light leading-relaxed">
+                Para solicitar cotizaciones por favor llenar el formulario a continuación o comuníquese con nosotros a través de los números de teléfonos +58 212.762.26.92 y +58 212.762.26.95
+            </p>
+        </div>
+        
+        <form action="https://formspree.io/f/TU_ID_DE_FORMSPREE" method="POST" class="space-y-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <input type="text" name="nombre" placeholder="Nombre y apellido" required class="w-full p-4 bg-stone-50 border-none rounded-xl outline-none focus:ring-2 focus:ring-slate-900 transition-all" />
+                <input type="email" name="email" placeholder="Email" required class="w-full p-4 bg-stone-50 border-none rounded-xl outline-none focus:ring-2 focus:ring-slate-900 transition-all" />
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <select name="transporte" class="w-full p-4 bg-stone-50 border-none rounded-xl outline-none focus:ring-2 focus:ring-slate-900 transition-all text-slate-700">
+                    <option value="">Tipo de transporte</option>
+                    <option value="aereo">Aéreo</option>
+                    <option value="maritimo">Marítimo</option>
+                    <option value="terrestre">Terrestre</option>
+                </select>
+                <select name="carga" class="w-full p-4 bg-stone-50 border-none rounded-xl outline-none focus:ring-2 focus:ring-slate-900 transition-all text-slate-700">
+                    <option value="">Tipo de carga</option>
+                    <option value="general">Mercancía General</option>
+                    <option value="alimentos">Alimentos / Perecederos</option>
+                </select>
+            </div>
+
+            <textarea name="message" rows="4" placeholder="Mensaje" class="w-full p-4 bg-stone-50 border-none rounded-xl outline-none resize-none focus:ring-2 focus:ring-slate-900 transition-all text-slate-700"></textarea>
+
+            <div class="flex items-center gap-3">
+                <input type="checkbox" id="acepto" required class="accent-slate-900 w-5 h-5" />
+                <label for="acepto" class="text-sm text-slate-500">Acepto que mis datos enviados se recopilan y almacenan.</label>
+            </div>
+
+            <button type="submit" class="w-full bg-slate-900 text-white font-bold py-5 rounded-2xl hover:bg-slate-800 transition-all mt-4 tracking-wide shadow-lg shadow-slate-900/20">
+                Solicitud de cotización
+            </button>
+        </form>
+    </div>
+</section>

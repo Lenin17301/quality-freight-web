@@ -1,0 +1,37 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Navbar from '../../components/Navbar.astro';
+import Footer from '../../components/Footer.astro';
+import ContactForm from '../../components/ContactForm.astro';
+---
+<BaseLayout 
+    title="Carga Aérea | Quality Freight Service" 
+    description="Transporte aéreo de carga rápida y eficaz, sin límites de peso o cantidad para envíos globales." 
+    lang="es"
+>
+	<div slot="header"><Navbar lang="es" /></div>
+	<section class="bg-white pt-32 pb-24 px-6 lg:pt-40 lg:pb-32">
+		<div class="max-w-7xl mx-auto flex flex-col lg:flex-row gap-16 lg:gap-24">
+			<div class="w-full lg:w-1/2 flex flex-col justify-center">
+				<nav class="flex text-[10px] sm:text-xs font-bold uppercase tracking-widest text-slate-400 mb-8">
+					<a href="/" class="hover:text-brand-orange transition-colors">Inicio</a> / 
+                    <a href="/servicios" class="hover:text-brand-orange transition-colors">Servicios</a> / 
+                    <span class="text-slate-900">Carga Aérea</span>
+				</nav>
+				<h1 class="text-4xl md:text-6xl font-light text-slate-900 leading-[1.1] mb-10">Carga <br /><span class="font-black">Aérea.</span></h1>
+				<div class="prose prose-lg prose-slate text-slate-500 font-light leading-relaxed space-y-6">
+					<p>El transporte aéreo de carga se realiza de una manera rápida y eficaz.</p>
+					<p>Nuestros servicios de Carga Regular y Express no tienen límites de peso o cantidad, desde y hacia cualquier parte del mundo.</p>
+					<p class="text-xl font-medium text-slate-900 border-l-4 border-brand-orange pl-6 py-2 mt-8">Rapidez garantizada para su mercancía global.</p>
+				</div>
+			</div>
+			<div class="w-full lg:w-1/2">
+				<div class="sticky top-32 aspect-square md:aspect-[4/5] rounded-[2.5rem] overflow-hidden shadow-2xl">
+					<img src="https://images.pexels.com/photos/6169046/pexels-photo-6169046.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Transporte de Carga Aérea" class="w-full h-full object-cover" />
+				</div>
+			</div>
+		</div>
+	</section>
+    <ContactForm />
+	<div slot="footer"><Footer lang="es" /></div>
+</BaseLayout>

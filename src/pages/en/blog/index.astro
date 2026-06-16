@@ -1,0 +1,40 @@
+---
+// src/pages/en/blog/index.astro
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Navbar from '../../../components/Navbar.astro';
+import Footer from '../../../components/Footer.astro';
+
+const posts = Object.values(import.meta.glob('./*.md', { eager: true }));
+---
+
+<BaseLayout title="Logistics Blog" description="Freight transport news." lang="en">
+	<div slot="header"><Navbar lang="en" /></div>
+
+	<section class="bg-brand-blue-dark text-white py-20 px-6 text-center">
+		<div class="max-w-3xl mx-auto mt-10">
+			<h1 class="text-4xl md:text-5xl font-black mb-4">Advancing Logistics</h1>
+			<p class="text-slate-300 text-lg">Analysis and practical guides to optimize your operations.</p>
+		</div>
+	</section>
+
+	<section class="bg-brand-bg py-20 px-6 min-h-[40vh]">
+		<div class="max-w-6xl mx-auto">
+			<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+				{posts.map((post) => (
+					<article class="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all border border-slate-100 flex flex-col group">
+						<div class="p-8 flex flex-col h-full">
+							<span class="text-brand-blue-light text-xs font-bold uppercase mb-2">{post.frontmatter.category}</span>
+							<h2 class="text-xl font-bold text-brand-blue-dark mb-3">
+								<a href={post.url}>{post.frontmatter.title}</a>
+							</h2>
+							<p class="text-slate-600 text-sm mb-6 flex-grow">{post.frontmatter.description}</p>
+							<a href={post.url} class="text-brand-orange font-bold text-sm">Read Article →</a>
+						</div>
+					</article>
+				))}
+			</div>
+		</div>
+	</section>
+
+	<div slot="footer"><Footer lang="en" /></div>
+</BaseLayout>

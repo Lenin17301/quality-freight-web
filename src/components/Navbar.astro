@@ -1,0 +1,212 @@
+---
+// src/components/Navbar.astro
+const { lang } = Astro.props;
+
+// Diccionario de traducciones para elementos de interfaz fijos del Navbar
+const i18n = {
+    es: {
+        bcvLabel: "BCV",
+        bcvMobileTitle: "Tasas BCV Oficiales",
+        loading: "Cargando...",
+        notAvailable: "No disponible",
+        menuBtnAlt: "Abrir menú"
+    },
+    en: {
+        bcvLabel: "BCV",
+        bcvMobileTitle: "Official BCV Rates",
+        loading: "Loading...",
+        notAvailable: "N/A",
+        menuBtnAlt: "Open menu"
+    }
+};
+
+const t = i18n[lang] || i18n.es;
+
+const links = {
+    es: [
+        { name: 'Home', url: '/' },
+        { name: 'Quiénes somos', url: '/quienes-somos' },
+        { name: 'Servicios', url: '/servicios/' },
+        { name: 'Asesoría', url: '/asesoria' },
+        { name: 'Rastreo', url: '/rastreo', special: true }
+    ],
+    en: [
+        { name: 'Home', url: '/en/' },
+        { name: 'About us', url: '/en/about' },
+        { name: 'Services', url: '/en/services/' },
+        { name: 'Consulting', url: '/en/consulting' },
+        { name: 'Tracking', url: '/en/tracking', special: true }
+    ]
+};
+
+const currentLinks = links[lang] || links.es;
+const currentPath = Astro.url.pathname;
+
+const isActive = (url) => {
+    if (url === '/' || url === '/en/') {
+        return currentPath === url;
+    }
+    return currentPath.startsWith(url);
+};
+---
+
+
+<nav class="fixed top-0 left-0 right-0 z-50 px-4 pt-4 sm:px-6 sm:pt-6">
+    <div class="max-w-7xl mx-auto flex flex-col gap-2">
+        <div class="flex justify-between items-center bg-white/90 backdrop-blur-md rounded-full px-4 sm:px-6 py-3 shadow-sm border border-white">
+            
+            <a href={lang === 'es' ? '/' : '/en/'} class="flex items-center gap-2">
+                <div class="w-10 h-10 bg-[#002845] rounded-full flex items-center justify-center relative overflow-hidden">
+                    <span class="text-white font-black text-xl relative z-10">Q</span>
+                    <div class="absolute bottom-0 right-0 w-4 h-4 bg-[#BAD700] rounded-tl-full"></div>
+                </div>
+            </a>
+
+            <div class="hidden lg:flex items-center gap-2">
+                {currentLinks.map((link) => (
+                    <a 
+                        href={link.url} 
+                        class={`px-4 py-2 rounded-full font-bold text-sm transition-all duration-300 ${
+                            isActive(link.url) 
+                                ? 'bg-[#002845] text-white shadow-md' 
+                                : link.special 
+                                    ? 'text-[#BAD700] hover:bg-[#BAD700]/10' 
+                                    : 'text-[#002845] hover:bg-gray-100'
+                        }`}
+                    >
+                        {link.name}
+                    </a>
+                ))}
+            </div>
+
+            <div class="hidden lg:flex items-center gap-3">
+                <div class="flex items-center gap-3 bg-[#E8ECEE] px-4 py-1.5 rounded-full border border-gray-200 shadow-inner">
+                    <div class="flex items-center gap-1.5">
+                        <div class="w-2 h-2 bg-[#BAD700] rounded-full animate-pulse"></div>
+                        <span class="text-[10px] font-black text-[#002845] uppercase tracking-wider">{t.bcvLabel}:</span>
+                    </div>
+                    <div class="flex gap-3">
+                        <div class="flex items-center gap-1">
+                            <span class="text-[10px] font-bold text-gray-500">USD</span>
+                            <span id="bcv-usd-desktop" class="text-xs font-bold text-gray-700">{t.loading}</span>
+                        </div>
+                        <div class="w-px h-3 bg-gray-300"></div>
+                        <div class="flex items-center gap-1">
+                            <span class="text-[10px] font-bold text-gray-500">EUR</span>
+                            <span id="bcv-eur-desktop" class="text-xs font-bold text-gray-700">{t.loading}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-1 bg-gray-100 rounded-full p-1">
+                    <a href="/" class={`px-3 py-1 rounded-full text-xs font-bold transition-colors ${lang === 'es' ? 'bg-white text-[#002845] shadow-sm' : 'text-gray-400 hover:text-[#002845]'}`}>ES</a>
+                    <a href="/en/" class={`px-3 py-1 rounded-full text-xs font-bold transition-colors ${lang === 'en' ? 'bg-white text-[#002845] shadow-sm' : 'text-gray-400 hover:text-[#002845]'}`}>EN</a>
+                </div>
+            </div>
+
+            <button id="mobile-menu-btn" aria-label={t.menuBtnAlt} class="lg:hidden text-[#002845] p-2 hover:bg-gray-100 rounded-full transition-colors cursor-pointer">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+        </div>
+
+        <div id="mobile-menu" class="hidden flex-col bg-white/95 backdrop-blur-md rounded-3xl shadow-xl border border-gray-100 p-4 gap-2 lg:hidden origin-top">
+            
+            <div class="flex flex-col items-center justify-center gap-1 bg-[#E8ECEE] px-4 py-3 rounded-2xl mb-2 border border-gray-200 shadow-inner">
+                <div class="flex items-center gap-2 mb-1">
+                    <div class="w-2 h-2 bg-[#BAD700] rounded-full animate-pulse"></div>
+                    <span class="text-[10px] font-black text-[#002845] uppercase tracking-wider">{t.bcvMobileTitle}</span>
+                </div>
+                <div class="flex gap-5">
+                    <div class="flex items-center gap-1">
+                        <span class="text-xs font-bold text-gray-500">USD:</span>
+                        <span id="bcv-usd-mobile" class="text-sm font-bold text-gray-700">--</span>
+                    </div>
+                    <div class="w-px h-4 bg-gray-300"></div>
+                    <div class="flex items-center gap-1">
+                        <span class="text-xs font-bold text-gray-500">EUR:</span>
+                        <span id="bcv-eur-mobile" class="text-sm font-bold text-gray-700">--</span>
+                    </div>
+                </div>
+            </div>
+
+            {currentLinks.map((link) => (
+                <a 
+                    href={link.url} 
+                    class={`block px-5 py-3 rounded-2xl font-bold text-center transition-all ${
+                        isActive(link.url) 
+                            ? 'bg-[#002845] text-white' 
+                            : link.special 
+                                ? 'text-[#BAD700] bg-[#BAD700]/5' 
+                                : 'text-[#002845] hover:bg-gray-50'
+                    }`}
+                >
+                    {link.name}
+                </a>
+            ))}
+            
+            <div class="flex justify-center gap-2 mt-2 pt-4 border-t border-gray-100">
+                <a href="/" class={`px-6 py-2 rounded-full text-sm font-bold transition-colors ${lang === 'es' ? 'bg-[#002845] text-white' : 'bg-gray-100 text-gray-500'}`}>ESPAÑOL</a>
+                <a href="/en/" class={`px-6 py-2 rounded-full text-sm font-bold transition-colors ${lang === 'en' ? 'bg-[#002845] text-white' : 'bg-gray-100 text-gray-500'}`}>ENGLISH</a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<script define:vars={{ fallbackText: t.notAvailable }}>
+    // 1. Lógica del Menú Móvil
+    const btn = document.getElementById('mobile-menu-btn');
+    const menu = document.getElementById('mobile-menu');
+
+    if (btn && menu) {
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+            menu.classList.toggle('flex');
+        });
+    }
+
+    // 2. Lógica de las Tasas BCV (USD y EUR)
+    async function fetchBCV() {
+        try {
+            const [responseUsd, responseEur] = await Promise.all([
+                fetch('https://ve.dolarapi.com/v1/dolares/oficial'),
+                fetch('https://ve.dolarapi.com/v1/euros/oficial')
+            ]);
+            
+            const dataUsd = await responseUsd.json();
+            const dataEur = await responseEur.json();
+            
+            const rateUsd = `Bs. ${dataUsd.promedio.toFixed(2)}`;
+            const rateEur = `Bs. ${dataEur.promedio.toFixed(2)}`;
+            
+            // Actualizamos en Desktop
+            const bcvUsdDesktop = document.getElementById('bcv-usd-desktop');
+            const bcvEurDesktop = document.getElementById('bcv-eur-desktop');
+            if(bcvUsdDesktop) bcvUsdDesktop.innerText = rateUsd;
+            if(bcvEurDesktop) bcvEurDesktop.innerText = rateEur;
+
+            // Actualizamos en Móvil
+            const bcvUsdMobile = document.getElementById('bcv-usd-mobile');
+            const bcvEurMobile = document.getElementById('bcv-eur-mobile');
+            if(bcvUsdMobile) bcvUsdMobile.innerText = rateUsd;
+            if(bcvEurMobile) bcvEurMobile.innerText = rateEur;
+
+        } catch (error) {
+            console.error('Error obteniendo las tasas BCV:', error);
+            
+            const elements = [
+                'bcv-usd-desktop', 'bcv-eur-desktop', 
+                'bcv-usd-mobile', 'bcv-eur-mobile'
+            ];
+            
+            elements.forEach(id => {
+                const el = document.getElementById(id);
+                if(el) el.innerText = fallbackText;
+            });
+        }
+    }
+
+    // Ejecutar al cargar la página
+    fetchBCV();
+</script>

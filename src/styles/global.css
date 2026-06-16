@@ -1,0 +1,14 @@
+@import "tailwindcss";
+
+@theme {
+	/* Tipografía Corporativa */
+  --font-sans: 'Inter', sans-serif;
+  /* Azul Marino Corporativo (Confianza B2B) */
+  --color-brand-blue-dark: #0a2540; 
+  /* Azul Logístico/Aéreo (Acción) */
+  --color-brand-blue-light: #0070f3;
+  /* Naranja de Carga/Marítimo (Botones importantes) */
+  --color-brand-orange: #ff6b00;
+  /* Gris de fondo premium */
+  --color-brand-bg: #f8fafc;
+}

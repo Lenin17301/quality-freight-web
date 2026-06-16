@@ -1,0 +1,38 @@
+---
+// src/layouts/BlogPostLayout.astro
+import BaseLayout from './BaseLayout.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+
+// Astro pasa automáticamente los datos del .md (frontmatter) a este layout
+const { frontmatter } = Astro.props;
+const lang = frontmatter.lang || 'es';
+---
+
+<BaseLayout title={frontmatter.title} description={frontmatter.description} lang={lang}>
+	<div slot="header">
+		<Navbar lang={lang} />
+	</div>
+
+	<header class="bg-brand-blue-dark text-white py-20 px-6 text-center">
+		<div class="max-w-3xl mx-auto mt-10">
+			<span class="bg-brand-orange text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-4 inline-block">
+				{frontmatter.category}
+			</span>
+			<h1 class="text-3xl md:text-5xl font-black mb-4">{frontmatter.title}</h1>
+			<p class="text-slate-400 text-sm">Publicado el: {frontmatter.date}</p>
+		</div>
+	</header>
+
+	<main class="py-16 px-6 bg-white min-h-[50vh]">
+		<div class="max-w-3xl mx-auto">
+			<div class="prose prose-slate prose-lg max-w-none text-slate-700">
+				<slot />
+			</div>
+		</div>
+	</main>
+
+	<div slot="footer">
+		<Footer lang={lang} />
+	</div>
+</BaseLayout>

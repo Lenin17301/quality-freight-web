@@ -1,0 +1,40 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Navbar from '../../components/Navbar.astro';
+import Footer from '../../components/Footer.astro';
+import ContactForm from '../../components/ContactForm.astro';
+---
+<BaseLayout 
+    title="Carga Marítima | Quality Freight Service" 
+    description="Logística de envíos marítimos mundiales con servicio exclusivo a Venezuela. FCL, LCL y carga sobredimensionada." 
+    lang="es"
+>
+	<div slot="header"><Navbar lang="es" /></div>
+	<section class="bg-white pt-32 pb-24 px-6 lg:pt-40 lg:pb-32">
+		<div class="max-w-7xl mx-auto flex flex-col lg:flex-row gap-16 lg:gap-24">
+			<div class="w-full lg:w-1/2 flex flex-col justify-center">
+				<nav class="flex text-[10px] sm:text-xs font-bold uppercase tracking-widest text-slate-400 mb-8">
+					<a href="/" class="hover:text-brand-orange transition-colors">Inicio</a> / 
+                    <a href="/servicios" class="hover:text-brand-orange transition-colors">Servicios</a> / 
+                    <span class="text-slate-900">Marítima</span>
+				</nav>
+				<h1 class="text-4xl md:text-6xl font-light text-slate-900 leading-[1.1] mb-10">Carga <br /><span class="font-black">Marítima.</span></h1>
+				<div class="prose prose-lg prose-slate text-slate-500 font-light leading-relaxed space-y-6">
+					<p>Logística de envíos a nivel mundial con servicio exclusivo a Venezuela y la región.</p>
+					<ul class="list-disc pl-6 space-y-3">
+						<li><strong>FCL/FCL:</strong> Contenedor completo.</li>
+						<li><strong>LCL:</strong> Carga consolidada.</li>
+						<li><strong>Carga Suelta:</strong> Sobredimensionada y extrapesada.</li>
+					</ul>
+				</div>
+			</div>
+			<div class="w-full lg:w-1/2">
+				<div class="sticky top-32 aspect-square md:aspect-[4/5] rounded-[2.5rem] overflow-hidden shadow-2xl">
+					<img src="https://images.pexels.com/photos/1095814/pexels-photo-1095814.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Transporte de Carga Marítima" class="w-full h-full object-cover" />
+				</div>
+			</div>
+		</div>
+	</section>
+    <ContactForm />
+	<div slot="footer"><Footer lang="es" /></div>
+</BaseLayout>

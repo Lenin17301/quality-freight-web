@@ -1,0 +1,44 @@
+---
+// src/layouts/BaseLayout.astro
+import '../styles/global.css'; // <-- ESTO REPARA TAILWIND INMEDIATAMENTE
+import SEO from '../components/SEO.astro';
+
+const { 
+    lang = 'es', 
+    title = 'Quality Freight Service', 
+    description = 'Soluciones logísticas globales'
+} = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang={lang} class="scroll-smooth">
+    <head>
+        <SEO title={title} description={description} />
+        
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap" rel="stylesheet" />
+
+        <style is:global>
+            body { font-family: 'Inter', sans-serif; }
+            ::-webkit-scrollbar { width: 10px; }
+            ::-webkit-scrollbar-track { background: #f1f1f1; }
+            ::-webkit-scrollbar-thumb { background: #002845; border-radius: 10px; }
+            ::-webkit-scrollbar-thumb:hover { background: #BAD700; }
+        </style>
+    </head>
+    
+    <body class="bg-white text-slate-800 antialiased selection:bg-[#BAD700] selection:text-[#002845] flex flex-col min-h-screen">
+        <header class="relative z-50">
+            <slot name="header" />
+        </header>
+        
+        <main class="flex-grow flex flex-col relative z-0">
+            <slot />
+        </main>
+        
+        <footer class="mt-auto relative z-10">
+            <slot name="footer" />
+        </footer>
+    </body>
+</html>
