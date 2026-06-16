@@ -22,21 +22,44 @@ import Footer from '../../../components/Footer.astro';
             </h1>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <a href="/en/services/ocean-freight" class="group bg-[#E8ECEE] rounded-[2rem] p-8 hover:bg-[#002845] transition-colors duration-500 flex flex-col justify-between h-80">
-                    <h3 class="text-3xl font-black text-[#002845] group-hover:text-white transition-colors">Ocean Freight</h3>
-                    <p class="text-sm text-gray-500 group-hover:text-stone-300 transition-colors">Worldwide FCL, LCL, and oversized cargo solutions.</p>
+                <!-- Card 1 -->
+                <a href="/en/services/ocean-freight" class="group relative bg-[#002845] rounded-4xl h-80 overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500">
+                    <img src="https://images.pexels.com/photos/1095814/pexels-photo-1095814.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Ocean Freight" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-in-out opacity-80" />
+                    <div class="absolute inset-0 bg-linear-to-t from-[#002845]/90 via-[#002845]/30 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 p-8 w-full transform group-hover:-translate-y-2 transition-transform duration-500">
+                        <h3 class="text-3xl font-black text-white mb-2">Ocean Freight</h3>
+                        <p class="text-sm text-stone-300">Worldwide FCL, LCL, and oversized cargo solutions.</p>
+                    </div>
                 </a>
-                <a href="/en/services/air-freight" class="group bg-[#E8ECEE] rounded-[2rem] p-8 hover:bg-[#002845] transition-colors duration-500 flex flex-col justify-between h-80">
-                    <h3 class="text-3xl font-black text-[#002845] group-hover:text-white transition-colors">Air Freight</h3>
-                    <p class="text-sm text-gray-500 group-hover:text-stone-300 transition-colors">Expedited transport for critical and priority merchandise.</p>
+                
+                <!-- Card 2 -->
+                <a href="/en/services/air-freight" class="group relative bg-[#002845] rounded-4xl h-80 overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500">
+                    <img src="https://images.pexels.com/photos/6169046/pexels-photo-6169046.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Air Freight" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-in-out opacity-80" />
+                    <div class="absolute inset-0 bg-linear-to-t from-[#002845]/90 via-[#002845]/30 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 p-8 w-full transform group-hover:-translate-y-2 transition-transform duration-500">
+                        <h3 class="text-3xl font-black text-white mb-2">Air Freight</h3>
+                        <p class="text-sm text-stone-300">Expedited transport for critical and priority merchandise.</p>
+                    </div>
                 </a>
-                <a href="/en/services/ground-freight" class="group bg-[#E8ECEE] rounded-[2rem] p-8 hover:bg-[#002845] transition-colors duration-500 flex flex-col justify-between h-80">
-                    <h3 class="text-3xl font-black text-[#002845] group-hover:text-white transition-colors">Ground Freight</h3>
-                    <p class="text-sm text-gray-500 group-hover:text-stone-300 transition-colors">National and cross-border logistics with 24/7 monitoring.</p>
+
+                <!-- Card 3 -->
+                <a href="/en/services/ground-freight" class="group relative bg-[#002845] rounded-4xl h-80 overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500">
+                    <img src="https://images.pexels.com/photos/2226458/pexels-photo-2226458.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Ground Freight" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-in-out opacity-80" />
+                    <div class="absolute inset-0 bg-linear-to-t from-[#002845]/90 via-[#002845]/30 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 p-8 w-full transform group-hover:-translate-y-2 transition-transform duration-500">
+                        <h3 class="text-3xl font-black text-white mb-2">Ground Freight</h3>
+                        <p class="text-sm text-stone-300">National and cross-border logistics with 24/7 monitoring.</p>
+                    </div>
                 </a>
-                <a href="/en/services/customs-agents" class="group bg-[#E8ECEE] rounded-[2rem] p-8 hover:bg-[#002845] transition-colors duration-500 flex flex-col justify-between h-80">
-                    <h3 class="text-3xl font-black text-[#002845] group-hover:text-white transition-colors">Customs Agents</h3>
-                    <p class="text-sm text-gray-500 group-hover:text-stone-300 transition-colors">Efficient clearance and guaranteed regulatory compliance.</p>
+
+                <!-- Card 4 -->
+                <a href="/en/services/customs-agents" class="group relative bg-[#002845] rounded-4xl h-80 overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500">
+                    <img src="https://images.pexels.com/photos/2800121/pexels-photo-2800121.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Customs Agents" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-in-out opacity-80" />
+                    <div class="absolute inset-0 bg-linear-to-t from-[#002845]/90 via-[#002845]/30 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 p-8 w-full transform group-hover:-translate-y-2 transition-transform duration-500">
+                        <h3 class="text-3xl font-black text-white mb-2">Customs Agents</h3>
+                        <p class="text-sm text-stone-300">Efficient clearance and guaranteed regulatory compliance.</p>
+                    </div>
                 </a>
             </div>
         </section>
