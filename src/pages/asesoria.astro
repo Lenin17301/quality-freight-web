@@ -133,7 +133,7 @@ import Footer from '../components/Footer.astro';
                     <p class="text-gray-500 text-sm">Complete el formulario y le contactaremos con una propuesta a medida.</p>
                 </div>
 
-                <form class="space-y-6 relative z-10">
+                <form id="quote-form" class="space-y-6 relative z-10">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
                             <label class="block text-xs font-bold text-[#002845] mb-2 uppercase tracking-wide">Nombre y Apellido</label>
@@ -198,3 +198,20 @@ import Footer from '../components/Footer.astro';
         <Footer lang="es" />
     </div>
 </BaseLayout>
+
+<!-- Script para monitoreo de conversión de Google Analytics 4 -->
+<script is:inline>
+    const form = document.getElementById('quote-form');
+    if (form) {
+        form.addEventListener('submit', function() {
+            // Verificamos que gtag esté cargado antes de enviar el evento
+            if (typeof gtag === 'function') {
+                gtag('event', 'generate_lead', {
+                    'event_category': 'formulario_asesoria',
+                    'event_label': 'solicitud_cotizacion',
+                    'value': 1
+                });
+            }
+        });
+    }
+</script>
