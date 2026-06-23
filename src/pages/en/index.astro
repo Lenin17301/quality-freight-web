@@ -18,15 +18,15 @@ import Footer from '../../components/Footer.astro';
     <main class="bg-white overflow-hidden">
         
         <!-- HERO SECTION -->
-        <section class="relative bg-[#E8ECEE] pt-32 pb-40 px-6 lg:pt-40 lg:pb-56 overflow-hidden rounded-b-[4rem]">
-            <div class="absolute top-0 right-0 w-96 h-96 bg-[#BAD700] rounded-bl-[100%] opacity-80 -translate-y-1/2 translate-x-1/4"></div>
-            <div class="absolute bottom-0 left-0 w-80 h-80 bg-[#002845] rounded-tr-[100%] opacity-90 translate-y-1/4 -translate-x-1/4"></div>
+        <section class="relative bg-[#E8ECEE] pt-32 pb-40 px-6 lg:pt-40 lg:pb-56 overflow-hidden" style="border-bottom-left-radius: 4rem; border-bottom-right-radius: 4rem;">
+            <div class="absolute top-0 right-0 w-96 h-96 bg-[#BAD700] rounded-bl-full opacity-80 -translate-y-1/2 translate-x-1/4"></div>
+            <div class="absolute bottom-0 left-0 w-80 h-80 bg-[#002845] rounded-tr-full opacity-90 translate-y-1/4 -translate-x-1/4"></div>
 
             <div class="relative z-10 max-w-7xl mx-auto flex flex-col-reverse lg:flex-row items-center gap-12">
                 <div class="w-full lg:w-1/2 relative">
-                    <img src="https://images.pexels.com/photos/1095814/pexels-photo-1095814.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Shipping Container" class="w-full drop-shadow-2xl rounded-2xl" />
+                    <img src="https://images.pexels.com/photos/1095814/pexels-photo-1095814.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Shipping Container" width="800" height="533" class="w-full drop-shadow-2xl rounded-2xl" />
                     
-                    <!-- Pestañas flotantes apuntando a las subpáginas en inglés -->
+                    <!-- Pestañas flotantes -->
                     <div class="absolute -bottom-10 left-0 right-0 flex justify-center gap-4 px-4">
                         <a href="/en/services/air-freight" class="bg-white rounded-2xl p-4 shadow-lg w-32 hover:-translate-y-2 transition-transform block">
                             <span class="block font-bold text-[#BAD700] text-lg leading-tight">Air<br/>Freight</span>
@@ -52,14 +52,23 @@ import Footer from '../../components/Footer.astro';
                         <span class="absolute -bottom-4 -right-4 text-3xl">🚢</span>
                     </a>
 
-                    <!-- Tracking Widget Mini -->
-                    <div class="bg-white rounded-3xl shadow-xl p-4 w-72 text-center">
-                        <p class="font-bold text-[#002845] mb-2 text-sm">Real-time tracking</p>
-                        <div class="rounded-xl overflow-hidden h-32 relative group cursor-pointer" onclick="window.location.href='/en/tracking'">
-                            <img src="https://images.pexels.com/photos/1117210/pexels-photo-1117210.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Logistics Tracking" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
-                            <div class="absolute inset-0 bg-black/20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                                <span class="bg-[#BAD700] text-[#002845] font-bold py-1 px-4 rounded-full text-xs">Track</span>
-                            </div>
+                    <!-- Portal Magaya Integrado -->
+                    <div class="bg-white rounded-3xl shadow-2xl relative overflow-hidden border-4 border-white transition-shadow duration-300 w-full max-w-sm" style="max-width: 350px;">
+                        
+                        <!-- Header falso -->
+                        <div class="absolute top-0 left-0 w-full bg-white z-20 flex flex-col items-center justify-center border-b border-gray-100" style="height: 90px;">
+                            <span class="text-xl mb-1">📦</span>
+                            <p class="font-black text-[#002845] text-sm leading-tight">Package Status</p>
+                            <p class="text-[10px] text-gray-500">Client Access</p>
+                        </div>
+                        
+                        <!-- Iframe centrado matemáticamente con CSS puro -->
+                        <div class="w-full bg-white relative z-10 overflow-hidden" style="height: 330px; margin-top: 90px;">
+                            <iframe 
+                                src="https://tracking.magaya.com/#livetrack" 
+                                title="QFS Client Portal"
+                                style="position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 500px; height: 450px; margin-top: -85px; border: none; overflow: hidden;"
+                            ></iframe>
                         </div>
                     </div>
                 </div>
@@ -78,7 +87,6 @@ import Footer from '../../components/Footer.astro';
                             We design optimized logistics routes so your merchandise reaches its final destination with total security. We have a global network of strategic partners that guarantee agile transit times and highly competitive market rates.
                         </p>
                         
-                        <!-- Pestañas apuntando a subpáginas en inglés -->
                         <div class="flex flex-wrap gap-4 mb-12">
                             <a href="/en/services/ocean-freight" class="border-2 border-[#BAD700] text-[#002845] font-medium py-2 px-6 rounded-full hover:bg-[#BAD700] hover:text-white transition-colors block text-center">Maritime</a>
                             <a href="/en/services/air-freight" class="border-2 border-[#BAD700] text-[#002845] font-medium py-2 px-6 rounded-full hover:bg-[#BAD700] hover:text-white transition-colors block text-center">Air</a>
@@ -101,7 +109,7 @@ import Footer from '../../components/Footer.astro';
                         </div>
                     </div>
                     <div class="w-full md:w-1/2">
-                        <img src="https://images.pexels.com/photos/1095814/pexels-photo-1095814.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Ship" class="rounded-[3rem] w-full object-cover h-96 shadow-xl" />
+                        <img src="https://images.pexels.com/photos/1095814/pexels-photo-1095814.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Ship" width="800" height="533" class="rounded-3xl w-full object-cover h-96 shadow-xl" />
                     </div>
                 </div>
 
@@ -109,9 +117,9 @@ import Footer from '../../components/Footer.astro';
                     <!-- Air -->
                     <div class="flex flex-col md:flex-row gap-6">
                         <div class="w-full md:w-2/3">
-                            <img src="https://images.pexels.com/photos/6169046/pexels-photo-6169046.jpeg?auto=compress&cs=tinysrgb&w=1000" alt="Plane" class="rounded-[2rem] w-full h-72 object-cover shadow-md" />
+                            <img src="https://images.pexels.com/photos/6169046/pexels-photo-6169046.jpeg?auto=compress&cs=tinysrgb&w=1000" alt="Plane" width="1000" height="667" class="rounded-3xl w-full h-72 object-cover shadow-md" />
                         </div>
-                        <div class="w-full md:w-1/3 bg-[#E8ECEE] rounded-[2rem] p-8 flex flex-col justify-center items-end text-right">
+                        <div class="w-full md:w-1/3 bg-[#E8ECEE] rounded-3xl p-8 flex flex-col justify-center items-end text-right">
                             <a href="/en/consulting" class="bg-[#BAD700] text-white font-bold py-2 px-8 rounded-full mb-6 hover:bg-[#a0be00] transition-colors">quote now</a>
                             <h3 class="text-3xl font-black text-[#002845] mb-2">Air Service</h3>
                             <p class="text-sm text-gray-500">Expedited handling of critical cargo. Alliances with top airlines to secure space and priority for your urgent shipments worldwide.</p>
@@ -120,9 +128,9 @@ import Footer from '../../components/Footer.astro';
                     <!-- Ground -->
                     <div class="flex flex-col md:flex-row-reverse gap-6">
                         <div class="w-full md:w-2/3">
-                            <img src="https://images.pexels.com/photos/2226458/pexels-photo-2226458.jpeg?auto=compress&cs=tinysrgb&w=1000" alt="Truck" class="rounded-[2rem] w-full h-72 object-cover shadow-md" />
+                            <img src="https://images.pexels.com/photos/2226458/pexels-photo-2226458.jpeg?auto=compress&cs=tinysrgb&w=1000" alt="Truck" width="1000" height="667" class="rounded-3xl w-full h-72 object-cover shadow-md" />
                         </div>
-                        <div class="w-full md:w-1/3 bg-[#E8ECEE] rounded-[2rem] p-8 flex flex-col justify-center items-start text-left">
+                        <div class="w-full md:w-1/3 bg-[#E8ECEE] rounded-3xl p-8 flex flex-col justify-center items-start text-left">
                             <a href="/en/consulting" class="bg-[#BAD700] text-white font-bold py-2 px-8 rounded-full mb-6 hover:bg-[#a0be00] transition-colors">quote now</a>
                             <h3 class="text-3xl font-black text-[#002845] mb-2">Ground Service</h3>
                             <p class="text-sm text-gray-500">Efficient national and cross-border distribution. 24/7 monitored fleets to guarantee door-to-door pickups and deliveries in record time.</p>
@@ -134,7 +142,7 @@ import Footer from '../../components/Footer.astro';
 
         <!-- WHY CHOOSE US -->
         <section class="py-16 px-6 bg-white relative overflow-hidden">
-            <div class="absolute top-0 right-0 w-[40rem] h-[40rem] border-[100px] border-[#BAD700] rounded-full opacity-20 translate-x-1/2 -translate-y-1/4"></div>
+            <div class="absolute top-0 right-0 border-[#BAD700] rounded-full opacity-20 translate-x-1/2 -translate-y-1/4" style="width: 40rem; height: 40rem; border-width: 100px;"></div>
             <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-12 relative z-10">
                 <div class="w-full md:w-1/2">
                     <h2 class="text-4xl md:text-5xl font-light text-[#002845] mb-6">
@@ -144,7 +152,6 @@ import Footer from '../../components/Footer.astro';
                         We are not just a supplier; we are your external logistics department. We anticipate customs challenges, reduce your operational costs, and provide 24/7 personalized attention. Our expertise allows us to bypass bureaucratic obstacles so your supply chain never stops.
                     </p>
                     
-                    <!-- Botones Inferiores apuntando a subpáginas en inglés -->
                     <div class="flex flex-wrap gap-4">
                         <a href="/en/services/ocean-freight" class="border-2 border-[#BAD700] text-[#002845] font-medium py-2 px-6 rounded-full hover:bg-[#BAD700] hover:text-white transition-colors block text-center">Maritime</a>
                         <a href="/en/services/air-freight" class="border-2 border-[#BAD700] text-[#002845] font-medium py-2 px-6 rounded-full hover:bg-[#BAD700] hover:text-white transition-colors block text-center">Air</a>
@@ -181,7 +188,7 @@ import Footer from '../../components/Footer.astro';
                         <div class="absolute -bottom-6 -right-6 w-24 h-24 bg-[#BAD700] rounded-full opacity-80 group-hover:scale-150 transition-transform duration-500"></div>
                         <div class="flex items-center gap-4 mb-4 relative z-10">
                             <div class="w-14 h-14 bg-gray-300 rounded-full overflow-hidden border-2 border-white shadow-sm">
-                                <img src="https://images.pexels.com/photos/3760370/pexels-photo-3760370.jpeg?auto=compress&cs=tinysrgb&w=150" alt="Executive" class="w-full h-full object-cover" />
+                                <img src="https://images.pexels.com/photos/3760370/pexels-photo-3760370.jpeg?auto=compress&cs=tinysrgb&w=150" alt="Executive" width="150" height="150" class="w-full h-full object-cover" />
                             </div>
                             <div>
                                 <h4 class="font-black text-[#002845] leading-tight">Roberto Mendoza</h4>
@@ -197,7 +204,7 @@ import Footer from '../../components/Footer.astro';
                         <div class="absolute -bottom-6 -right-6 w-24 h-24 bg-[#BAD700] rounded-full opacity-80 group-hover:scale-150 transition-transform duration-500"></div>
                         <div class="flex items-center gap-4 mb-4 relative z-10">
                             <div class="w-14 h-14 bg-gray-300 rounded-full overflow-hidden border-2 border-white shadow-sm">
-                                <img src="https://images.pexels.com/photos/5805404/pexels-photo-5805404.jpeg?auto=compress&cs=tinysrgb&w=150" alt="Logistics Supervisor" class="w-full h-full object-cover object-top" />
+                                <img src="https://images.pexels.com/photos/5805404/pexels-photo-5805404.jpeg?auto=compress&cs=tinysrgb&w=150" alt="Logistics Supervisor" width="150" height="150" class="w-full h-full object-cover object-top" />
                             </div>
                             <div>
                                 <h4 class="font-black text-[#002845] leading-tight">Elena Castillo</h4>
@@ -213,7 +220,7 @@ import Footer from '../../components/Footer.astro';
                         <div class="absolute -bottom-6 -right-6 w-24 h-24 bg-[#BAD700] rounded-full opacity-80 group-hover:scale-150 transition-transform duration-500"></div>
                         <div class="flex items-center gap-4 mb-4 relative z-10">
                             <div class="w-14 h-14 bg-gray-300 rounded-full overflow-hidden border-2 border-white shadow-sm">
-                                <img src="https://images.pexels.com/photos/3184611/pexels-photo-3184611.jpeg?auto=compress&cs=tinysrgb&w=150" alt="Corporate Team" class="w-full h-full object-cover" />
+                                <img src="https://images.pexels.com/photos/3184611/pexels-photo-3184611.jpeg?auto=compress&cs=tinysrgb&w=150" alt="Corporate Team" width="150" height="150" class="w-full h-full object-cover" />
                             </div>
                             <div>
                                 <h4 class="font-black text-[#002845] leading-tight">Andrés Villalobos</h4>

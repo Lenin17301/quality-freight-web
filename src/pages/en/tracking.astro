@@ -7,164 +7,77 @@ import Footer from '../../components/Footer.astro';
 
 <BaseLayout 
     lang="en"
-    title="Real-Time Tracking | Quality Freight Service" 
-    description="Track the status and location of your international cargo in real-time with our integrated system."
+    title="Client Portal | Quality Freight Service" 
+    description="Access our secure portal to track the status and location of your international cargo in real time."
 >
     <div slot="header">
         <Navbar lang="en" />
     </div>
 
-    <main class="bg-white overflow-hidden pb-24 pt-32 min-h-screen">
-        <section class="max-w-4xl mx-auto px-6 mb-12 text-center md:text-left flex flex-col md:flex-row items-center gap-8">
-            <div class="w-20 h-20 text-[#002845] shrink-0">
-                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 15l6-6m0 0l-6-6m6 6H9a6 6 0 000 12h3"></path></svg>
-                <svg fill="currentColor" viewBox="0 0 24 24" class="w-full h-full"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"></path></svg>
-            </div>
-            <div>
-                <h1 class="text-4xl md:text-5xl font-light text-[#002845] mb-2 leading-tight">
-                    Track your cargo <span class="font-black text-[#BAD700]">in real time</span>
+    <!-- MAIN PORTAL SECTION -->
+    <main class="relative bg-[#002845] min-h-screen pt-32 pb-24 overflow-hidden flex items-center">
+        
+        <!-- Background Map Image -->
+        <div class="absolute inset-0 z-0">
+            <img 
+                src="https://images.pexels.com/photos/414916/pexels-photo-414916.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&dpr=1" 
+                alt="Global Logistics Map" 
+                width="1920"
+                height="1080"
+                class="w-full h-full object-cover opacity-30 mix-blend-luminosity"
+            />
+            <div class="absolute inset-0 bg-linear-to-b from-[#002845]/90 to-[#002845]/60"></div>
+        </div>
+
+        <div class="relative z-10 max-w-6xl mx-auto px-6 w-full flex flex-col lg:flex-row items-center gap-16">
+            
+            <!-- Text Content Left -->
+            <div class="w-full lg:w-1/2 text-center lg:text-left">
+                <div class="w-16 h-16 bg-[#BAD700] rounded-2xl flex items-center justify-center mb-6 mx-auto lg:mx-0 shadow-lg border-2 border-white/20">
+                    <svg class="w-8 h-8 text-[#002845]" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11c0 3.517-1.009 6.799-2.753 9.571m-3.44-2.04l.054-.09A13.916 13.916 0 008 11a4 4 0 118 0c0 1.017-.07 2.019-.203 3m-2.118 6.844A21.88 21.88 0 0015.171 17m3.839 1.132c.645-2.266.99-4.659.99-7.132A8 8 0 008 4.07M3 15.364c.64-1.319 1-2.8 1-4.364 0-1.457.39-2.823 1.07-4"></path></svg>
+                </div>
+                <h1 class="text-4xl md:text-6xl font-light text-white mb-6 leading-tight">
+                    Client Access <br/><span class="font-black text-[#BAD700]">Portal</span>
                 </h1>
-                <p class="text-gray-500 text-sm">Enter your tracking or container number to check the current status and location of your shipment.</p>
-            </div>
-        </section>
-
-        <section class="max-w-5xl mx-auto px-6 mb-16">
-            <div class="bg-[#E8ECEE] rounded-[2rem] p-6 flex flex-col md:flex-row gap-4 items-center">
-                <div class="w-full">
-                    <input type="text" placeholder="Enter tracking or container number" class="w-full bg-white border-none rounded-xl px-6 py-4 text-slate-700 focus:ring-2 focus:ring-[#BAD700] outline-none shadow-sm" value="QTYU1234567" />
-                    <p class="text-[10px] text-gray-400 mt-2 ml-2">Example: QTYU1234567 / BL123456789</p>
-                </div>
-                <button class="w-full md:w-auto bg-[#002845] text-white font-bold px-10 py-4 rounded-xl hover:bg-[#001c30] transition-colors shadow-lg whitespace-nowrap mb-6 md:mb-0">
-                    Track Shipment
-                </button>
-            </div>
-        </section>
-
-        <section class="max-w-5xl mx-auto px-6 mb-12">
-            <div class="border border-gray-200 rounded-[2rem] p-8 md:p-10 shadow-sm relative overflow-hidden">
-                <div class="flex flex-col lg:flex-row gap-10 mb-12">
-                    <div class="w-full lg:w-1/4">
-                        <span class="inline-block bg-[#BAD700] text-white font-bold text-sm px-6 py-1.5 rounded-full mb-6">In Transit</span>
-                        <p class="text-[10px] text-gray-400 font-bold uppercase mb-1">Tracking Number</p>
-                        <p class="text-xl font-black text-[#002845] mb-4">QTYU1234567</p>
-                        <p class="text-[10px] text-gray-400 font-bold uppercase mb-1">Cargo Type</p>
-                        <p class="text-lg font-bold text-[#002845] mb-4">Ocean Freight</p>
-                        <p class="text-[10px] text-gray-400 font-bold uppercase mb-1">Route</p>
-                        <p class="text-sm font-bold text-[#002845]">Shanghai, CN &rarr; Los Angeles, USA</p>
+                <p class="text-gray-300 text-base md:text-lg leading-relaxed max-w-lg mx-auto lg:mx-0">
+                    Welcome to the Quality Freight Service integrated system. Enter your Magaya LiveTrack credentials to check the updated status of your merchandise, review inventories, and manage your international shipments.
+                </p>
+                
+                <div class="mt-10 flex flex-wrap gap-6 justify-center lg:justify-start">
+                    <div class="flex items-center gap-3">
+                        <svg class="w-5 h-5 text-[#BAD700]" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                        <span class="text-sm font-medium text-gray-300">Secure Connection (SSL)</span>
                     </div>
-                    <div class="w-full lg:w-2/4">
-                        <img src="https://images.pexels.com/photos/1095814/pexels-photo-1095814.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Ship in transit" class="w-full h-48 object-cover rounded-2xl shadow-md" />
-                    </div>
-                    <div class="w-full lg:w-1/4 flex flex-col justify-between gap-4">
-                        <div class="flex items-start gap-3">
-                            <svg class="w-6 h-6 text-[#002845] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-                            <div><p class="text-[10px] text-gray-400 leading-tight">Departure Date</p><p class="text-sm font-bold text-[#002845]">May 20, 2026</p></div>
-                        </div>
-                        <div class="flex items-start gap-3">
-                            <svg class="w-6 h-6 text-[#002845] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-                            <div><p class="text-[10px] text-gray-400 leading-tight">Current Location</p><p class="text-sm font-bold text-[#002845]">Pacific Ocean</p></div>
-                        </div>
-                        <div class="flex items-start gap-3">
-                            <svg class="w-6 h-6 text-[#002845] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9"></path></svg>
-                            <div><p class="text-[10px] text-gray-400 leading-tight">Next Destination</p><p class="text-sm font-bold text-[#002845]">Los Angeles, USA</p></div>
-                        </div>
-                        <div class="flex items-start gap-3">
-                            <svg class="w-6 h-6 text-[#002845] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                            <div><p class="text-[10px] text-gray-400 leading-tight">Estimated Arrival</p><p class="text-sm font-bold text-[#002845]">June 02, 2026</p></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="border-t border-gray-100 pt-8 relative">
-                    <div class="absolute top-[52px] left-[10%] right-[10%] h-1 bg-gray-200 z-0"></div>
-                    <div class="absolute top-[52px] left-[10%] w-[40%] h-1 bg-[#BAD700] z-0"></div>
-
-                    <div class="flex justify-between relative z-10">
-                        <div class="flex flex-col items-center w-1/5">
-                            <div class="w-8 h-8 rounded-full bg-[#BAD700] flex items-center justify-center mb-2 border-4 border-white shadow-sm"><svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg></div>
-                            <p class="text-xs font-bold text-[#002845]">Received</p>
-                            <p class="text-[10px] text-gray-400">May 18, 2026</p>
-                        </div>
-                        <div class="flex flex-col items-center w-1/5">
-                            <div class="w-8 h-8 rounded-full bg-[#BAD700] flex items-center justify-center mb-2 border-4 border-white shadow-sm"><svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg></div>
-                            <p class="text-xs font-bold text-[#002845]">In Transit</p>
-                            <p class="text-[10px] text-gray-400">May 20, 2026</p>
-                        </div>
-                        <div class="flex flex-col items-center w-1/5">
-                            <div class="w-8 h-8 rounded-full bg-[#002845] flex items-center justify-center mb-2 border-4 border-white shadow-md ring-4 ring-[#BAD700]/30 animate-pulse"><div class="w-3 h-3 bg-white rounded-full"></div></div>
-                            <p class="text-xs font-bold text-[#002845]">On the Way</p>
-                            <p class="text-[10px] font-bold text-[#BAD700]">Current</p>
-                        </div>
-                        <div class="flex flex-col items-center w-1/5">
-                            <div class="w-8 h-8 rounded-full bg-gray-300 mb-2 border-4 border-white shadow-sm"></div>
-                            <p class="text-xs font-bold text-gray-500">At Destination</p>
-                            <p class="text-[10px] text-gray-400">Upcoming</p>
-                        </div>
-                        <div class="flex flex-col items-center w-1/5">
-                            <div class="w-8 h-8 rounded-full bg-gray-300 mb-2 border-4 border-white shadow-sm"></div>
-                            <p class="text-xs font-bold text-gray-500">Delivered</p>
-                            <p class="text-[10px] text-gray-400">Upcoming</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="max-w-5xl mx-auto px-6 mb-16 flex flex-col lg:flex-row gap-6">
-            <div class="w-full lg:w-2/3 h-80 rounded-[2rem] overflow-hidden relative shadow-md bg-[#002845]">
-                <img src="https://images.pexels.com/photos/414916/pexels-photo-414916.jpeg?auto=compress&cs=tinysrgb&w=1000" alt="Satellite Route Map" class="w-full h-full object-cover opacity-60 mix-blend-overlay" />
-                <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
-                    <svg class="w-full h-full" style="position: absolute; top: 0; left: 0;">
-                        <path d="M 150 160 Q 400 250 650 140" fill="transparent" stroke="white" stroke-width="2" stroke-dasharray="5,5" class="opacity-70"></path>
-                    </svg>
-                    <div class="absolute left-[15%] top-[40%] flex flex-col items-center">
-                        <div class="w-4 h-4 bg-[#BAD700] rounded-full border-2 border-white shadow-lg"></div>
-                        <span class="bg-white text-[#002845] text-xs font-bold px-2 py-1 rounded-md mt-2 shadow-sm">Shanghai, CN</span>
-                    </div>
-                    <div class="absolute left-[50%] top-[60%]">
-                        <div class="w-12 h-12 bg-[#BAD700] rounded-full flex items-center justify-center border-4 border-white shadow-xl animate-bounce">
-                            <span class="text-xl">🚢</span>
-                        </div>
-                    </div>
-                    <div class="absolute right-[15%] top-[35%] flex flex-col items-center">
-                        <div class="w-4 h-4 bg-[#BAD700] rounded-full border-2 border-white shadow-lg"></div>
-                        <span class="bg-white text-[#002845] text-xs font-bold px-2 py-1 rounded-md mt-2 shadow-sm">Los Angeles, USA</span>
+                    <div class="flex items-center gap-3">
+                        <svg class="w-5 h-5 text-[#BAD700]" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                        <span class="text-sm font-medium text-gray-300">Real-Time Data</span>
                     </div>
                 </div>
             </div>
 
-            <div class="w-full lg:w-1/3 bg-[#E8ECEE] rounded-[2rem] p-8 flex flex-col justify-center">
-                <p class="text-lg font-black text-[#002845] mb-1">Shipment Route</p>
-                <p class="text-sm text-gray-600 mb-6">Shanghai, CN &rarr; Los Angeles, USA</p>
-                <p class="text-[10px] text-gray-400 font-bold uppercase mb-1">Transport</p>
-                <p class="text-base font-bold text-[#002845] mb-4">Ocean Freight</p>
-                <p class="text-[10px] text-gray-400 font-bold uppercase mb-1">Container</p>
-                <p class="text-base font-bold text-[#002845] mb-4">40 HC</p>
-                <p class="text-[10px] text-gray-400 font-bold uppercase mb-1">BL Number</p>
-                <p class="text-base font-bold text-[#002845]">BL123456789</p>
-            </div>
-        </section>
+            <!-- Magaya Form Widget Right -->
+            <div class="w-full lg:w-1/2 flex justify-center lg:justify-end">
+                <div class="w-full max-w-md bg-white rounded-3xl shadow-2xl relative overflow-hidden border-8 border-white/10 backdrop-blur-sm flex flex-col">
+                    
+                    <!-- Header Falso -->
+                    <div class="absolute top-0 left-0 w-full bg-white z-20 flex flex-col items-center justify-center border-b border-gray-100" style="height: 100px;">
+                        <h3 class="text-2xl font-black text-[#002845] leading-tight">Log In</h3>
+                        <p class="text-xs text-gray-500 mt-1">Magaya LiveTrack Platform</p>
+                    </div>
 
-        <section class="max-w-5xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div class="bg-[#E8ECEE] rounded-2xl p-6 flex items-center gap-4">
-                <div class="w-12 h-12 bg-[#BAD700] rounded-full flex items-center justify-center shrink-0">
-                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
+                    <!-- Iframe Contenedor centrado -->
+                    <div class="w-full bg-white relative z-10 overflow-hidden" style="height: 360px; margin-top: 100px;">
+                        <iframe 
+                            src="https://tracking.magaya.com/#livetrack" 
+                            title="Magaya LiveTrack Login"
+                            style="position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 600px; height: 450px; margin-top: -85px; border: none; overflow: hidden;"
+                        ></iframe>
+                    </div>
+                    
                 </div>
-                <div><h4 class="font-black text-[#002845] text-sm">Notifications</h4><p class="text-[10px] text-gray-500 leading-tight">Receive updates on your shipment at every stage.</p></div>
             </div>
-            <div class="bg-[#E8ECEE] rounded-2xl p-6 flex items-center gap-4">
-                <div class="w-12 h-12 bg-[#BAD700] rounded-full flex items-center justify-center shrink-0">
-                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-                </div>
-                <div><h4 class="font-black text-[#002845] text-sm">Real-time tracking</h4><p class="text-[10px] text-gray-500 leading-tight">Know the exact location of your cargo at all times.</p></div>
-            </div>
-            <div class="bg-[#E8ECEE] rounded-2xl p-6 flex items-center gap-4">
-                <div class="w-12 h-12 bg-[#BAD700] rounded-full flex items-center justify-center shrink-0">
-                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
-                </div>
-                <div><h4 class="font-black text-[#002845] text-sm">Safe and reliable</h4><p class="text-[10px] text-gray-500 leading-tight">Your information and your cargo are 100% protected.</p></div>
-            </div>
-        </section>
+
+        </div>
     </main>
     
     <div slot="footer">
