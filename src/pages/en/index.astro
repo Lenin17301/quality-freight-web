@@ -47,11 +47,40 @@ import Footer from '../../components/Footer.astro';
                     <h1 class="text-5xl md:text-6xl font-light text-[#002845] mb-8 leading-tight">
                         International Maritime <span class="font-black text-[#BAD700]">Service<br/>Worldwide</span>
                     </h1>
-                    <a href="/en/consulting" class="bg-[#002845] text-white font-bold text-xl py-3 px-12 rounded-full shadow-lg hover:bg-[#001c30] transition-colors mb-12 relative">
-                        quote now
-                        <span class="absolute -bottom-4 -right-4 text-3xl">🚢</span>
+                    <div class="flex flex-col sm:flex-row gap-4 items-center justify-end mb-12">
+                         <a href="/en/consulting" class="bg-[#002845] text-white font-bold text-xl py-3 px-12 rounded-full shadow-lg hover:bg-[#001c30] transition-colors relative">
+                            quote now
+                            <span class="absolute -bottom-4 -right-4 text-3xl">🚢</span>
+                        </a>
+                    </div>
+
+                    <!-- FALSO WIDGET (Hybrid Strategy - Option 1 Direct Link) -->
+                    <!-- Zero load time, Behance styling, secure direct link -->
+                    <a 
+                        href="https://tracking.magaya.com/?orgname=38465" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        class="bg-white rounded-3xl shadow-2xl overflow-hidden border-4 border-white transition-all duration-300 hover:shadow-[0_20px_50px_rgba(0,40,69,0.15)] hover:-translate-y-1 w-full max-w-sm flex flex-col group cursor-pointer" 
+                        style="max-width: 350px;"
+                    >
+                        <!-- Visual Header -->
+                        <div class="w-full bg-white z-20 flex flex-col items-center justify-center border-b border-gray-100 py-6">
+                            <span class="text-3xl mb-2 group-hover:scale-110 transition-transform">📦</span>
+                            <p class="font-black text-[#002845] text-lg leading-tight">Client Portal</p>
+                            <p class="text-[10px] text-gray-500 uppercase tracking-wider mt-1">Magaya LiveTrack</p>
+                        </div>
+                        
+                        <!-- Call to action button -->
+                        <div class="w-full bg-[#F8FAFC] flex flex-col items-center justify-center py-8 px-6">
+                            <p class="text-sm text-center text-gray-600 mb-4">Track your cargo status in real time.</p>
+                            <span class="bg-[#BAD700] text-[#002845] font-bold py-2 px-6 rounded-full group-hover:bg-[#a0be00] group-hover:text-white transition-colors w-full text-center">
+                                Access Portal
+                            </span>
+                        </div>
                     </a>
 
+                </div>
+            </div>
         </section>
 
         <!-- TRANSPORT SERVICES -->

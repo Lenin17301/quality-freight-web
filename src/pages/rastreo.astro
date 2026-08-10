@@ -29,14 +29,14 @@ import Footer from '../components/Footer.astro';
             <div class="absolute inset-0 bg-linear-to-b from-[#002845]/90 to-[#002845]/60"></div>
         </div>
 
-        <div class="relative z-10 max-w-6xl mx-auto px-6 w-full flex flex-col lg:flex-row items-center gap-16">
+        <div class="relative z-10 max-w-7xl mx-auto px-6 w-full flex flex-col lg:flex-row items-center gap-12">
             
             <!-- Text Content Left -->
-            <div class="w-full lg:w-1/2 text-center lg:text-left">
+            <div class="w-full lg:w-5/12 text-center lg:text-left">
                 <div class="w-16 h-16 bg-[#BAD700] rounded-2xl flex items-center justify-center mb-6 mx-auto lg:mx-0 shadow-lg border-2 border-white/20">
                     <svg class="w-8 h-8 text-[#002845]" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11c0 3.517-1.009 6.799-2.753 9.571m-3.44-2.04l.054-.09A13.916 13.916 0 008 11a4 4 0 118 0c0 1.017-.07 2.019-.203 3m-2.118 6.844A21.88 21.88 0 0015.171 17m3.839 1.132c.645-2.266.99-4.659.99-7.132A8 8 0 008 4.07M3 15.364c.64-1.319 1-2.8 1-4.364 0-1.457.39-2.823 1.07-4"></path></svg>
                 </div>
-                <h1 class="text-4xl md:text-6xl font-light text-white mb-6 leading-tight">
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-light text-white mb-6 leading-tight">
                     Portal de acceso <br/><span class="font-black text-[#BAD700]">para clientes</span>
                 </h1>
                 <p class="text-gray-300 text-base md:text-lg leading-relaxed max-w-lg mx-auto lg:mx-0">
@@ -55,9 +55,10 @@ import Footer from '../components/Footer.astro';
                 </div>
             </div>
 
-            <!-- Magaya Form Widget Right -->
-            <div class="w-full lg:w-1/2 flex justify-center lg:justify-end">
-                <div class="w-full max-w-md bg-white rounded-[3rem] shadow-[0_30px_60px_rgba(0,0,0,0.4)] relative overflow-hidden border-8 border-white/10 backdrop-blur-sm flex flex-col">
+            <!-- Magaya Form Widget Right (En página de Rastreo) -->
+            <div class="w-full lg:w-7/12 flex justify-center lg:justify-end">
+                <!-- Aumentamos el max-w-md a max-w-2xl para que el login respire mejor -->
+                <div class="w-full max-w-2xl bg-white rounded-[3rem] shadow-[0_30px_60px_rgba(0,0,0,0.4)] relative overflow-hidden border-8 border-white/10 backdrop-blur-sm flex flex-col">
                     
                     <!-- Header Falso -->
                     <div class="absolute top-0 left-0 w-full bg-white z-20 flex flex-col items-center justify-center border-b border-gray-100" style="height: 100px;">
@@ -65,12 +66,13 @@ import Footer from '../components/Footer.astro';
                         <p class="text-xs text-gray-500 mt-1">Plataforma Magaya LiveTrack</p>
                     </div>
 
-                    <!-- Iframe Contenedor centrado -->
-                    <div class="w-full bg-white relative z-10 overflow-hidden" style="height: 360px; margin-top: 100px;">
+                    <!-- Iframe espacioso para la página dedicada -->
+                    <!-- Aumentamos la altura de 360px a 500px -->
+                    <div class="w-full bg-white relative z-10 overflow-hidden" style="height: 500px; margin-top: 100px;">
                         <iframe 
-                            src="https://tracking.magaya.com/#livetrack" 
+                            src="https://tracking.magaya.com/?orgname=38465" 
                             title="Login Magaya LiveTrack"
-                            style="position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 600px; height: 450px; margin-top: -85px; border: none; overflow: hidden;"
+                            style="position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 700px; height: 600px; margin-top: -85px; border: none; overflow: hidden;"
                         ></iframe>
                     </div>
                     
