@@ -4,38 +4,62 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Navbar from '../../components/Navbar.astro';
 import Footer from '../../components/Footer.astro';
 
-// Astro.glob lee todos los archivos .md que estén en esta misma carpeta
+// Obtenemos todos los posts de la carpeta actual
 const posts = Object.values(import.meta.glob('./*.md', { eager: true }));
 ---
 
-<BaseLayout title="Blog de Logística" description="Noticias de transporte." lang="es">
-	<div slot="header"><Navbar lang="es" /></div>
+<BaseLayout 
+    lang="es" 
+    title="Blog de Logística | Quality Freight Service" 
+    description="Noticias, consejos y actualizaciones sobre el mundo de la logística, aduanas y transporte internacional de carga."
+>
+    <div slot="header">
+        <Navbar lang="es" />
+    </div>
 
-	<section class="bg-brand-blue-dark text-white py-20 px-6 text-center">
-		<div class="max-w-3xl mx-auto mt-10">
-			<h1 class="text-4xl md:text-5xl font-black mb-4">Avanzando en Logística</h1>
-			<p class="text-slate-300 text-lg">Análisis y guías prácticas para optimizar tus operaciones.</p>
-		</div>
-	</section>
+    <main class="bg-white overflow-hidden min-h-screen pb-24">
+        
+        <!-- Header del Blog -->
+        <section class="pt-32 pb-16 px-6 lg:pt-40 bg-[#E8ECEE] relative overflow-hidden" style="border-bottom-left-radius: 4rem; border-bottom-right-radius: 4rem;">
+            <div class="absolute top-0 right-0 w-64 h-64 bg-[#BAD700] rounded-bl-full opacity-80 -translate-y-1/2 translate-x-1/4"></div>
+            <div class="max-w-7xl mx-auto relative z-10 text-center">
+                <h1 class="text-5xl md:text-6xl font-light text-[#002845] mb-4">
+                    Nuestro <span class="font-black text-[#BAD700]">Blog</span>
+                </h1>
+                <p class="text-gray-500 max-w-2xl mx-auto text-lg">
+                    Mantente actualizado con las últimas noticias, normativas aduaneras y consejos de logística internacional.
+                </p>
+            </div>
+        </section>
 
-	<section class="bg-brand-bg py-20 px-6 min-h-[40vh]">
-		<div class="max-w-6xl mx-auto">
-			<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-				{posts.map((post) => (
-					<article class="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all border border-slate-100 flex flex-col group">
-						<div class="p-8 flex flex-col h-full">
-							<span class="text-brand-blue-light text-xs font-bold uppercase mb-2">{post.frontmatter.category}</span>
-							<h2 class="text-xl font-bold text-brand-blue-dark mb-3">
-								<a href={post.url}>{post.frontmatter.title}</a>
-							</h2>
-							<p class="text-slate-600 text-sm mb-6 flex-grow">{post.frontmatter.description}</p>
-							<a href={post.url} class="text-brand-orange font-bold text-sm">Leer Artículo →</a>
-						</div>
-					</article>
-				))}
-			</div>
-		</div>
-	</section>
+        <!-- Grid de Posts -->
+        <section class="py-20 px-6 max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {posts.map((post) => (
+                    <a href={post.url} class="bg-white border-2 border-gray-100 rounded-3xl overflow-hidden hover:shadow-[0_20px_50px_rgba(0,40,69,0.1)] hover:-translate-y-2 transition-all duration-300 group flex flex-col">
+                        <div class="h-56 overflow-hidden relative">
+                            <!-- Placeholder si no hay imagen en el frontmatter -->
+                            <img src={post.frontmatter.image || 'https://images.pexels.com/photos/1095814/pexels-photo-1095814.jpeg?auto=compress&cs=tinysrgb&w=600'} alt={post.frontmatter.title} class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                            <div class="absolute top-4 left-4 bg-[#BAD700] text-[#002845] text-xs font-black px-3 py-1 rounded-full uppercase tracking-wider">
+                                {post.frontmatter.category || 'Logística'}
+                            </div>
+                        </div>
+                        <div class="p-8 flex flex-col flex-grow">
+                            <h3 class="text-2xl font-black text-[#002845] mb-3 leading-tight group-hover:text-[#BAD700] transition-colors">{post.frontmatter.title}</h3>
+                            <p class="text-gray-500 text-sm mb-6 flex-grow">{post.frontmatter.description}</p>
+                            <div class="flex items-center justify-between mt-auto pt-4 border-t border-gray-100">
+                                <span class="text-xs font-bold text-[#002845]">{post.frontmatter.date}</span>
+                                <span class="text-[#BAD700] font-black text-sm group-hover:translate-x-2 transition-transform">Leer más →</span>
+                            </div>
+                        </div>
+                    </a>
+                ))}
+            </div>
+        </section>
 
-	<div slot="footer"><Footer lang="es" /></div>
+    </main>
+
+    <div slot="footer">
+        <Footer lang="es" />
+    </div>
 </BaseLayout>
