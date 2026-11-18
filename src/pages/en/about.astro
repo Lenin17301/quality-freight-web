@@ -4,6 +4,18 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Navbar from '../../components/Navbar.astro';
 import Footer from '../../components/Footer.astro';
 import QEmblem from '../../components/QEmblem.astro';
+import teamData from '../../data/team.json';
+
+const activeMembers = (teamData.members || []).filter((member) => member.active);
+
+const schemaEmployees = activeMembers
+    .filter((member) => member.name && member.name.trim() !== 'Nombre y Apellido')
+    .map((member) => ({
+        "@type": "Person",
+        "name": member.name,
+        "jobTitle": member.role_en,
+        ...(member.photo ? { "image": `https://qualityfs.com.ve${member.photo}` } : {})
+    }));
 
 const schemaData = {
     "@context": "https://schema.org",
@@ -19,8 +31,18 @@ const schemaData = {
             "@type": "PostalAddress",
             "addressLocality": "Caracas",
             "addressCountry": "VE"
-        }
+        },
+        ...(schemaEmployees.length > 0 ? { "employee": schemaEmployees } : {})
     }
+};
+
+const getInitials = (name: string) => {
+    return name
+        .split(' ')
+        .filter(Boolean)
+        .slice(0, 2)
+        .map((part) => part[0]?.toUpperCase())
+        .join('');
 };
 ---
 
@@ -141,7 +163,7 @@ const schemaData = {
         </section>
 
         <!-- VALUES -->
-        <section class="px-6 mb-24">
+        <section class={activeMembers.length > 0 ? 'px-6 mb-24' : 'px-6'}>
             <div class="max-w-6xl mx-auto">
                 <h2 class="text-4xl md:text-5xl font-light text-[#002845] text-center mb-12 leading-tight">
                     <QEmblem 
@@ -170,6 +192,59 @@ const schemaData = {
                 </div>
             </div>
         </section>
+
+        <!-- OUR TEAM (Managed from Pages CMS) -->
+        {activeMembers.length > 0 && (
+            <section class="px-6" aria-labelledby="team-heading">
+                <div class="max-w-6xl mx-auto">
+                    <span class="text-[#BAD700] font-black tracking-[0.2em] uppercase text-xs block mb-3 text-center">
+                        Human Talent
+                    </span>
+                    <h2 id="team-heading" class="text-4xl md:text-5xl font-light text-[#002845] text-center mb-4 leading-tight">
+                        Our <span class="font-black text-[#BAD700]">Team</span>
+                    </h2>
+                    <p class="text-gray-500 text-sm lg:text-base text-center max-w-2xl mx-auto mb-12 leading-relaxed">
+                        Professionals committed to timely tracking and operational excellence on every shipment.
+                    </p>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                        {activeMembers.map((member) => (
+                            <article class="bg-[#E8ECEE]/70 border border-gray-100 rounded-3xl p-8 text-center flex flex-col items-center shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300">
+                                {member.photo ? (
+                                    <div class="w-32 h-32 rounded-full overflow-hidden mb-6 ring-4 ring-white shadow-md bg-[#002845]">
+                                        <img
+                                            src={member.photo}
+                                            alt={`${member.name} - ${member.role_en} at Quality Freight Service`}
+                                            width="256"
+                                            height="256"
+                                            loading="lazy"
+                                            decoding="async"
+                                            class="w-full h-full object-cover"
+                                        />
+                                    </div>
+                                ) : (
+                                    <div
+                                        class="w-32 h-32 rounded-full mb-6 ring-4 ring-white shadow-md bg-gradient-to-br from-[#002845] to-[#003d66] flex items-center justify-center text-white select-none"
+                                        aria-hidden="true"
+                                    >
+                                        <span class="text-3xl font-black tracking-wider text-[#BAD700]">
+                                            {getInitials(member.name) || 'QF'}
+                                        </span>
+                                    </div>
+                                )}
+
+                                <h3 class="font-black text-[#002845] text-xl mb-2 leading-snug">
+                                    {member.name}
+                                </h3>
+                                <p class="text-xs font-bold uppercase tracking-wider text-[#002845]/80 bg-white px-4 py-1.5 rounded-full shadow-sm">
+                                    {member.role_en}
+                                </p>
+                            </article>
+                        ))}
+                    </div>
+                </div>
+            </section>
+        )}
     </main>
 
     <div slot="footer">

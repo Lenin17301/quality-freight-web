@@ -6,7 +6,7 @@ import Footer from '../components/Footer.astro';
 import QEmblem from '../components/QEmblem.astro';
 import teamData from '../data/team.json';
 
-const activeTeam = teamData.filter((member) => member.active);
+const activeTeam = (teamData.members || []).filter((member) => member.active);
 
 const schemaData = {
     "@context": "https://schema.org",
