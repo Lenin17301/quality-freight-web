@@ -4,6 +4,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Navbar from '../../components/Navbar.astro';
 import Footer from '../../components/Footer.astro';
 import QEmblem from '../../components/QEmblem.astro';
+import TeamCarousel from '../../components/TeamCarousel.astro';
 import teamData from '../../data/team.json';
 
 const activeTeam = (teamData.members || []).filter((member) => member.active);
@@ -166,65 +167,29 @@ const schemaData = {
         </section>
 
         <!-- SECTION 4: TEAM GALLERY (Replaces Testimonials) -->
-        <section id="team" class="py-24 px-6 bg-white">
-            <div class="max-w-7xl mx-auto">
-                <div class="text-center max-w-3xl mx-auto mb-16">
-                    <span class="text-[#BAD700] font-black tracking-[0.2em] uppercase text-xs block mb-3">
-                        Our People
-                    </span>
-                    <h2 class="text-4xl md:text-5xl font-light text-[#002845] mb-4 leading-tight">
-                        <QEmblem 
-                            class="inline-block w-10 h-10 md:w-12 md:h-12 object-contain align-baseline mr-2 -mb-1" 
-                            decorative={true} 
-                            widths={[64, 96]} 
-                        />Our <span class="font-black">Team</span>
-                    </h2>
-                    <p class="text-gray-500 text-base md:text-lg font-light">
-                        A team of specialists committed to the security, traceability, and punctuality of every logistics operation.
-                    </p>
+        {activeTeam.length > 0 && (
+            <section id="team" class="py-24 px-6 bg-white">
+                <div class="max-w-7xl mx-auto">
+                    <div class="text-center max-w-3xl mx-auto mb-16">
+                        <span class="text-[#BAD700] font-black tracking-[0.2em] uppercase text-xs block mb-3">
+                            Our People
+                        </span>
+                        <h2 class="text-4xl md:text-5xl font-light text-[#002845] mb-4 leading-tight">
+                            <QEmblem 
+                                class="inline-block w-10 h-10 md:w-12 md:h-12 object-contain align-baseline mr-2 -mb-1" 
+                                decorative={true} 
+                                widths={[64, 96]} 
+                            />Our <span class="font-black">Team</span>
+                        </h2>
+                        <p class="text-gray-500 text-base md:text-lg font-light">
+                            A team of specialists committed to the security, traceability, and punctuality of every logistics operation.
+                        </p>
+                    </div>
+                    
+                    <TeamCarousel members={activeTeam} lang="en" variant="card" />
                 </div>
-                
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {activeTeam.map((member) => (
-                        <article class="bg-[#E8ECEE] rounded-[2.5rem] p-6 relative overflow-hidden group border border-transparent hover:border-[#BAD700] hover:shadow-[0_20px_50px_rgba(0,40,69,0.1)] transition-all duration-300 flex flex-col">
-                            <div class="absolute -bottom-8 -right-8 w-28 h-28 bg-[#BAD700] rounded-full opacity-75 group-hover:scale-150 transition-transform duration-500 pointer-events-none"></div>
-
-                            <!-- Team member photo -->
-                            <div class="w-full h-72 rounded-3xl overflow-hidden bg-[#002845]/5 mb-6 relative z-10 flex items-center justify-center">
-                                {member.photo ? (
-                                    <img 
-                                        src={member.photo} 
-                                        alt={`${member.name} - ${member.role_en} at Quality Freight Service`} 
-                                        width="400" 
-                                        height="400" 
-                                        loading="lazy"
-                                        decoding="async"
-                                        class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500" 
-                                    />
-                                ) : (
-                                    <div class="flex flex-col items-center justify-center text-center p-6">
-                                        <QEmblem class="w-20 h-20 object-contain opacity-60 mb-2" decorative={true} widths={[80, 160]} />
-                                        <span class="text-[11px] font-bold uppercase tracking-widest text-[#002845]/40">Quality Freight Service</span>
-                                    </div>
-                                )}
-                            </div>
-
-                            <!-- Name and role -->
-                            <div class="relative z-10 px-2 pb-2">
-                                <h3 class="text-xl font-black text-[#002845] leading-tight">
-                                    {member.name}
-                                </h3>
-                                {member.role_en && (
-                                    <p class="text-xs font-bold uppercase tracking-wider text-[#002845]/70 mt-1.5">
-                                        {member.role_en}
-                                    </p>
-                                )}
-                            </div>
-                        </article>
-                    ))}
-                </div>
-            </div>
-        </section>
+            </section>
+        )}
 
     </main>
     
