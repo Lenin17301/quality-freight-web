@@ -1,35 +1,45 @@
 ---
 // src/components/Footer.astro
-const { lang } = Astro.props;
+import QEmblem from './QEmblem.astro';
+
+const { lang = 'es' } = Astro.props;
 
 const content = {
     es: {
+        homeAria: "Ir al inicio - Quality Freight Service",
         about: "Quality Freight Service, C.A. es su aliado estratégico en soluciones logísticas globales, garantizando seguridad y eficiencia en cada envío.",
+        navTitle: "Navegación",
         links: [
             { name: "Inicio", url: "/" },
             { name: "Quiénes somos", url: "/quienes-somos" },
-            { name: "Servicios", url: "/servicios" },
+            { name: "Servicios", url: "/servicios/" },
             { name: "Asesoría", url: "/asesoria" },
-            { name: "Rastreo", url: "/rastreo" },
+            { name: "InfoQuality", url: "/infoquality" },
             { name: "Blog", url: "/blog" }
         ],
         contact: "Contacto",
         address: "Caracas, Venezuela",
-        rights: "© 2026 Quality Freight Service. Todos los derechos reservados."
+        rights: "© 2026 Quality Freight Service. Todos los derechos reservados.",
+        privacy: "Política de Privacidad",
+        terms: "Términos de Servicio"
     },
     en: {
+        homeAria: "Go to home - Quality Freight Service",
         about: "Quality Freight Service, C.A. is your strategic partner in global logistics solutions, ensuring security and efficiency in every shipment.",
+        navTitle: "Navigation",
         links: [
             { name: "Home", url: "/en/" },
             { name: "About us", url: "/en/about" },
-            { name: "Services", url: "/en/services" },
+            { name: "Services", url: "/en/services/" },
             { name: "Consulting", url: "/en/consulting" },
-            { name: "Tracking", url: "/en/tracking" },
+            { name: "InfoQuality", url: "/en/infoquality" },
             { name: "Blog", url: "/en/blog" }
         ],
         contact: "Contact",
         address: "Caracas, Venezuela",
-        rights: "© 2026 Quality Freight Service. All rights reserved."
+        rights: "© 2026 Quality Freight Service. All rights reserved.",
+        privacy: "Privacy Policy",
+        terms: "Terms of Service"
     }
 };
 
@@ -41,19 +51,20 @@ const t = content[lang] || content.es;
         
         <!-- Logo y descripción -->
         <div class="md:col-span-2">
-            <div class="flex items-center gap-2 mb-6">
-                <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center relative overflow-hidden">
-                    <span class="text-[#002845] font-black text-xl relative z-10">Q</span>
-                    <div class="absolute bottom-0 right-0 w-4 h-4 bg-[#BAD700] rounded-tl-full"></div>
-                </div>
-                <span class="font-bold text-xl tracking-tight">Quality Freight</span>
-            </div>
+            <a href={lang === 'es' ? '/' : '/en/'} aria-label={t.homeAria} class="inline-flex items-center gap-3 mb-6 group">
+                <QEmblem 
+                    class="w-11 h-11 object-contain group-hover:scale-105 transition-transform duration-300" 
+                    decorative={false} 
+                    widths={[88, 132]}
+                />
+                <span class="font-bold text-xl tracking-tight text-white">Quality Freight</span>
+            </a>
             <p class="text-stone-400 text-sm max-w-sm leading-relaxed">{t.about}</p>
         </div>
 
         <!-- Links -->
         <div>
-            <h4 class="font-black text-[#BAD700] mb-6 uppercase tracking-widest text-sm">Navegación</h4>
+            <h3 class="font-black text-[#BAD700] mb-6 uppercase tracking-widest text-sm">{t.navTitle}</h3>
             <ul class="space-y-4">
                 {t.links.map(link => (
                     <li><a href={link.url} class="text-stone-300 hover:text-[#BAD700] transition-colors">{link.name}</a></li>
@@ -63,11 +74,19 @@ const t = content[lang] || content.es;
 
         <!-- Contacto -->
         <div>
-            <h4 class="font-black text-[#BAD700] mb-6 uppercase tracking-widest text-sm">{t.contact}</h4>
+            <h3 class="font-black text-[#BAD700] mb-6 uppercase tracking-widest text-sm">{t.contact}</h3>
             <ul class="space-y-4 text-stone-300 text-sm">
                 <li>📍 {t.address}</li>
-                <li>📧 info@qualityfs.com.ve</li>
-                <li>📞 +58 212 555 0000</li>
+                <li>
+                    <a href="mailto:info@qualityfs.com.ve" class="hover:text-[#BAD700] transition-colors">
+                        📧 info@qualityfs.com.ve
+                    </a>
+                </li>
+                <li>
+                    <a href="tel:+582127622692" class="hover:text-[#BAD700] transition-colors">
+                        📞 +58 212.762.26.92
+                    </a>
+                </li>
             </ul>
         </div>
     </div>
@@ -76,9 +95,8 @@ const t = content[lang] || content.es;
     <div class="max-w-7xl mx-auto border-t border-[#BAD700]/20 pt-8 text-center md:text-left flex flex-col md:flex-row justify-between items-center gap-4">
         <p class="text-stone-500 text-xs">{t.rights}</p>
         <div class="flex gap-6">
-            <!-- NOTA: Aquí puedes poner tus rutas de privacidad cuando las tengas -->
-            <a href="#" class="text-stone-400 hover:text-white transition-colors text-xs">Política de Privacidad</a>
-            <a href="#" class="text-stone-400 hover:text-white transition-colors text-xs">Términos de Servicio</a>
+            <a href="#" class="text-stone-400 hover:text-white transition-colors text-xs">{t.privacy}</a>
+            <a href="#" class="text-stone-400 hover:text-white transition-colors text-xs">{t.terms}</a>
         </div>
     </div>
 </footer>

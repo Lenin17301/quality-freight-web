@@ -1,0 +1,30 @@
+---
+// src/components/QEmblem.astro
+import { Image } from 'astro:assets';
+import qEmblem from '../assets/images/emblema-quality-freight-service.png';
+
+interface Props {
+  class?: string;
+  decorative?: boolean;
+  eager?: boolean;
+  widths?: number[];
+}
+
+const {
+  class: className = 'w-12 h-12 object-contain',
+  decorative = true,
+  eager = false,
+  widths = [96, 192, 384, 768],
+} = Astro.props;
+---
+
+<Image
+  src={qEmblem}
+  alt={decorative ? '' : 'Emblema Quality Freight Service'}
+  aria-hidden={decorative ? 'true' : undefined}
+  widths={widths}
+  sizes="(max-width: 768px) 192px, 384px"
+  class={className}
+  loading={eager ? 'eager' : 'lazy'}
+  decoding={eager ? 'sync' : 'async'}
+/>

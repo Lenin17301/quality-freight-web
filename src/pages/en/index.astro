@@ -3,6 +3,25 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Navbar from '../../components/Navbar.astro';
 import Footer from '../../components/Footer.astro';
+import QEmblem from '../../components/QEmblem.astro';
+import teamData from '../../data/team.json';
+
+const activeTeam = teamData.filter((member) => member.active);
+
+const schemaData = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Quality Freight Service, C.A.",
+    "url": "https://qualityfs.com.ve/en/",
+    "description": "Comprehensive ocean, air, and ground transportation solutions. Customs clearance and international logistics management in Venezuela.",
+    "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Caracas",
+        "addressCountry": "VE"
+    },
+    "telephone": "+58-212-762-2692",
+    "inLanguage": "en"
+};
 ---
 
 <BaseLayout 
@@ -10,29 +29,32 @@ import Footer from '../../components/Footer.astro';
     title="International Logistics & Freight | Quality Freight Service" 
     description="Comprehensive ocean, air, and ground transportation solutions. We manage your customs clearance with security, speed, and competitive rates."
 >
-    
     <div slot="header">
         <Navbar lang="en" />
     </div>
 
+    <script type="application/ld+json" set:html={JSON.stringify(schemaData)} />
+
     <main class="bg-white overflow-hidden">
         
         <!-- SECTION 1: HERO SECTION -->
-        <section class="relative bg-[#E8ECEE] pt-32 pb-64 px-6 lg:pt-40 lg:pb-72 overflow-hidden" style="border-bottom-left-radius: 4rem; border-bottom-right-radius: 4rem;">
-            <div class="absolute top-0 right-0 w-96 h-96 bg-[#BAD700] rounded-bl-full opacity-80 -translate-y-1/2 translate-x-1/4"></div>
-            <div class="absolute bottom-0 left-0 w-80 h-80 bg-[#002845] rounded-tr-full opacity-90 translate-y-1/4 -translate-x-1/4"></div>
+        <section class="relative bg-[#E8ECEE] pt-32 pb-64 px-6 lg:pt-40 lg:pb-72 overflow-hidden rounded-b-[4rem]">
+            <div class="absolute top-0 right-0 w-96 h-96 bg-[#BAD700] rounded-bl-full opacity-80 -translate-y-1/2 translate-x-1/4 pointer-events-none"></div>
+            <div class="absolute bottom-0 left-0 w-80 h-80 bg-[#002845] rounded-tr-full opacity-90 translate-y-1/4 -translate-x-1/4 pointer-events-none"></div>
 
             <div class="relative z-10 max-w-7xl mx-auto flex flex-col-reverse lg:flex-row items-center gap-12">
                 
                 <!-- Dynamic Image & Floating Bubbles -->
                 <div class="w-full lg:w-1/2 relative mt-16 lg:mt-0">
-                    <!-- Main image with ID for JS manipulation -->
                     <img 
                         id="hero-img"
                         src="https://images.pexels.com/photos/1095814/pexels-photo-1095814.jpeg?auto=compress&cs=tinysrgb&w=800" 
-                        alt="Logistics and Shipping" 
+                        alt="International freight logistics and shipping Quality Freight Service" 
                         width="800" 
                         height="533" 
+                        fetchpriority="high"
+                        loading="eager"
+                        decoding="sync"
                         class="w-full drop-shadow-2xl rounded-3xl object-cover h-[400px] transition-opacity duration-500" 
                     />
                     
@@ -40,13 +62,13 @@ import Footer from '../../components/Footer.astro';
                     <div class="absolute -bottom-32 lg:-bottom-24 left-0 right-0 flex flex-col md:flex-row justify-center gap-4 px-4">
                         
                         <!-- Bubble 1 -->
-                        <a href="/en/services" data-image="https://images.pexels.com/photos/1095814/pexels-photo-1095814.jpeg?auto=compress&cs=tinysrgb&w=800" class="hover-trigger bg-white rounded-3xl p-5 shadow-xl w-full md:w-1/3 hover:-translate-y-2 transition-all block group border-2 border-transparent hover:border-[#BAD700]">
+                        <a href="/en/services/" data-image="https://images.pexels.com/photos/1095814/pexels-photo-1095814.jpeg?auto=compress&cs=tinysrgb&w=800" class="hover-trigger bg-white rounded-3xl p-5 shadow-xl w-full md:w-1/3 hover:-translate-y-2 transition-all block group border-2 border-transparent hover:border-[#BAD700]">
                             <span class="block font-black text-[#002845] text-lg leading-tight mb-2">Logistics & shipping</span>
                             <span class="text-xs text-gray-500 group-hover:text-[#002845] transition-colors leading-relaxed block">International and domestic freight transport</span>
                         </a>
                         
                         <!-- Bubble 2 -->
-                        <a href="https://wa.me/584120000000" target="_blank" data-image="https://images.pexels.com/photos/5805404/pexels-photo-5805404.jpeg?auto=compress&cs=tinysrgb&w=800" class="hover-trigger bg-[#BAD700] rounded-3xl p-5 shadow-xl w-full md:w-1/3 hover:-translate-y-2 transition-all scale-100 md:scale-110 z-10 block group">
+                        <a href="/en/services/customs-agents" data-image="https://images.pexels.com/photos/5805404/pexels-photo-5805404.jpeg?auto=compress&cs=tinysrgb&w=800" class="hover-trigger bg-[#BAD700] rounded-3xl p-5 shadow-xl w-full md:w-1/3 hover:-translate-y-2 transition-all scale-100 md:scale-110 z-10 block group">
                             <span class="block font-black text-[#002845] text-lg leading-tight mb-2">Customs agent</span>
                             <span class="text-xs text-[#002845]/80 font-medium leading-relaxed block">Assistance for efficient customs clearance</span>
                         </a>
@@ -61,13 +83,13 @@ import Footer from '../../components/Footer.astro';
                 </div>
 
                 <!-- Main Text -->
-                <div class="w-full lg:w-1/2 flex flex-col items-end text-right">
-                    <h1 class="text-5xl md:text-6xl font-light text-[#002845] mb-8 leading-tight">
-                        Logistics solutions and <span class="font-black text-[#BAD700]">international freight<br/>shipping service</span>
+                <div class="w-full lg:w-1/2 flex flex-col items-center lg:items-end text-center lg:text-right">
+                    <h1 class="text-4xl sm:text-5xl md:text-6xl font-light text-[#002845] mb-8 leading-tight">
+                        Logistics solutions and <span class="font-black text-[#BAD700]">international freight<br class="hidden sm:inline" /> shipping service</span>
                     </h1>
-                    <a href="/en/consulting" class="bg-[#002845] text-white font-bold text-xl py-3 px-12 rounded-full shadow-lg hover:bg-[#001c30] transition-colors mb-4 relative">
-                        quote now
-                        <span class="absolute -bottom-4 -right-4 text-3xl">🚢</span>
+                    <a href="/en/consulting#quote" class="bg-[#002845] text-white font-bold text-xl py-3.5 px-12 rounded-full shadow-lg hover:bg-[#001c30] transition-colors mb-4 relative">
+                        Quote now
+                        <span class="absolute -bottom-4 -right-4 text-3xl" aria-hidden="true">🚢</span>
                     </a>
                 </div>
             </div>
@@ -75,9 +97,13 @@ import Footer from '../../components/Footer.astro';
 
         <!-- SECTION 2: DRIVING GROWTH -->
         <section class="py-24 px-6 bg-white">
-            <div class="max-w-7xl mx-auto text-center max-w-4xl">
+            <div class="max-w-4xl mx-auto text-center">
                 <h2 class="text-4xl md:text-5xl lg:text-6xl font-light text-[#002845] mb-6 leading-tight">
-                    <span class="text-[#BAD700] font-bold text-6xl mr-2">Q</span>We drive your business growth <span class="font-black">with unique fluidity.</span>
+                    <QEmblem 
+                        class="inline-block w-11 h-11 md:w-14 md:h-14 object-contain align-baseline mr-2 -mb-1" 
+                        decorative={true} 
+                        widths={[64, 112]} 
+                    />We drive your business growth <span class="font-black">with unique fluidity.</span>
                 </h2>
                 <p class="text-gray-500 text-lg md:text-xl leading-relaxed mb-12">
                     We design optimized logistics routes so your merchandise reaches its final destination with total security. We have a global network of strategic partners that guarantee agile transit times.
@@ -100,26 +126,25 @@ import Footer from '../../components/Footer.astro';
             </div>
         </section>
 
-        <!-- SECTION 3: TRACKING AND GROUND SERVICE HIGHLIGHT -->
-        <section class="py-20 px-6 bg-[#002845] relative overflow-hidden" style="border-radius: 4rem;">
-            <!-- Background Decoration -->
-            <div class="absolute inset-0 z-0 opacity-10">
+        <!-- SECTION 3: INFOQUALITY AND GROUND SERVICE HIGHLIGHT -->
+        <section class="py-20 px-6 bg-[#002845] relative overflow-hidden rounded-[4rem]">
+            <div class="absolute inset-0 z-0 opacity-10 pointer-events-none">
                 <div class="absolute top-0 left-0 w-full h-full" style="background-image: radial-gradient(#BAD700 2px, transparent 2px); background-size: 40px 40px;"></div>
             </div>
 
             <div class="max-w-7xl mx-auto relative z-10">
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                     
-                    <!-- Tracking Card (Hybrid Strategy) -->
-                    <a href="https://tracking.magaya.com/?orgname=38465" target="_blank" rel="noopener noreferrer" class="bg-white rounded-[3rem] p-10 md:p-12 shadow-2xl hover:-translate-y-2 transition-transform group flex flex-col justify-between relative overflow-hidden">
+                    <!-- InfoQuality Card (Replaces Magaya) -->
+                    <a href="/en/infoquality" class="bg-white rounded-[3rem] p-10 md:p-12 shadow-2xl hover:-translate-y-2 transition-transform group flex flex-col justify-between relative overflow-hidden">
                         <div class="absolute -right-10 -top-10 w-48 h-48 bg-[#E8ECEE] rounded-full opacity-50 group-hover:scale-150 transition-transform duration-700"></div>
                         <div class="relative z-10">
-                            <span class="text-6xl mb-6 block group-hover:scale-110 transition-transform origin-left">📦</span>
-                            <h3 class="text-3xl md:text-4xl font-black text-[#002845] mb-4">Tracking System</h3>
-                            <p class="text-gray-500 mb-8 text-lg">Monitor your international cargo status in real time through our secure Magaya LiveTrack portal.</p>
+                            <span class="text-6xl mb-6 block group-hover:scale-110 transition-transform origin-left" aria-hidden="true">📦</span>
+                            <h3 class="text-3xl md:text-4xl font-black text-[#002845] mb-4">InfoQuality Portal</h3>
+                            <p class="text-gray-500 mb-8 text-lg">Check the updated status of your shipment using your tracking number and access container specifications and volume calculators.</p>
                         </div>
                         <span class="bg-[#BAD700] text-[#002845] font-bold py-4 px-8 rounded-full text-center group-hover:bg-[#a0be00] group-hover:text-white transition-colors text-lg relative z-10 w-full md:w-auto self-start">
-                            Track my shipment
+                            Check my shipment
                         </span>
                     </a>
 
@@ -127,12 +152,12 @@ import Footer from '../../components/Footer.astro';
                     <a href="/en/services/ground-freight" class="bg-[#BAD700] rounded-[3rem] p-10 md:p-12 shadow-2xl hover:-translate-y-2 transition-transform group flex flex-col justify-between relative overflow-hidden">
                         <div class="absolute -right-10 -top-10 w-48 h-48 bg-white rounded-full opacity-20 group-hover:scale-150 transition-transform duration-700"></div>
                         <div class="relative z-10">
-                            <span class="text-6xl mb-6 block group-hover:scale-110 transition-transform origin-left">🚛</span>
+                            <span class="text-6xl mb-6 block group-hover:scale-110 transition-transform origin-left" aria-hidden="true">🚛</span>
                             <h3 class="text-3xl md:text-4xl font-black text-[#002845] mb-4">Ground Service</h3>
                             <p class="text-[#002845]/80 mb-8 text-lg font-medium">In addition to importing your merchandise, we deliver it directly to your company's doors. Safe and fast national distribution.</p>
                         </div>
                         <span class="bg-[#002845] text-white font-bold py-4 px-8 rounded-full text-center group-hover:bg-[#001c30] transition-colors text-lg relative z-10 w-full md:w-auto self-start flex items-center justify-center gap-2">
-                            Learn more <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                            Learn more <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
                         </span>
                     </a>
 
@@ -140,61 +165,63 @@ import Footer from '../../components/Footer.astro';
             </div>
         </section>
 
-        <!-- SECTION 4: TESTIMONIALS -->
-        <section class="py-24 px-6 bg-white">
+        <!-- SECTION 4: TEAM GALLERY (Replaces Testimonials) -->
+        <section id="team" class="py-24 px-6 bg-white">
             <div class="max-w-7xl mx-auto">
-                <h2 class="text-4xl md:text-5xl font-light text-[#002845] text-center mb-16">
-                    <span class="text-[#BAD700] font-bold text-5xl mr-2">Q</span>Customer <span class="font-black">Experiences</span>
-                </h2>
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <span class="text-[#BAD700] font-black tracking-[0.2em] uppercase text-xs block mb-3">
+                        Our People
+                    </span>
+                    <h2 class="text-4xl md:text-5xl font-light text-[#002845] mb-4 leading-tight">
+                        <QEmblem 
+                            class="inline-block w-10 h-10 md:w-12 md:h-12 object-contain align-baseline mr-2 -mb-1" 
+                            decorative={true} 
+                            widths={[64, 96]} 
+                        />Our <span class="font-black">Team</span>
+                    </h2>
+                    <p class="text-gray-500 text-base md:text-lg font-light">
+                        A team of specialists committed to the security, traceability, and punctuality of every logistics operation.
+                    </p>
+                </div>
                 
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <!-- Card 1 -->
-                    <div class="bg-[#E8ECEE] rounded-3xl p-8 relative overflow-hidden group">
-                        <div class="absolute -bottom-6 -right-6 w-24 h-24 bg-[#BAD700] rounded-full opacity-80 group-hover:scale-150 transition-transform duration-500"></div>
-                        <div class="flex items-center gap-4 mb-4 relative z-10">
-                            <div class="w-14 h-14 bg-gray-300 rounded-full overflow-hidden border-2 border-white shadow-sm">
-                                <img src="https://images.pexels.com/photos/3760370/pexels-photo-3760370.jpeg?auto=compress&cs=tinysrgb&w=150" alt="Executive" width="150" height="150" class="w-full h-full object-cover" />
-                            </div>
-                            <div>
-                                <h4 class="font-black text-[#002845] leading-tight">Roberto Mendoza</h4>
-                                <p class="text-[#BAD700] font-bold text-sm">Southern Imports Corp.</p>
-                            </div>
-                        </div>
-                        <p class="text-xs text-gray-500 leading-relaxed mb-4 relative z-10">"Quality FS's customs management saved us weeks of waiting at the port. Their team handled all the documentation with an efficiency we hadn't seen before with other operators."</p>
-                        <div class="flex text-[#BAD700] text-xl relative z-10">★★★★★</div>
-                    </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                    {activeTeam.map((member) => (
+                        <article class="bg-[#E8ECEE] rounded-[2.5rem] p-6 relative overflow-hidden group border border-transparent hover:border-[#BAD700] hover:shadow-[0_20px_50px_rgba(0,40,69,0.1)] transition-all duration-300 flex flex-col">
+                            <div class="absolute -bottom-8 -right-8 w-28 h-28 bg-[#BAD700] rounded-full opacity-75 group-hover:scale-150 transition-transform duration-500 pointer-events-none"></div>
 
-                    <!-- Card 2 -->
-                    <div class="bg-[#E8ECEE] rounded-3xl p-8 relative overflow-hidden group">
-                        <div class="absolute -bottom-6 -right-6 w-24 h-24 bg-[#BAD700] rounded-full opacity-80 group-hover:scale-150 transition-transform duration-500"></div>
-                        <div class="flex items-center gap-4 mb-4 relative z-10">
-                            <div class="w-14 h-14 bg-gray-300 rounded-full overflow-hidden border-2 border-white shadow-sm">
-                                <img src="https://images.pexels.com/photos/5805404/pexels-photo-5805404.jpeg?auto=compress&cs=tinysrgb&w=150" alt="Logistics Supervisor" width="150" height="150" class="w-full h-full object-cover object-top" />
+                            <!-- Team member photo -->
+                            <div class="w-full h-72 rounded-3xl overflow-hidden bg-[#002845]/5 mb-6 relative z-10 flex items-center justify-center">
+                                {member.photo ? (
+                                    <img 
+                                        src={member.photo} 
+                                        alt={`${member.name} - ${member.role_en} at Quality Freight Service`} 
+                                        width="400" 
+                                        height="400" 
+                                        loading="lazy"
+                                        decoding="async"
+                                        class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500" 
+                                    />
+                                ) : (
+                                    <div class="flex flex-col items-center justify-center text-center p-6">
+                                        <QEmblem class="w-20 h-20 object-contain opacity-60 mb-2" decorative={true} widths={[80, 160]} />
+                                        <span class="text-[11px] font-bold uppercase tracking-widest text-[#002845]/40">Quality Freight Service</span>
+                                    </div>
+                                )}
                             </div>
-                            <div>
-                                <h4 class="font-black text-[#002845] leading-tight">Elena Castillo</h4>
-                                <p class="text-[#BAD700] font-bold text-sm">Global Distributions</p>
-                            </div>
-                        </div>
-                        <p class="text-xs text-gray-500 leading-relaxed mb-4 relative z-10">"Consolidating our cargo from Asia was always a headache until we started working with them. The tracking is precise and the customer service is highly professional at all times."</p>
-                        <div class="flex text-[#BAD700] text-xl relative z-10">★★★★★</div>
-                    </div>
 
-                    <!-- Card 3 -->
-                    <div class="bg-[#E8ECEE] rounded-3xl p-8 relative overflow-hidden group">
-                        <div class="absolute -bottom-6 -right-6 w-24 h-24 bg-[#BAD700] rounded-full opacity-80 group-hover:scale-150 transition-transform duration-500"></div>
-                        <div class="flex items-center gap-4 mb-4 relative z-10">
-                            <div class="w-14 h-14 bg-gray-300 rounded-full overflow-hidden border-2 border-white shadow-sm">
-                                <img src="https://images.pexels.com/photos/3184611/pexels-photo-3184611.jpeg?auto=compress&cs=tinysrgb&w=150" alt="Corporate Team" width="150" height="150" class="w-full h-full object-cover" />
+                            <!-- Name and role -->
+                            <div class="relative z-10 px-2 pb-2">
+                                <h3 class="text-xl font-black text-[#002845] leading-tight">
+                                    {member.name}
+                                </h3>
+                                {member.role_en && (
+                                    <p class="text-xs font-bold uppercase tracking-wider text-[#002845]/70 mt-1.5">
+                                        {member.role_en}
+                                    </p>
+                                )}
                             </div>
-                            <div>
-                                <h4 class="font-black text-[#002845] leading-tight">Andrés Villalobos</h4>
-                                <p class="text-[#BAD700] font-bold text-sm">Retail & Fashion Express</p>
-                            </div>
-                        </div>
-                        <p class="text-xs text-gray-500 leading-relaxed mb-4 relative z-10">"We use their air cargo service on a weekly basis. The rates are unbeatable and the peace of mind knowing the merchandise will reach the shelves on time is priceless."</p>
-                        <div class="flex text-[#BAD700] text-xl relative z-10">★★★★★</div>
-                    </div>
+                        </article>
+                    ))}
                 </div>
             </div>
         </section>
@@ -216,7 +243,6 @@ import Footer from '../../components/Footer.astro';
             trigger.addEventListener('mouseenter', () => {
                 const newSrc = trigger.getAttribute('data-image');
                 if (newSrc && heroImg) {
-                    // Smooth transition animation
                     heroImg.style.opacity = '0.7';
                     setTimeout(() => {
                         heroImg.setAttribute('src', newSrc);

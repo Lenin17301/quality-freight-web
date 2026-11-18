@@ -1,0 +1,440 @@
+---
+// src/pages/en/infoquality.astro
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Navbar from '../../components/Navbar.astro';
+import Footer from '../../components/Footer.astro';
+
+import { Image } from 'astro:assets';
+import bgHero from '../../assets/images/logistica-y-rastreo-carga.png';
+
+const containers = [
+    {
+        name: "20' Dry Van (Standard)",
+        tag: "Dry Cargo",
+        internalDim: "5.90 m × 2.35 m × 2.39 m",
+        doorDim: "2.34 m × 2.28 m",
+        capacity: "33.2 m³",
+        maxPayload: "28,200 kg",
+        tare: "2,280 kg",
+        idealFor: "Palletized general cargo, boxed goods, compact machinery, and dry merchandise."
+    },
+    {
+        name: "40' Dry Van (Standard)",
+        tag: "High Volume",
+        internalDim: "12.03 m × 2.35 m × 2.39 m",
+        doorDim: "2.34 m × 2.28 m",
+        capacity: "67.7 m³",
+        maxPayload: "26,700 kg",
+        tare: "3,780 kg",
+        idealFor: "Large volumes of dry goods, textiles, furniture, and consolidated shipments."
+    },
+    {
+        name: "40' High Cube (HC)",
+        tag: "Extra Height",
+        internalDim: "12.03 m × 2.35 m × 2.69 m",
+        doorDim: "2.34 m × 2.58 m",
+        capacity: "76.3 m³",
+        maxPayload: "26,580 kg",
+        tare: "3,900 kg",
+        idealFor: "Tall lightweight cargo (+30 cm extra height) and bulky merchandise."
+    },
+    {
+        name: "20' / 40' Refrigerated (Reefer)",
+        tag: "Temperature Controlled",
+        internalDim: "5.44 m / 11.56 m × 2.29 m × 2.27 m",
+        doorDim: "2.28 m × 2.26 m",
+        capacity: "28.3 m³ / 59.3 m³",
+        maxPayload: "27,400 kg / 29,500 kg",
+        tare: "3,080 kg / 4,500 kg",
+        idealFor: "Perishable foods, pharmaceuticals, and temperature-sensitive goods (-25 °C to +25 °C)."
+    },
+    {
+        name: "20' / 40' Open Top & Flat Rack",
+        tag: "Oversized Cargo",
+        internalDim: "Open roof / No side walls",
+        doorDim: "Top or side crane loading",
+        capacity: "Project dependent",
+        maxPayload: "Up to 40,000 kg (Flat Rack)",
+        tare: "2,360 kg – 5,000 kg",
+        idealFor: "Heavy machinery, vehicles, piping, and out-of-gauge or extra-heavy cargo."
+    }
+];
+
+const incoterms = [
+    { code: "EXW", name: "Ex Works", desc: "Seller makes goods available at their premises; buyer bears all transport costs and risks." },
+    { code: "FOB", name: "Free On Board", desc: "Seller delivers cargo on board the vessel at the designated port of shipment." },
+    { code: "CIF", name: "Cost, Insurance & Freight", desc: "Seller covers cost, marine insurance, and ocean freight to the destination port." },
+    { code: "DDP", name: "Delivered Duty Paid", desc: "Door-to-door delivery with customs duties and taxes paid at destination." }
+];
+
+const schemaData = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "InfoQuality | Shipment Inquiry & Logistics Tools",
+    "description": "Check your shipment status using your tracking code and explore maritime container specifications, volumetric weight formulas, and Incoterms.",
+    "inLanguage": "en"
+};
+---
+
+<BaseLayout 
+    lang="en"
+    title="InfoQuality | Shipment Tracking & Logistics Tools | Quality Freight Service" 
+    description="Check your cargo location and delivery status with your tracking code, and access maritime container dimensions, volumetric weight calculators, and Incoterms."
+>
+    <div slot="header">
+        <Navbar lang="en" />
+    </div>
+
+    <script type="application/ld+json" set:html={JSON.stringify(schemaData)} />
+
+    <main class="bg-white overflow-hidden min-h-screen">
+        
+        <!-- HERO + INFOQUALITY FORM -->
+        <section class="relative bg-[#002845] pt-32 pb-24 px-6 lg:pt-40 lg:pb-32 overflow-hidden">
+            <!-- Optimized Background Image -->
+            <div class="absolute inset-0 z-0">
+                <Image 
+                    src={bgHero} 
+                    alt="Global logistics operations and cargo tracking Quality Freight Service" 
+                    class="w-full h-full object-cover opacity-20 mix-blend-luminosity"
+                    fetchpriority="high"
+                    loading="eager"
+                />
+                <div class="absolute inset-0 bg-gradient-to-b from-[#002845]/95 via-[#002845]/85 to-[#002845]"></div>
+            </div>
+
+            <div class="relative z-10 max-w-7xl mx-auto flex flex-col lg:flex-row items-start gap-12 lg:gap-16">
+                
+                <!-- Left Column: InfoQuality Intro -->
+                <div class="w-full lg:w-5/12 lg:sticky lg:top-32 text-left">
+                    <nav aria-label="Breadcrumb" class="flex text-[10px] sm:text-xs font-black uppercase tracking-widest text-[#BAD700] mb-6 gap-2">
+                        <a href="/en" class="hover:text-white transition-colors">Home</a> <span>/</span>
+                        <span class="text-white">InfoQuality</span>
+                    </nav>
+
+                    <div class="w-14 h-14 bg-[#BAD700] rounded-2xl flex items-center justify-center mb-6 shadow-lg">
+                        <svg class="w-7 h-7 text-[#002845]" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path>
+                        </svg>
+                    </div>
+
+                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-light text-white mb-6 leading-[1.1]">
+                        Info<span class="font-black text-[#BAD700]">Quality.</span>
+                    </h1>
+                    
+                    <p class="text-gray-300 text-base md:text-lg font-light leading-relaxed mb-8">
+                        Manage direct tracking for your international shipments. Fill out the short form with your tracking number and our operations team will send you an updated status report.
+                    </p>
+
+                    <div class="space-y-4 border-t border-white/10 pt-8">
+                        <div class="flex items-center gap-3">
+                            <span class="w-6 h-6 rounded-full bg-[#BAD700]/20 text-[#BAD700] flex items-center justify-center text-xs font-black">✓</span>
+                            <span class="text-sm text-gray-200">Personalized follow-up by your account specialist</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <span class="w-6 h-6 rounded-full bg-[#BAD700]/20 text-[#BAD700] flex items-center justify-center text-xs font-black">✓</span>
+                            <span class="text-sm text-gray-200">Direct updates sent to your email or WhatsApp</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <span class="w-6 h-6 rounded-full bg-[#BAD700]/20 text-[#BAD700] flex items-center justify-center text-xs font-black">✓</span>
+                            <span class="text-sm text-gray-200">Container specs & freight tools included below</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Short Base Form -->
+                <div class="w-full lg:w-7/12">
+                    <div class="bg-white rounded-[2.5rem] p-8 md:p-12 shadow-[0_30px_60px_rgba(0,0,0,0.35)] border border-white/10">
+                        <div class="mb-8 pb-6 border-b border-stone-100">
+                            <span class="text-[#BAD700] font-black tracking-[0.2em] uppercase text-xs block mb-2">Shipment Inquiry</span>
+                            <h2 class="text-2xl md:text-3xl font-light text-[#002845]">
+                                Request a <span class="font-black">tracking report</span>
+                            </h2>
+                        </div>
+
+                        <form action="https://formsubmit.co/lceballos17301@gmail.com" method="POST" class="space-y-6">
+                            <input type="hidden" name="_subject" value="New shipment tracking inquiry - InfoQuality (EN)" />
+                            <input type="hidden" name="_template" value="table" />
+                            <!-- 1. Tracking number (Required) -->
+                            <div>
+                                <label for="tracking_number" class="block text-sm font-bold text-[#002845] mb-1.5">
+                                    1. Tracking number or shipment code <span class="text-red-500">*</span>
+                                </label>
+                                <input 
+                                    type="text" 
+                                    id="tracking_number" 
+                                    name="tracking_number" 
+                                    required 
+                                    aria-describedby="help_tracking"
+                                    placeholder="e.g., QFS-2026-88412"
+                                    class="w-full p-4 bg-stone-50 rounded-2xl border border-stone-200/60 text-[#002845] outline-none focus:ring-2 focus:ring-[#002845] focus:bg-white transition-all"
+                                />
+                                <p id="help_tracking" class="text-xs text-slate-500 mt-1.5">
+                                    Enter the code you received when your shipment was confirmed.
+                                </p>
+                            </div>
+
+                            <!-- 2. Full name or company name (Required) -->
+                            <div>
+                                <label for="company_name" class="block text-sm font-bold text-[#002845] mb-1.5">
+                                    2. Full name or company legal name <span class="text-red-500">*</span>
+                                </label>
+                                <input 
+                                    type="text" 
+                                    id="company_name" 
+                                    name="company_name" 
+                                    required 
+                                    aria-describedby="help_company"
+                                    placeholder="e.g., Global Logistics Corp / John Doe"
+                                    class="w-full p-4 bg-stone-50 rounded-2xl border border-stone-200/60 text-[#002845] outline-none focus:ring-2 focus:ring-[#002845] focus:bg-white transition-all"
+                                />
+                                <p id="help_company" class="text-xs text-slate-500 mt-1.5">
+                                    Name of the shipper or consignee registered on the shipment.
+                                </p>
+                            </div>
+
+                            <!-- 3 & 4 Grid: Email (Required) & Phone/WhatsApp (Optional) -->
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label for="email" class="block text-sm font-bold text-[#002845] mb-1.5">
+                                        3. Email address <span class="text-red-500">*</span>
+                                    </label>
+                                    <input 
+                                        type="email" 
+                                        id="email" 
+                                        name="email" 
+                                        required 
+                                        aria-describedby="help_email"
+                                        placeholder="email@company.com"
+                                        class="w-full p-4 bg-stone-50 rounded-2xl border border-stone-200/60 text-[#002845] outline-none focus:ring-2 focus:ring-[#002845] focus:bg-white transition-all"
+                                    />
+                                    <p id="help_email" class="text-xs text-slate-500 mt-1.5">
+                                        We will send the updated status report of your shipment here.
+                                    </p>
+                                </div>
+
+                                <div>
+                                    <label for="phone" class="block text-sm font-bold text-[#002845] mb-1.5">
+                                        4. Contact phone or WhatsApp <span class="text-xs font-normal text-slate-400">(Optional)</span>
+                                    </label>
+                                    <input 
+                                        type="tel" 
+                                        id="phone" 
+                                        name="phone" 
+                                        aria-describedby="help_phone"
+                                        placeholder="+1 (305) 000-0000"
+                                        class="w-full p-4 bg-stone-50 rounded-2xl border border-stone-200/60 text-[#002845] outline-none focus:ring-2 focus:ring-[#002845] focus:bg-white transition-all"
+                                    />
+                                    <p id="help_phone" class="text-xs text-slate-500 mt-1.5">
+                                        So we can reach you quickly in case of any delivery update.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- 5. Multiple choice (Optional) -->
+                            <fieldset class="pt-2">
+                                <legend class="block text-sm font-bold text-[#002845] mb-3">
+                                    5. How can we help you with your shipment? <span class="text-xs font-normal text-slate-400">(Optional - Multiple choice)</span>
+                                </legend>
+                                <div class="grid grid-cols-1 gap-3">
+                                    <label class="flex items-start gap-3 p-3.5 rounded-2xl bg-stone-50 hover:bg-stone-100/80 border border-stone-200/60 cursor-pointer transition-colors">
+                                        <input type="checkbox" name="inquiry_reason[]" value="Current location and estimated delivery date" class="mt-0.5 w-4 h-4 accent-[#002845] rounded" />
+                                        <span class="text-sm text-slate-700">Check current location and estimated delivery date.</span>
+                                    </label>
+
+                                    <label class="flex items-start gap-3 p-3.5 rounded-2xl bg-stone-50 hover:bg-stone-100/80 border border-stone-200/60 cursor-pointer transition-colors">
+                                        <input type="checkbox" name="inquiry_reason[]" value="Report a delay" class="mt-0.5 w-4 h-4 accent-[#002845] rounded" />
+                                        <span class="text-sm text-slate-700">Report a delay.</span>
+                                    </label>
+
+                                    <label class="flex items-start gap-3 p-3.5 rounded-2xl bg-stone-50 hover:bg-stone-100/80 border border-stone-200/60 cursor-pointer transition-colors">
+                                        <input type="checkbox" name="inquiry_reason[]" value="Update recipient address or contact" class="mt-0.5 w-4 h-4 accent-[#002845] rounded" />
+                                        <span class="text-sm text-slate-700">Update recipient address or contact details.</span>
+                                    </label>
+
+                                    <label class="flex items-start gap-3 p-3.5 rounded-2xl bg-stone-50 hover:bg-stone-100/80 border border-stone-200/60 cursor-pointer transition-colors">
+                                        <input type="checkbox" name="inquiry_reason[]" value="Other inquiry" class="mt-0.5 w-4 h-4 accent-[#002845] rounded" />
+                                        <span class="text-sm text-slate-700">Other inquiry.</span>
+                                    </label>
+                                </div>
+                            </fieldset>
+
+                            <!-- 6. Additional comments (Optional) -->
+                            <div>
+                                <label for="comments" class="block text-sm font-bold text-[#002845] mb-1.5">
+                                    6. Additional comments or details <span class="text-xs font-normal text-slate-400">(Optional)</span>
+                                </label>
+                                <textarea 
+                                    id="comments" 
+                                    name="comments" 
+                                    rows="3" 
+                                    aria-describedby="help_comments"
+                                    placeholder="Share any important notes about your cargo or receiving schedule..."
+                                    class="w-full p-4 bg-stone-50 rounded-2xl border border-stone-200/60 text-[#002845] outline-none resize-none focus:ring-2 focus:ring-[#002845] focus:bg-white transition-all"
+                                ></textarea>
+                                <p id="help_comments" class="text-xs text-slate-500 mt-1.5">
+                                    Write any important notes regarding your cargo or receiving schedule.
+                                </p>
+                            </div>
+
+                            <button 
+                                type="submit" 
+                                class="w-full bg-[#002845] text-white font-black py-5 rounded-2xl hover:bg-[#BAD700] hover:text-[#002845] transition-all tracking-wide shadow-lg shadow-[#002845]/20 cursor-pointer"
+                            >
+                                Check Shipment Status
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- LOGISTICS TOOLS SECTION: CONTAINER SPECIFICATIONS -->
+        <section id="tools" class="py-24 px-6 bg-stone-50 border-t border-stone-200">
+            <div class="max-w-7xl mx-auto">
+                
+                <!-- Section Header -->
+                <div class="max-w-3xl mb-16">
+                    <span class="text-[#BAD700] font-black tracking-[0.2em] uppercase text-xs block mb-3">
+                        Logistics Tools
+                    </span>
+                    <h2 class="text-3xl md:text-5xl font-light text-[#002845] leading-tight mb-6">
+                        Container <span class="font-black">Specifications.</span>
+                    </h2>
+                    <p class="text-slate-600 text-lg font-light leading-relaxed">
+                        Review internal dimensions, cubic capacity, and maximum payload limits for standard and specialized ocean containers to plan your cargo accurately.
+                    </p>
+                </div>
+
+                <!-- Container Cards Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20">
+                    {containers.map((item) => (
+                        <article class="bg-white rounded-3xl p-8 border border-stone-200/80 shadow-sm hover:shadow-[0_20px_50px_rgba(0,40,69,0.08)] transition-all duration-300 flex flex-col">
+                            <div class="flex items-center justify-between gap-2 mb-4">
+                                <span class="bg-[#BAD700]/25 text-[#002845] text-xs font-black px-3 py-1 rounded-full uppercase tracking-wider">
+                                    {item.tag}
+                                </span>
+                                <span class="text-xs font-bold text-slate-400">{item.capacity}</span>
+                            </div>
+
+                            <h3 class="text-2xl font-black text-[#002845] mb-6">
+                                {item.name}
+                            </h3>
+
+                            <dl class="space-y-3 text-sm border-t border-stone-100 pt-5 mb-6 flex-grow">
+                                <div class="flex justify-between gap-4">
+                                    <dt class="text-slate-500">Internal dimensions:</dt>
+                                    <dd class="font-bold text-[#002845] text-right">{item.internalDim}</dd>
+                                </div>
+                                <div class="flex justify-between gap-4">
+                                    <dt class="text-slate-500">Door opening:</dt>
+                                    <dd class="font-bold text-[#002845] text-right">{item.doorDim}</dd>
+                                </div>
+                                <div class="flex justify-between gap-4">
+                                    <dt class="text-slate-500">Cubic capacity:</dt>
+                                    <dd class="font-bold text-[#002845] text-right">{item.capacity}</dd>
+                                </div>
+                                <div class="flex justify-between gap-4">
+                                    <dt class="text-slate-500">Max payload:</dt>
+                                    <dd class="font-bold text-[#002845] text-right">{item.maxPayload}</dd>
+                                </div>
+                                <div class="flex justify-between gap-4">
+                                    <dt class="text-slate-500">Tare weight:</dt>
+                                    <dd class="font-medium text-slate-600 text-right">{item.tare}</dd>
+                                </div>
+                            </dl>
+
+                            <p class="text-xs text-slate-500 bg-stone-50 p-4 rounded-2xl leading-relaxed">
+                                <strong class="text-[#002845]">Best suited for:</strong> {item.idealFor}
+                            </p>
+                        </article>
+                    ))}
+                </div>
+
+                <!-- Complementary Tools: Volumetric Weight & Incoterms -->
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+                    
+                    <!-- Volumetric Weight Formulas -->
+                    <div class="lg:col-span-5 bg-[#002845] text-white rounded-[2.5rem] p-8 md:p-10 flex flex-col justify-between">
+                        <div>
+                            <span class="text-[#BAD700] font-black tracking-[0.2em] uppercase text-xs block mb-3">
+                                Freight Calculation
+                            </span>
+                            <h3 class="text-2xl md:text-3xl font-light mb-4">
+                                Volumetric <span class="font-black text-[#BAD700]">Weight</span>
+                            </h3>
+                            <p class="text-gray-300 text-sm font-light leading-relaxed mb-8">
+                                International freight is billed based on the greater value between actual gross weight (kg) and volumetric weight calculated from package dimensions:
+                            </p>
+
+                            <div class="space-y-4">
+                                <div class="bg-white/10 rounded-2xl p-5 border border-white/10">
+                                    <p class="text-xs uppercase tracking-wider text-[#BAD700] font-black mb-1">Air Freight (IATA)</p>
+                                    <p class="font-mono text-sm text-white">
+                                        (Length × Width × Height in cm) ÷ 6,000 = Vol. Kg
+                                    </p>
+                                </div>
+
+                                <div class="bg-white/10 rounded-2xl p-5 border border-white/10">
+                                    <p class="text-xs uppercase tracking-wider text-[#BAD700] font-black mb-1">Consolidated Ocean Freight (LCL)</p>
+                                    <p class="font-mono text-sm text-white">
+                                        1 Metric Ton (1,000 kg) = 1 Cubic Meter (1 m³)
+                                    </p>
+                                </div>
+
+                                <div class="bg-white/10 rounded-2xl p-5 border border-white/10">
+                                    <p class="text-xs uppercase tracking-wider text-[#BAD700] font-black mb-1">Ground Freight</p>
+                                    <p class="font-mono text-sm text-white">
+                                        (Length × Width × Height in cm) ÷ 3,000 = Vol. Kg
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-8 pt-6 border-t border-white/10">
+                            <a href="/en/services" class="inline-flex items-center gap-2 text-sm font-black text-[#BAD700] hover:underline">
+                                Request load planning & freight quote →
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Quick Incoterms Guide -->
+                    <div class="lg:col-span-7 bg-white rounded-[2.5rem] p-8 md:p-10 border border-stone-200/80">
+                        <span class="text-[#BAD700] font-black tracking-[0.2em] uppercase text-xs block mb-3">
+                            Global Trade
+                        </span>
+                        <h3 class="text-2xl md:text-3xl font-light text-[#002845] mb-4">
+                            Quick <span class="font-black">Incoterms</span> Guide
+                        </h3>
+                        <p class="text-slate-500 text-sm font-light leading-relaxed mb-8">
+                            International commercial terms defining the exact point where costs, customs formalities, and risks transfer from seller to buyer:
+                        </p>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            {incoterms.map((term) => (
+                                <div class="p-5 rounded-2xl bg-stone-50 border border-stone-100">
+                                    <div class="flex items-center gap-2.5 mb-2">
+                                        <span class="bg-[#002845] text-[#BAD700] text-xs font-black px-2.5 py-1 rounded-lg">
+                                            {term.code}
+                                        </span>
+                                        <span class="font-bold text-sm text-[#002845]">{term.name}</span>
+                                    </div>
+                                    <p class="text-xs text-slate-600 leading-relaxed">
+                                        {term.desc}
+                                    </p>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <div slot="footer">
+        <Footer lang="en" />
+    </div>
+</BaseLayout>

@@ -1,10 +1,13 @@
 ---
 // src/components/Navbar.astro
-const { lang } = Astro.props;
+import QEmblem from './QEmblem.astro';
+
+const { lang = 'es' } = Astro.props;
 
 // Diccionario de traducciones para elementos de interfaz fijos del Navbar
 const i18n = {
     es: {
+        homeAria: "Ir al inicio - Quality Freight Service",
         bcvLabel: "BCV",
         bcvMobileTitle: "Tasas BCV Oficiales",
         loading: "Cargando...",
@@ -12,6 +15,7 @@ const i18n = {
         menuBtnAlt: "Abrir menú"
     },
     en: {
+        homeAria: "Go to home - Quality Freight Service",
         bcvLabel: "BCV",
         bcvMobileTitle: "Official BCV Rates",
         loading: "Loading...",
@@ -28,7 +32,7 @@ const links = {
         { name: 'Quiénes somos', url: '/quienes-somos' },
         { name: 'Servicios', url: '/servicios/' },
         { name: 'Asesoría', url: '/asesoria' },
-        { name: 'Rastreo', url: '/rastreo', special: true },
+        { name: 'InfoQuality', url: '/infoquality', special: true },
         { name: 'Blog', url: '/blog' }
     ],
     en: [
@@ -36,8 +40,8 @@ const links = {
         { name: 'About us', url: '/en/about' },
         { name: 'Services', url: '/en/services/' },
         { name: 'Consulting', url: '/en/consulting' },
-        { name: 'Tracking', url: '/en/tracking', special: true },
-        { name: 'Blog', url: '/en/blog'}
+        { name: 'InfoQuality', url: '/en/infoquality', special: true },
+        { name: 'Blog', url: '/en/blog' }
     ]
 };
 
@@ -50,19 +54,27 @@ const isActive = (url) => {
     }
     return currentPath.startsWith(url);
 };
+
+// Mapeo directo entre versiones ES/EN de InfoQuality y fallback al Home
+const esSwitchUrl = currentPath.startsWith('/en/infoquality') ? '/infoquality' : '/';
+const enSwitchUrl = currentPath.startsWith('/infoquality') ? '/en/infoquality' : '/en/';
 ---
 
 <nav class="fixed top-0 left-0 right-0 z-50 px-4 pt-4 sm:px-6 sm:pt-6">
     <div class="max-w-7xl mx-auto flex flex-col gap-2">
         <div class="flex justify-between items-center bg-white/90 backdrop-blur-md rounded-full px-4 sm:px-6 py-3 shadow-sm border border-white">
             
-            <a href={lang === 'es' ? '/' : '/en/'} class="flex items-center gap-2">
-                <div class="w-10 h-10 bg-[#002845] rounded-full flex items-center justify-center relative overflow-hidden">
-                    <span class="text-white font-black text-xl relative z-10">Q</span>
-                    <div class="absolute bottom-0 right-0 w-4 h-4 bg-[#BAD700] rounded-tl-full"></div>
-                </div>
+            <!-- Emblema Oficial Quality Freight Service -->
+            <a href={lang === 'es' ? '/' : '/en/'} aria-label={t.homeAria} class="flex items-center gap-2 group shrink-0">
+                <QEmblem 
+                    class="w-10 h-10 object-contain group-hover:scale-105 transition-transform duration-300" 
+                    decorative={false} 
+                    eager={true} 
+                    widths={[80, 120]}
+                />
             </a>
 
+            <!-- Enlaces Desktop -->
             <div class="hidden lg:flex items-center gap-2">
                 {currentLinks.map((link) => (
                     <a 
@@ -80,6 +92,7 @@ const isActive = (url) => {
                 ))}
             </div>
 
+            <!-- Tasas BCV + Selector Idioma Desktop -->
             <div class="hidden lg:flex items-center gap-3">
                 <div class="flex items-center gap-3 bg-[#E8ECEE] px-4 py-1.5 rounded-full border border-gray-200 shadow-inner">
                     <div class="flex items-center gap-1.5">
@@ -100,18 +113,20 @@ const isActive = (url) => {
                 </div>
 
                 <div class="flex items-center gap-1 bg-gray-100 rounded-full p-1">
-                    <a href="/" class={`px-3 py-1 rounded-full text-xs font-bold transition-colors ${lang === 'es' ? 'bg-white text-[#002845] shadow-sm' : 'text-gray-400 hover:text-[#002845]'}`}>ES</a>
-                    <a href="/en/" class={`px-3 py-1 rounded-full text-xs font-bold transition-colors ${lang === 'en' ? 'bg-white text-[#002845] shadow-sm' : 'text-gray-400 hover:text-[#002845]'}`}>EN</a>
+                    <a href={esSwitchUrl} class={`px-3 py-1 rounded-full text-xs font-bold transition-colors ${lang === 'es' ? 'bg-white text-[#002845] shadow-sm' : 'text-gray-400 hover:text-[#002845]'}`}>ES</a>
+                    <a href={enSwitchUrl} class={`px-3 py-1 rounded-full text-xs font-bold transition-colors ${lang === 'en' ? 'bg-white text-[#002845] shadow-sm' : 'text-gray-400 hover:text-[#002845]'}`}>EN</a>
                 </div>
             </div>
 
-            <button id="mobile-menu-btn" aria-label={t.menuBtnAlt} class="lg:hidden text-[#002845] p-2 hover:bg-gray-100 rounded-full transition-colors cursor-pointer">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <!-- Botón Menú Móvil -->
+            <button id="mobile-menu-btn" aria-label={t.menuBtnAlt} aria-expanded="false" aria-controls="mobile-menu" class="lg:hidden text-[#002845] p-2 hover:bg-gray-100 rounded-full transition-colors cursor-pointer">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
                 </svg>
             </button>
         </div>
 
+        <!-- Menú Desplegable Móvil -->
         <div id="mobile-menu" class="hidden flex-col bg-white/95 backdrop-blur-md rounded-3xl shadow-xl border border-gray-100 p-4 gap-2 lg:hidden origin-top">
             
             <div class="flex flex-col items-center justify-center gap-1 bg-[#E8ECEE] px-4 py-3 rounded-2xl mb-2 border border-gray-200 shadow-inner">
@@ -148,8 +163,8 @@ const isActive = (url) => {
             ))}
             
             <div class="flex justify-center gap-2 mt-2 pt-4 border-t border-gray-100">
-                <a href="/" class={`px-6 py-2 rounded-full text-sm font-bold transition-colors ${lang === 'es' ? 'bg-[#002845] text-white' : 'bg-gray-100 text-gray-500'}`}>ESPAÑOL</a>
-                <a href="/en/" class={`px-6 py-2 rounded-full text-sm font-bold transition-colors ${lang === 'en' ? 'bg-[#002845] text-white' : 'bg-gray-100 text-gray-500'}`}>ENGLISH</a>
+                <a href={esSwitchUrl} class={`px-6 py-2 rounded-full text-sm font-bold transition-colors ${lang === 'es' ? 'bg-[#002845] text-white' : 'bg-gray-100 text-gray-500'}`}>ESPAÑOL</a>
+                <a href={enSwitchUrl} class={`px-6 py-2 rounded-full text-sm font-bold transition-colors ${lang === 'en' ? 'bg-[#002845] text-white' : 'bg-gray-100 text-gray-500'}`}>ENGLISH</a>
             </div>
         </div>
     </div>
@@ -162,8 +177,9 @@ const isActive = (url) => {
 
     if (btn && menu) {
         btn.addEventListener('click', () => {
-            menu.classList.toggle('hidden');
+            const isHidden = menu.classList.toggle('hidden');
             menu.classList.toggle('flex');
+            btn.setAttribute('aria-expanded', String(!isHidden));
         });
     }
 
@@ -181,17 +197,15 @@ const isActive = (url) => {
             const rateUsd = `Bs. ${dataUsd.promedio.toFixed(2)}`;
             const rateEur = `Bs. ${dataEur.promedio.toFixed(2)}`;
             
-            // Actualizamos en Desktop
             const bcvUsdDesktop = document.getElementById('bcv-usd-desktop');
             const bcvEurDesktop = document.getElementById('bcv-eur-desktop');
-            if(bcvUsdDesktop) bcvUsdDesktop.innerText = rateUsd;
-            if(bcvEurDesktop) bcvEurDesktop.innerText = rateEur;
+            if (bcvUsdDesktop) bcvUsdDesktop.innerText = rateUsd;
+            if (bcvEurDesktop) bcvEurDesktop.innerText = rateEur;
 
-            // Actualizamos en Móvil
             const bcvUsdMobile = document.getElementById('bcv-usd-mobile');
             const bcvEurMobile = document.getElementById('bcv-eur-mobile');
-            if(bcvUsdMobile) bcvUsdMobile.innerText = rateUsd;
-            if(bcvEurMobile) bcvEurMobile.innerText = rateEur;
+            if (bcvUsdMobile) bcvUsdMobile.innerText = rateUsd;
+            if (bcvEurMobile) bcvEurMobile.innerText = rateEur;
 
         } catch (error) {
             console.error('Error obteniendo las tasas BCV:', error);
@@ -203,11 +217,10 @@ const isActive = (url) => {
             
             elements.forEach(id => {
                 const el = document.getElementById(id);
-                if(el) el.innerText = fallbackText;
+                if (el) el.innerText = fallbackText;
             });
         }
     }
 
-    // Ejecutar al cargar la página
     fetchBCV();
 </script>
