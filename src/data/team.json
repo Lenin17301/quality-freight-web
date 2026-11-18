@@ -21,6 +21,14 @@
       "role_es": "Gestión Aduanal",
       "role_en": "Customs Management",
       "active": true
+    },
+    {
+      "id": "integrante-4",
+      "name": "Lenin Ceballos",
+      "role_es": "Test",
+      "role_en": "Test",
+      "photo": "/images/IMG_20250815_215258.jpg",
+      "active": true
     }
   ]
 }
