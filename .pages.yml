@@ -1,0 +1,35 @@
+media:
+  input: public/images
+  output: /images
+
+content:
+  - name: team
+    label: Equipo de Trabajo
+    path: src/data/team.json
+    type: file
+    list: true
+    fields:
+      - name: id
+        label: Identificador interno (sin espacios)
+        type: string
+        required: true
+      - name: name
+        label: Nombre y Apellido
+        type: string
+        required: true
+      - name: role_es
+        label: Cargo (Español)
+        type: string
+      - name: role_en
+        label: Cargo (Inglés)
+        type: string
+      - name: photo
+        label: Fotografía del integrante
+        type: image
+        options:
+          input: public/images/equipo
+          output: /images/equipo
+      - name: active
+        label: Visible en la página web
+        type: boolean
+        default: true
