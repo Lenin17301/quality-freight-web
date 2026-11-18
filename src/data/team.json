@@ -1,26 +1,28 @@
-[
-  {
-    "id": "integrante-1",
-    "name": "Nombre y Apellido",
-    "role_es": "Gerencia General",
-    "role_en": "General Management",
-    "photo": "",
-    "active": true
-  },
-  {
-    "id": "integrante-2",
-    "name": "Nombre y Apellido",
-    "role_es": "Operaciones y Tráfico Internacional",
-    "role_en": "International Operations & Traffic",
-    "photo": "",
-    "active": true
-  },
-  {
-    "id": "integrante-3",
-    "name": "Nombre y Apellido",
-    "role_es": "Gestión Aduanal",
-    "role_en": "Customs Management",
-    "photo": "",
-    "active": true
-  }
-]
+{
+  "members": [
+    {
+      "id": "integrante-1",
+      "name": "Nombre y Apellido",
+      "role_es": "Gerencia General",
+      "role_en": "General Management",
+      "photo": "",
+      "active": true
+    },
+    {
+      "id": "integrante-2",
+      "name": "Nombre y Apellido",
+      "role_es": "Operaciones y Tráfico Internacional",
+      "role_en": "International Operations & Traffic",
+      "photo": "",
+      "active": true
+    },
+    {
+      "id": "integrante-3",
+      "name": "Nombre y Apellido",
+      "role_es": "Gestión Aduanal",
+      "role_en": "Customs Management",
+      "photo": "",
+      "active": true
+    }
+  ]
+}
