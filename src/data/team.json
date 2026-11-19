@@ -39,6 +39,86 @@
       "role_en": "Commercial Executive",
       "photo": "/images/IMG_0084 (2).webp",
       "active": true
+    },
+    {
+      "id": "integrante-6",
+      "name": "Yuly Suárez",
+      "role_es": "Ejecutiva Comercial",
+      "role_en": "Commercial Executive",
+      "photo": "/images/IMG_0467.webp",
+      "active": true
+    },
+    {
+      "id": "integrante-7",
+      "name": "Katherin Rangel",
+      "role_es": "Ejecutiva Comercial",
+      "role_en": "Commercial Executive",
+      "photo": "/images/IMG_0712.webp",
+      "active": true
+    },
+    {
+      "id": "integrante-8",
+      "name": "Kimberly Briceño",
+      "role_es": "Aduana y Gestión Institucional",
+      "role_en": "Customs and Institutional Management",
+      "photo": "/images/WhatsApp Image 2026-10-19 at 14.48.31.webp",
+      "active": true
+    },
+    {
+      "id": "integrante-9",
+      "name": "Amaly Mieres ",
+      "role_es": "Coordinadora de Pricing & Overseas",
+      "role_en": "Pricing & Overseas Coordinator",
+      "photo": "/images/IMG_0097.webp",
+      "active": true
+    },
+    {
+      "id": "integrante-10",
+      "name": "Danae López",
+      "role_es": "Asistente de Pricing & Overseas/Asistente Marketing",
+      "role_en": "Pricing & Overseas Assistant / Marketing Assistant",
+      "photo": "/images/IMG_0228.webp",
+      "active": true
+    },
+    {
+      "id": "integrante-11",
+      "name": "Ayarit Rodríguez",
+      "role_es": "Coordinadora de Tráfico y Operaciones",
+      "role_en": "Traffic and Operations Coordinator",
+      "photo": "/images/IMG_0196.webp",
+      "active": true
+    },
+    {
+      "id": "integrante-12",
+      "name": "Yram Caldera ",
+      "role_es": "Agente de Tráfico y Operaciones",
+      "role_en": "Traffic and Operations Agent",
+      "photo": "/images/IMG_0248.webp",
+      "active": true
+    },
+    {
+      "id": "integrante-13",
+      "name": "Valentina Quiara",
+      "role_es": "Agente de Tráfico y Operaciones",
+      "role_en": "Traffic and Operations Agent",
+      "photo": "/images/IMG_0766.webp",
+      "active": true
+    },
+    {
+      "id": "integrante-14",
+      "name": "Angela Belandria",
+      "role_es": "Agente de Tráfico y Operaciones",
+      "role_en": "Traffic and Operations Agent",
+      "photo": "/images/IMG_0033.webp",
+      "active": true
+    },
+    {
+      "id": "integrante-15",
+      "name": "María Gabriela Omaña",
+      "role_es": "Asistente General",
+      "role_en": "General Assistant",
+      "photo": "/images/IMG_0277 (1).webp",
+      "active": true
     }
   ]
 }
