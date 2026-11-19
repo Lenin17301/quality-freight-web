@@ -2,32 +2,42 @@
   "members": [
     {
       "id": "integrante-1",
-      "name": "Prueba 1",
-      "role_es": "Gerencia General",
-      "role_en": "General Management",
-      "photo": "/images/WhatsApp Image 2026-10-19 at 14.48.31.jpeg",
+      "name": "Yamileth Briceño",
+      "role_es": "Directora",
+      "role_en": "Director",
+      "photo": "/images/IMG_0637.webp",
       "active": true
     },
     {
       "id": "integrante-2",
-      "name": "Nombre y Apellido",
-      "role_es": "Operaciones y Tráfico Internacional",
-      "role_en": "International Operations & Traffic",
+      "name": "Elizabeth Ortiz",
+      "role_es": "Gerente General",
+      "role_en": "General Manager",
+      "photo": "/images/IMG_0316.webp",
       "active": true
     },
     {
       "id": "integrante-3",
-      "name": "Nombre y Apellido",
-      "role_es": "Gestión Aduanal",
-      "role_en": "Customs Management",
+      "name": "Shirly Pérez ",
+      "role_es": "Coordinadora de Comercial y de Negocios",
+      "role_en": "Commercial and Business Coordinator",
+      "photo": "/images/IMG_0048.webp",
       "active": true
     },
     {
       "id": "integrante-4",
-      "name": "Lenin Ceballos",
-      "role_es": "Test",
-      "role_en": "Test",
-      "photo": "/images/IMG_20250815_215258.jpg",
+      "name": "Abiezer Arraiz ",
+      "role_es": "Ejecutivo Comercial",
+      "role_en": "Commercial Executive",
+      "photo": "/images/IMG_0146 (1).webp",
+      "active": true
+    },
+    {
+      "id": "integrante-5",
+      "name": "Maria Garrido",
+      "role_es": "Ejecutiva Comercial",
+      "role_en": "Commercial Executive",
+      "photo": "/images/IMG_0084 (2).webp",
       "active": true
     }
   ]
