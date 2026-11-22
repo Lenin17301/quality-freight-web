@@ -1,12 +1,13 @@
----
+﻿---
 // src/components/ContactForm.astro
+import QuoteWizard from './QuoteWizard.astro';
+
 interface Props {
   lang?: 'es' | 'en';
 }
 
 const { lang = 'es' } = Astro.props;
 
-// Reemplaza este correo cuando Marley te confirme el buzón oficial de Quality
 const destinationEmail = "lceballos17301@gmail.com";
 const anchorId = lang === 'es' ? 'cotizador' : 'quote';
 
@@ -15,47 +16,13 @@ const t = {
     badge: "Consulta Gratis",
     title: "Solicitar una ",
     titleBold: "cotización",
-    description: "Para solicitar cotizaciones por favor llenar el formulario a continuación o comuníquese con nosotros a través de los números de teléfonos +58 212.762.26.92 y +58 212.762.26.95",
-    subject: "Nueva solicitud de cotización - Quality Freight Service",
-    name: "Nombre y apellido",
-    email: "Email",
-    transportType: "Tipo de transporte",
-    aereo: "Aéreo",
-    maritimo: "Marítimo",
-    terrestre: "Terrestre",
-    cargoType: "Tipo de carga",
-    general: "Mercancía General",
-    perishable: "Alimentos / Perecederos",
-    message: "Mensaje",
-    checkbox: "Acepto que mis datos enviados se recopilan y almacenan.",
-    button: "Solicitud de cotización",
-    sending: "Enviando solicitud...",
-    successTitle: "¡Solicitud enviada con éxito!",
-    successMsg: "Hemos recibido tus datos. Un especialista de Quality Freight Service te responderá a la brevedad.",
-    errorMsg: "Hubo un problema al enviar el formulario. Por favor intenta de nuevo o contáctanos vía telefónica."
+    description: "Para solicitar cotizaciones por favor complete el asistente a continuación o comuníquese con nosotros a través de los números de teléfonos +58 212.762.26.92 y +58 212.762.26.95"
   },
   en: {
     badge: "Free Consultation",
     title: "Request a ",
     titleBold: "quote",
-    description: "To request a quote, please fill out the form below or contact us at +58 212.762.26.92 and +58 212.762.26.95",
-    subject: "New Quote Request - Quality Freight Service",
-    name: "Full Name",
-    email: "Email",
-    transportType: "Transport Type",
-    aereo: "Air",
-    maritimo: "Ocean",
-    terrestre: "Ground",
-    cargoType: "Cargo Type",
-    general: "General Merchandise",
-    perishable: "Food / Perishables",
-    message: "Message",
-    checkbox: "I accept that my submitted data is collected and stored.",
-    button: "Submit Request",
-    sending: "Sending request...",
-    successTitle: "Request sent successfully!",
-    successMsg: "We have received your inquiry. A Quality Freight Service specialist will get back to you shortly.",
-    errorMsg: "There was an issue sending your request. Please try again or reach us by phone."
+    description: "To request a quote, please complete the wizard below or contact us at +58 212.762.26.92 and +58 212.762.26.95"
   }
 };
 
@@ -63,104 +30,17 @@ const text = t[lang];
 ---
 
 <section id={anchorId} class="py-24 px-6 bg-stone-50 border-t border-stone-200 scroll-mt-28">
-    <div class="max-w-4xl mx-auto bg-white p-10 md:p-16 rounded-[2.5rem] shadow-sm border border-stone-100">
-        <div class="mb-12">
-            <span class="text-[#BAD700] font-black tracking-[0.2em] uppercase text-xs mb-4 block">{text.badge}</span>
-            <h2 class="text-3xl md:text-5xl font-light text-[#002845] mb-6">
+    <div class="max-w-4xl mx-auto bg-white p-8 md:p-14 rounded-[2.5rem] shadow-sm border border-stone-100">
+        <div class="mb-10">
+            <span class="text-[#BAD700] font-black tracking-[0.2em] uppercase text-xs mb-3 block">{text.badge}</span>
+            <h2 class="text-3xl md:text-5xl font-light text-[#002845] mb-4">
                 {text.title}<span class="font-black">{text.titleBold}</span>
             </h2>
-            <p class="text-slate-500 font-light leading-relaxed">
+            <p class="text-slate-500 font-light leading-relaxed text-sm md:text-base">
                 {text.description}
             </p>
         </div>
-        
-        <form 
-            action={`https://formsubmit.co/${destinationEmail}`} 
-            method="POST" 
-            class="space-y-6 qfs-contact-form"
-            data-ajax-url={`https://formsubmit.co/ajax/${destinationEmail}`}
-            data-sending={text.sending}
-            data-default-btn={text.button}
-            data-error={text.errorMsg}
-        >
-            <input type="hidden" name="_subject" value={text.subject} />
-            <input type="hidden" name="_template" value="table" />
-            <input type="hidden" name="_captcha" value="false" />
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <input type="text" name="nombre" aria-label={text.name} placeholder={text.name} required class="w-full p-4 bg-stone-50 border-none rounded-xl outline-none focus:ring-2 focus:ring-[#002845] transition-all" />
-                <input type="email" name="email" aria-label={text.email} placeholder={text.email} required class="w-full p-4 bg-stone-50 border-none rounded-xl outline-none focus:ring-2 focus:ring-[#002845] transition-all" />
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <select name="transporte" aria-label={text.transportType} class="w-full p-4 bg-stone-50 border-none rounded-xl outline-none focus:ring-2 focus:ring-[#002845] transition-all text-slate-700">
-                    <option value="">{text.transportType}</option>
-                    <option value="aereo">{text.aereo}</option>
-                    <option value="maritimo">{text.maritimo}</option>
-                    <option value="terrestre">{text.terrestre}</option>
-                </select>
-                <select name="carga" aria-label={text.cargoType} class="w-full p-4 bg-stone-50 border-none rounded-xl outline-none focus:ring-2 focus:ring-[#002845] transition-all text-slate-700">
-                    <option value="">{text.cargoType}</option>
-                    <option value="general">{text.general}</option>
-                    <option value="alimentos">{text.perishable}</option>
-                </select>
-            </div>
-
-            <textarea name="message" rows="4" aria-label={text.message} placeholder={text.message} class="w-full p-4 bg-stone-50 border-none rounded-xl outline-none resize-none focus:ring-2 focus:ring-[#002845] transition-all text-slate-700"></textarea>
-
-            <div class="flex items-center gap-3">
-                <input type="checkbox" id={`acepto-${lang}`} required class="accent-[#002845] w-5 h-5 cursor-pointer" />
-                <label for={`acepto-${lang}`} class="text-sm text-slate-500 cursor-pointer">{text.checkbox}</label>
-            </div>
-
-            <button type="submit" class="w-full bg-[#002845] text-white font-bold py-5 rounded-2xl hover:bg-[#BAD700] hover:text-[#002845] transition-all mt-4 tracking-wide shadow-lg shadow-[#002845]/20 cursor-pointer">
-                {text.button}
-            </button>
-
-            <!-- Mensaje de confirmación en línea -->
-            <div class="qfs-form-status hidden p-5 rounded-2xl bg-[#BAD700]/20 border border-[#BAD700] text-[#002845]" role="status">
-                <p class="font-black text-base">{text.successTitle}</p>
-                <p class="text-sm mt-1 text-slate-700">{text.successMsg}</p>
-            </div>
-        </form>
+        <QuoteWizard lang={lang} destinationEmail={destinationEmail} />
     </div>
 </section>
-
-<script>
-    document.querySelectorAll<HTMLFormElement>('.qfs-contact-form').forEach((form) => {
-        form.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const btn = form.querySelector<HTMLButtonElement>('button[type="submit"]');
-            const statusBox = form.querySelector<HTMLDivElement>('.qfs-form-status');
-            const ajaxUrl = form.dataset.ajaxUrl;
-            if (!btn || !ajaxUrl) return;
-
-            btn.disabled = true;
-            btn.textContent = form.dataset.sending || 'Enviando...';
-
-            try {
-                const formData = new FormData(form);
-                const response = await fetch(ajaxUrl, {
-                    method: 'POST',
-                    headers: { 'Accept': 'application/json' },
-                    body: formData
-                });
-
-            if (response.ok) {
-                form.reset();
-                if (statusBox) {
-                    statusBox.classList.remove('hidden');
-                    statusBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-                }
-                } else {
-                    alert(form.dataset.error);
-                }
-            } catch {
-                alert(form.dataset.error);
-            } finally {
-                btn.disabled = false;
-                btn.textContent = form.dataset.defaultBtn || 'Enviar';
-            }
-        });
-    });
-</script>

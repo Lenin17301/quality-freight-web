@@ -1,0 +1,1536 @@
+---
+// src/components/QuoteWizard.astro
+interface Props {
+    lang?: 'es' | 'en';
+    destinationEmail?: string;
+}
+
+const { lang = 'es', destinationEmail = 'lceballos17301@gmail.com' } = Astro.props;
+
+const uid = `qw-${lang}-${Math.random().toString(36).slice(2, 7)}`;
+
+const t = {
+    es: {
+        subject: "Nueva solicitud de cotización - Quality Freight Service, C.A.",
+        iframeTitle: "Envío de archivo adjunto",
+        requiredTag: "*",
+        optionalTag: "(Opcional)",
+        stepLabels: {
+            personal: "1. Datos",
+            route: "2. Ruta",
+            modality: "3. Equipo",
+            cargo: "Carga",
+            closing: "Envío"
+        },
+        // Step 1
+        s1Title: "Información Personal",
+        s1Sub: "Datos de contacto para enviarle su propuesta comercial.",
+        nameLabel: "Nombre y Apellido",
+        namePh: "Ej: Carlos Mendoza",
+        companyLabel: "Empresa",
+        companyPh: "Nombre de su empresa",
+        emailLabel: "Correo Corporativo",
+        emailPh: "nombre@empresa.com",
+        phoneLabel: "Teléfono",
+        phonePh: "+58 412 000 0000",
+        // Step 2
+        s2Title: "Ruta y Servicios",
+        s2Sub: "Seleccione el modo de transporte y los puntos de origen y destino.",
+        modeLabel: "Modo de Transporte",
+        modes: {
+            air: "Aéreo",
+            ocean: "Marítimo",
+            ground: "Terrestre",
+            door: "Door to Door"
+        },
+        originCountryLabel: "País de Origen",
+        originCountryPh: "Ej: Estados Unidos, China, España...",
+        destCountryLabel: "País de Destino",
+        destCountryPh: "Ej: Venezuela, Colombia, Panamá...",
+        originDynamic: {
+            ocean: "Origen (POL - Puerto de Embarque)",
+            air: "Origen (AOL - Aeropuerto de Embarque)",
+            ground: "Origen (País, Ciudad, Código Postal)",
+            default: "Origen (Ciudad / Puerto / Aeropuerto)"
+        },
+        destDynamic: {
+            ocean: "Destino (POD - Puerto de Descarga)",
+            air: "Destino (AOD - Aeropuerto de Descarga)",
+            ground: "Destino (País, Ciudad, Código Postal)",
+            default: "Destino (Ciudad / Puerto / Aeropuerto)"
+        },
+        originPlacePh: {
+            ocean: "Buscar puerto POL (ej. Miami, Shanghai, La Guaira)...",
+            air: "Buscar aeropuerto AOL (ej. MIA, MAD, CCS)...",
+            ground: "Ciudad y código postal (ej. Doral, FL 33172)...",
+            default: "Seleccione primero un modo o escriba..."
+        },
+        destPlacePh: {
+            ocean: "Buscar puerto POD (ej. La Guaira, Puerto Cabello)...",
+            air: "Buscar aeropuerto AOD (ej. Maiquetía CCS, VLN)...",
+            ground: "Ciudad y código postal (ej. Caracas, 1010)...",
+            default: "Seleccione primero un modo o escriba..."
+        },
+        incotermLabel: "INCOTERM",
+        incotermTooltip: "Si no estás seguro, déjalo en blanco",
+        incotermBlankOption: "No estoy seguro / Dejar en blanco",
+        incotermDefaultNote: "No especificado — Cotizar solo flete bajo FOB o FCA",
+        // Step 3
+        s3Title: "Modalidad y Equipamiento Marítimo",
+        s3Sub: "Indique la modalidad de embarque marítimo y el equipo requerido.",
+        modalityLabel: "Modalidad",
+        modalities: {
+            fcl: { title: "FCL", desc: "Contenedor Completo" },
+            lcl: { title: "LCL", desc: "Carga Consolidada" },
+            breakbulk: { title: "Carga Suelta", desc: "Breakbulk / Sobredimensionada" }
+        },
+        equipmentLabel: "Tipo de Equipo (Seleccione cantidades)",
+        equipmentError: "Seleccione al menos 1 contenedor para continuar con FCL.",
+        equipments: [
+            { key: "20' ST", label: "20' ST", group: "Estándar" },
+            { key: "40' ST", label: "40' ST", group: "Estándar" },
+            { key: "40' HC", label: "40' HC", group: "High Cube" },
+            { key: "Reefer (20'/40')", label: "Reefer", group: "Equipo Especial" },
+            { key: "Open Top", label: "Open Top", group: "Equipo Especial" },
+            { key: "Flat Rack", label: "Flat Rack", group: "Equipo Especial" }
+        ],
+        // Step 4
+        s4Title: "Detalles de la Mercancía y Carga",
+        s4Sub: "Especifique las características físicas de su carga para calcular tarifas exactas.",
+        productLabel: "Tipo de Producto",
+        productPh: "Ej: Repuestos de autos, textiles, electrónicos",
+        packagingLabel: "Embalaje / Empaquetado",
+        packagingPlaceholder: "Seleccione el tipo de embalaje...",
+        packagings: [
+            { value: "Pallets", label: "Pallets" },
+            { value: "Cajas", label: "Cajas" },
+            { value: "Big Bags", label: "Big Bags" },
+            { value: "Otro", label: "Otro" }
+        ],
+        packagingOtherLabel: "Por favor, especifica el embalaje",
+        packagingOtherPh: "Ej: Huacales de madera, tambores metálicos, rollos...",
+        // FCL fields
+        containersCountLabel: "Cantidad de Contenedores",
+        fclEquipmentSummaryPrefix: "Equipos seleccionados:",
+        // LCL / Air / Ground fields
+        packagesCountLabel: "Cantidad de Bultos",
+        totalWeightLabel: "Peso Total",
+        volumeCbmLabel: "Volumen Total (CBM)",
+        calcToggleBtn: "+ Agregar dimensiones por bulto (Largo x Ancho x Alto)",
+        calcHideBtn: "− Ocultar calculadora de dimensiones",
+        dimUnitLabel: "Unidad de medida general",
+        dimUnitIn: "Pulgadas (in)",
+        dimUnitCm: "Centímetros (cm)",
+        dimLength: "Largo",
+        dimWidth: "Ancho",
+        dimHeight: "Alto",
+        dimCalcHint: "El volumen total (CBM) se calcula automáticamente según la cantidad de bultos.",
+        // IMO
+        imoQuestion: "¿Tu carga es considerada peligrosa (IMO)?",
+        imoSub: "Mercancía regulada con código UN / Clase de peligro.",
+        imoNo: "No",
+        imoYes: "Sí",
+        msdsLabel: "Adjuntar Hoja de Seguridad (MSDS)",
+        msdsHint: "PDF, Word o Imagen (Máx. 5 MB)",
+        msdsSizeError: "El archivo MSDS supera el límite de 5 MB permitido por el servidor de correo.",
+        // Step 5
+        s5Title: "Cierre y Comentarios Adicionales",
+        s5Sub: "Revise el resumen de su solicitud y añada cualquier instrucción especial.",
+        summaryTitle: "Resumen de Cotización",
+        commentsLabel: "Comentarios Adicionales",
+        commentsPh: "Ej: Necesito recolección con camión con rampa, la carga no se puede apilar, requiere control de temperatura, etc.",
+        termsLabel: "Acepto que mis datos sean almacenados para contacto comercial y envío de cotizaciones.",
+        // Buttons & status
+        prevBtn: "← Anterior",
+        nextBtn: "Siguiente →",
+        submitBtn: "Solicitar Cotización",
+        sendingBtn: "Enviando solicitud...",
+        successTitle: "¡Solicitud enviada con éxito!",
+        successMsg: "Hemos recibido los detalles de tu carga. Un especialista de Quality Freight Service, C.A. te enviará tu cotización a la brevedad.",
+        errorMsg: "Hubo un problema al enviar tu solicitud. Por favor intenta de nuevo.",
+        connErrorMsg: "Error de conexión. Verifica tu internet e intenta de nuevo.",
+        selectModeAlert: "Por favor seleccione un Modo de Transporte para continuar.",
+        selectModalityAlert: "Por favor seleccione una Modalidad marítima (FCL, LCL o Carga Suelta)."
+    },
+    en: {
+        subject: "New quote request - Quality Freight Service, C.A. (EN)",
+        iframeTitle: "Attachment upload",
+        requiredTag: "*",
+        optionalTag: "(Optional)",
+        stepLabels: {
+            personal: "1. Info",
+            route: "2. Route",
+            modality: "3. Equipment",
+            cargo: "Cargo",
+            closing: "Submit"
+        },
+        // Step 1
+        s1Title: "Personal Information",
+        s1Sub: "Contact details to send your customized commercial proposal.",
+        nameLabel: "Full Name",
+        namePh: "Ex: John Doe",
+        companyLabel: "Company",
+        companyPh: "Your company name",
+        emailLabel: "Corporate Email",
+        emailPh: "name@company.com",
+        phoneLabel: "Phone Number",
+        phonePh: "+1 (305) 000-0000",
+        // Step 2
+        s2Title: "Route & Services",
+        s2Sub: "Select the transport mode along with origin and destination points.",
+        modeLabel: "Transport Mode",
+        modes: {
+            air: "Air Freight",
+            ocean: "Ocean Freight",
+            ground: "Ground Freight",
+            door: "Door to Door"
+        },
+        originCountryLabel: "Origin Country",
+        originCountryPh: "Ex: United States, China, Spain...",
+        destCountryLabel: "Destination Country",
+        destCountryPh: "Ex: Venezuela, Colombia, Panama...",
+        originDynamic: {
+            ocean: "Origin (POL - Port of Loading)",
+            air: "Origin (AOL - Airport of Loading)",
+            ground: "Origin (Country, City, Postal Code)",
+            default: "Origin (City / Port / Airport)"
+        },
+        destDynamic: {
+            ocean: "Destination (POD - Port of Discharge)",
+            air: "Destination (AOD - Airport of Discharge)",
+            ground: "Destination (Country, City, Postal Code)",
+            default: "Destination (City / Port / Airport)"
+        },
+        originPlacePh: {
+            ocean: "Search POL port (ex. Miami, Shanghai, La Guaira)...",
+            air: "Search AOL airport (ex. MIA, MAD, CCS)...",
+            ground: "City & postal code (ex. Doral, FL 33172)...",
+            default: "Select a transport mode first or type..."
+        },
+        destPlacePh: {
+            ocean: "Search POD port (ex. La Guaira, Puerto Cabello)...",
+            air: "Search AOD airport (ex. Maiquetia CCS, VLN)...",
+            ground: "City & postal code (ex. Caracas, 1010)...",
+            default: "Select a transport mode first or type..."
+        },
+        incotermLabel: "INCOTERM",
+        incotermTooltip: "If you are not sure, leave it blank",
+        incotermBlankOption: "Not sure / Leave blank",
+        incotermDefaultNote: "Not specified — Quote freight only under FOB or FCA",
+        // Step 3
+        s3Title: "Ocean Modality & Equipment",
+        s3Sub: "Specify the ocean shipping modality and required container equipment.",
+        modalityLabel: "Modality",
+        modalities: {
+            fcl: { title: "FCL", desc: "Full Container Load" },
+            lcl: { title: "LCL", desc: "Less than Container Load" },
+            breakbulk: { title: "Breakbulk", desc: "Loose / Oversized Cargo" }
+        },
+        equipmentLabel: "Equipment Type (Select quantities)",
+        equipmentError: "Please select at least 1 container to proceed with FCL.",
+        equipments: [
+            { key: "20' ST", label: "20' ST", group: "Standard" },
+            { key: "40' ST", label: "40' ST", group: "Standard" },
+            { key: "40' HC", label: "40' HC", group: "High Cube" },
+            { key: "Reefer (20'/40')", label: "Reefer", group: "Special Equipment" },
+            { key: "Open Top", label: "Open Top", group: "Special Equipment" },
+            { key: "Flat Rack", label: "Flat Rack", group: "Special Equipment" }
+        ],
+        // Step 4
+        s4Title: "Merchandise & Cargo Details",
+        s4Sub: "Provide physical cargo specifications to calculate accurate freight rates.",
+        productLabel: "Product Type",
+        productPh: "Ex: Auto parts, textiles, electronics",
+        packagingLabel: "Packaging Type",
+        packagingPlaceholder: "Select packaging type...",
+        packagings: [
+            { value: "Pallets", label: "Pallets" },
+            { value: "Boxes", label: "Boxes" },
+            { value: "Big Bags", label: "Big Bags" },
+            { value: "Other", label: "Other" }
+        ],
+        packagingOtherLabel: "Please specify the packaging",
+        packagingOtherPh: "Ex: Wooden crates, steel drums, rolls...",
+        // FCL fields
+        containersCountLabel: "Number of Containers",
+        fclEquipmentSummaryPrefix: "Selected equipment:",
+        // LCL / Air / Ground fields
+        packagesCountLabel: "Number of Packages / Pieces",
+        totalWeightLabel: "Total Weight",
+        volumeCbmLabel: "Total Volume (CBM)",
+        calcToggleBtn: "+ Add dimensions per package (Length x Width x Height)",
+        calcHideBtn: "− Hide dimensions calculator",
+        dimUnitLabel: "General measurement unit",
+        dimUnitIn: "Inches (in)",
+        dimUnitCm: "Centimeters (cm)",
+        dimLength: "Length",
+        dimWidth: "Width",
+        dimHeight: "Height",
+        dimCalcHint: "Total volume (CBM) is automatically calculated based on package count.",
+        // IMO
+        imoQuestion: "Is your cargo considered dangerous goods (IMO)?",
+        imoSub: "Regulated goods with UN number / Hazard Class.",
+        imoNo: "No",
+        imoYes: "Yes",
+        msdsLabel: "Attach Material Safety Data Sheet (MSDS)",
+        msdsHint: "PDF, Word, or Image (Max 5 MB)",
+        msdsSizeError: "The MSDS file exceeds the 5 MB limit allowed by the mail server.",
+        // Step 5
+        s5Title: "Closing & Additional Comments",
+        s5Sub: "Review your request summary and add any special handling instructions.",
+        summaryTitle: "Quote Summary",
+        commentsLabel: "Additional Comments",
+        commentsPh: "Ex: Need liftgate truck pickup, cargo is non-stackable, requires temperature control, etc.",
+        termsLabel: "I agree that my data will be stored for commercial contact and quoting purposes.",
+        // Buttons & status
+        prevBtn: "← Previous",
+        nextBtn: "Next →",
+        submitBtn: "Request Quote",
+        sendingBtn: "Sending request...",
+        successTitle: "Request sent successfully!",
+        successMsg: "We have received your cargo details. A Quality Freight Service, C.A. specialist will send your quote shortly.",
+        errorMsg: "There was an issue sending your request. Please try again.",
+        connErrorMsg: "Connection error. Please check your internet connection and try again.",
+        selectModeAlert: "Please select a Transport Mode to continue.",
+        selectModalityAlert: "Please select an ocean Modality (FCL, LCL, or Breakbulk)."
+    }
+};
+
+const text = t[lang];
+
+const countriesList = [
+    "Venezuela", "Estados Unidos / United States", "China", "Panamá / Panama", "Colombia",
+    "España / Spain", "Alemania / Germany", "Italia / Italy", "Brasil / Brazil", "México / Mexico",
+    "Chile", "Perú / Peru", "Ecuador", "Argentina", "Países Bajos / Netherlands",
+    "Reino Unido / United Kingdom", "Francia / France", "Turquía / Turkey", "India",
+    "Japón / Japan", "Corea del Sur / South Korea", "Taiwán / Taiwan", "Canadá / Canada",
+    "Emiratos Árabes Unidos / UAE", "República Dominicana / Dominican Republic", "Costa Rica"
+];
+
+const portsList = [
+    "La Guaira (VELAG) - Venezuela", "Puerto Cabello (VEPBL) - Venezuela", "Guanta (VEGUA) - Venezuela",
+    "Maracaibo (VEMAR) - Venezuela", "El Guamache (VEEGU) - Venezuela",
+    "Miami (USMIA) - USA", "Port Everglades (USPEF) - USA", "Houston (USHOU) - USA",
+    "Savannah (USSAV) - USA", "New York / Newark (USNYC) - USA", "Los Angeles (USLAX) - USA",
+    "Long Beach (USLGB) - USA", "Charleston (USCHS) - USA",
+    "Manzanillo (PAMIT) - Panamá", "Balboa (PABLB) - Panamá", "Colón (PAONX) - Panamá",
+    "Cartagena (COCTG) - Colombia", "Buenaventura (COBUN) - Colombia", "Barranquilla (COBAQ) - Colombia",
+    "Shanghai (CNSHA) - China", "Ningbo (CNNGB) - China", "Shenzhen / Yantian (CNSZX) - China",
+    "Qingdao (CNTAO) - China", "Guangzhou / Nansha (CNCAN) - China", "Xiamen (CNXMN) - China",
+    "Hong Kong (HKHKG)", "Busan (KRPUS) - Corea del Sur", "Kaohsiung (TWKHH) - Taiwán",
+    "Rotterdam (NLRTM) - Países Bajos", "Antwerp (BEANR) - Bélgica", "Hamburg (DEHAM) - Alemania",
+    "Valencia (ESVLC) - España", "Algeciras (ESALG) - España", "Barcelona (ESBCN) - España",
+    "Genoa (ITGOA) - Italia", "Santos (BRSSZ) - Brasil", "Callao (PECLL) - Perú",
+    "Guayaquil (ECGYE) - Ecuador", "San Antonio (CLSAI) - Chile", "Veracruz (MXVER) - México"
+];
+
+const airportsList = [
+    "Caracas - Maiquetía (CCS) - Venezuela", "Valencia - Arturo Michelena (VLN) - Venezuela",
+    "Maracaibo - La Chinita (MAR) - Venezuela", "Barcelona (BLA) - Venezuela",
+    "Miami International (MIA) - USA", "New York - JFK (JFK) - USA", "Los Angeles (LAX) - USA",
+    "Houston - George Bush (IAH) - USA", "Atlanta (ATL) - USA", "Chicago - O'Hare (ORD) - USA",
+    "Panamá - Tocumen (PTY) - Panamá", "Bogotá - El Dorado (BOG) - Colombia",
+    "Medellín - José María Córdova (MDE) - Colombia", "Madrid - Barajas (MAD) - España",
+    "Barcelona - El Prat (BCN) - España", "Frankfurt (FRA) - Alemania",
+    "Amsterdam - Schiphol (AMS) - Países Bajos", "Paris - Charles de Gaulle (CDG) - Francia",
+    "London - Heathrow (LHR) - Reino Unido", "Milan - Malpensa (MXP) - Italia",
+    "Shanghai - Pudong (PVG) - China", "Guangzhou - Baiyun (CAN) - China",
+    "Shenzhen - Bao'an (SZX) - China", "Beijing - Capital (PEK) - China",
+    "Hong Kong International (HKG)", "Tokyo - Narita (NRT) - Japón",
+    "Seoul - Incheon (ICN) - Corea del Sur", "São Paulo - Guarulhos (GRU) - Brasil",
+    "Santiago (SCL) - Chile", "Lima - Jorge Chávez (LIM) - Perú", "Ciudad de México (MEX / NLU)"
+];
+
+const citiesList = [
+    "Caracas, Distrito Capital (1010) - Venezuela", "Valencia, Carabobo (2001) - Venezuela",
+    "Maracay, Aragua (2101) - Venezuela", "Barquisimeto, Lara (3001) - Venezuela",
+    "Maracaibo, Zulia (4001) - Venezuela", "Barcelona / Puerto La Cruz, Anzoátegui (6001) - Venezuela",
+    "Puerto Ordaz, Bolívar (8050) - Venezuela", "San Cristóbal, Táchira (5001) - Venezuela",
+    "Miami, FL (33166) - USA", "Doral, FL (33172) - USA", "Houston, TX (77032) - USA",
+    "Laredo, TX (78045) - USA", "Los Angeles, CA (90040) - USA", "New York, NY (10001) - USA",
+    "Bogotá, Cundinamarca (110111) - Colombia", "Medellín, Antioquia (050001) - Colombia",
+    "Cúcuta, Norte de Santander (540001) - Colombia", "Ciudad de Panamá - Panamá",
+    "Madrid (28001) - España", "Valencia (46001) - España", "Barcelona (08001) - España",
+    "Shenzhen, Guangdong (518000) - China", "Yiwu, Zhejiang (322000) - China",
+    "Guangzhou, Guangdong (510000) - China", "Shanghai (200000) - China"
+];
+---
+
+<div
+    class="qfs-quote-wizard relative z-10"
+    data-quote-wizard
+    data-lang={lang}
+    data-uid={uid}
+    data-strings={JSON.stringify(text)}
+>
+    <!-- Datalists de autocompletado -->
+    <datalist id={`${uid}-countries`}>
+        {countriesList.map((item) => <option value={item} />)}
+    </datalist>
+    <datalist id={`${uid}-ports`}>
+        {portsList.map((item) => <option value={item} />)}
+    </datalist>
+    <datalist id={`${uid}-airports`}>
+        {airportsList.map((item) => <option value={item} />)}
+    </datalist>
+    <datalist id={`${uid}-cities`}>
+        {citiesList.map((item) => <option value={item} />)}
+    </datalist>
+
+    <!-- Barra de Progreso del Wizard -->
+    <div class="mb-8" aria-label="Progreso de solicitud">
+        <div class="flex items-center justify-between gap-2 mb-3" data-qw-stepper></div>
+        <div class="w-full h-2 bg-[#E8ECEE] rounded-full overflow-hidden">
+            <div data-qw-progress-bar class="h-full bg-[#BAD700] transition-all duration-300 rounded-full" style="width: 25%"></div>
+        </div>
+    </div>
+
+    <!-- Iframe oculto para envío multipart con archivo MSDS adjunto sin recargar la página -->
+    <iframe name={`${uid}-upload-frame`} data-qw-iframe class="hidden" title={text.iframeTitle}></iframe>
+
+    <form
+        action={`https://formsubmit.co/${destinationEmail}`}
+        method="POST"
+        enctype="multipart/form-data"
+        data-ajax-url={`https://formsubmit.co/ajax/${destinationEmail}`}
+        data-qw-form
+        novalidate
+        class="space-y-6"
+    >
+        <!-- Campos ocultos estructurados para FormSubmit -->
+        <input type="hidden" name="_subject" value={text.subject} />
+        <input type="hidden" name="_template" value="table" />
+        <input type="hidden" name="_captcha" value="false" />
+
+        <input type="hidden" name="Ruta_Origen_Completa" data-qw-hidden-origin />
+        <input type="hidden" name="Ruta_Destino_Completa" data-qw-hidden-dest />
+        <input type="hidden" name="Incoterm_Aplicado" data-qw-hidden-incoterm />
+        <input type="hidden" name="Modalidad_y_Equipo" data-qw-hidden-modality />
+        <input type="hidden" name="Detalle_Medidas_y_Peso" data-qw-hidden-dimensions />
+        <input type="hidden" name="Carga_Peligrosa_IMO" data-qw-hidden-imo />
+
+        <!-- ========================================================= -->
+        <!-- PASO 1: INFORMACIÓN PERSONAL                              -->
+        <!-- ========================================================= -->
+        <div data-qw-step="1" class="space-y-6">
+            <div class="border-b border-stone-100 pb-4">
+                <h3 class="text-xl font-black text-[#002845]">{text.s1Title}</h3>
+                <p class="text-xs text-gray-500 mt-1">{text.s1Sub}</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label for={`${uid}-name`} class="block text-xs font-bold text-[#002845] mb-2 uppercase tracking-wide">
+                        {text.nameLabel} <span class="text-red-500">{text.requiredTag}</span>
+                    </label>
+                    <input
+                        type="text"
+                        id={`${uid}-name`}
+                        name="Nombre_y_Apellido"
+                        placeholder={text.namePh}
+                        required
+                        class="w-full bg-[#E8ECEE] border-2 border-transparent rounded-xl px-4 py-3 text-slate-700 focus:border-[#BAD700] focus:bg-white outline-none transition-all"
+                    />
+                </div>
+                <div>
+                    <label for={`${uid}-company`} class="block text-xs font-bold text-[#002845] mb-2 uppercase tracking-wide">
+                        {text.companyLabel} <span class="text-red-500">{text.requiredTag}</span>
+                    </label>
+                    <input
+                        type="text"
+                        id={`${uid}-company`}
+                        name="Empresa"
+                        placeholder={text.companyPh}
+                        required
+                        class="w-full bg-[#E8ECEE] border-2 border-transparent rounded-xl px-4 py-3 text-slate-700 focus:border-[#BAD700] focus:bg-white outline-none transition-all"
+                    />
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label for={`${uid}-email`} class="block text-xs font-bold text-[#002845] mb-2 uppercase tracking-wide">
+                        {text.emailLabel} <span class="text-red-500">{text.requiredTag}</span>
+                    </label>
+                    <input
+                        type="email"
+                        id={`${uid}-email`}
+                        name="email"
+                        placeholder={text.emailPh}
+                        required
+                        class="w-full bg-[#E8ECEE] border-2 border-transparent rounded-xl px-4 py-3 text-slate-700 focus:border-[#BAD700] focus:bg-white outline-none transition-all"
+                    />
+                </div>
+                <div>
+                    <label for={`${uid}-phone`} class="block text-xs font-bold text-[#002845] mb-2 uppercase tracking-wide">
+                        {text.phoneLabel} <span class="text-red-500">{text.requiredTag}</span>
+                    </label>
+                    <input
+                        type="tel"
+                        id={`${uid}-phone`}
+                        name="Telefono"
+                        placeholder={text.phonePh}
+                        required
+                        class="w-full bg-[#E8ECEE] border-2 border-transparent rounded-xl px-4 py-3 text-slate-700 focus:border-[#BAD700] focus:bg-white outline-none transition-all"
+                    />
+                </div>
+            </div>
+        </div>
+
+        <!-- ========================================================= -->
+        <!-- PASO 2: RUTA Y SERVICIOS                                  -->
+        <!-- ========================================================= -->
+        <div data-qw-step="2" class="hidden space-y-6">
+            <div class="border-b border-stone-100 pb-4">
+                <h3 class="text-xl font-black text-[#002845]">{text.s2Title}</h3>
+                <p class="text-xs text-gray-500 mt-1">{text.s2Sub}</p>
+            </div>
+
+            <!-- 1. Modo de Transporte (Tarjetas visuales grandes) -->
+            <div>
+                <span class="block text-xs font-bold text-[#002845] mb-3 uppercase tracking-wide">
+                    {text.modeLabel} <span class="text-red-500">{text.requiredTag}</span>
+                </span>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-3.5">
+                    <!-- Aéreo -->
+                    <label class="cursor-pointer group">
+                        <input type="radio" name="Modo_de_Transporte" value="Aéreo" class="sr-only peer" required data-qw-mode />
+                        <div class="h-full rounded-2xl border-2 border-stone-200 bg-[#E8ECEE]/50 p-4 text-center flex flex-col items-center justify-center gap-2.5 transition-all peer-checked:border-[#BAD700] peer-checked:bg-[#002845] peer-checked:text-white group-hover:border-[#BAD700]">
+                            <svg class="w-8 h-8 text-[#002845] peer-checked:text-[#BAD700] group-has-[:checked]:text-[#BAD700] transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                            </svg>
+                            <span class="font-black text-sm">{text.modes.air}</span>
+                        </div>
+                    </label>
+
+                    <!-- Marítimo -->
+                    <label class="cursor-pointer group">
+                        <input type="radio" name="Modo_de_Transporte" value="Marítimo" class="sr-only peer" data-qw-mode />
+                        <div class="h-full rounded-2xl border-2 border-stone-200 bg-[#E8ECEE]/50 p-4 text-center flex flex-col items-center justify-center gap-2.5 transition-all peer-checked:border-[#BAD700] peer-checked:bg-[#002845] peer-checked:text-white group-hover:border-[#BAD700]">
+                            <svg class="w-8 h-8 text-[#002845] group-has-[:checked]:text-[#BAD700] transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 17l1.5 2h15L21 17M4 13l1.5-5h13L20 13M12 3v5M8 8V5h8v3M2 21c2 0 3-1 5-1s3 1 5 1 3-1 5-1 3 1 5 1" />
+                            </svg>
+                            <span class="font-black text-sm">{text.modes.ocean}</span>
+                        </div>
+                    </label>
+
+                    <!-- Terrestre -->
+                    <label class="cursor-pointer group">
+                        <input type="radio" name="Modo_de_Transporte" value="Terrestre" class="sr-only peer" data-qw-mode />
+                        <div class="h-full rounded-2xl border-2 border-stone-200 bg-[#E8ECEE]/50 p-4 text-center flex flex-col items-center justify-center gap-2.5 transition-all peer-checked:border-[#BAD700] peer-checked:bg-[#002845] peer-checked:text-white group-hover:border-[#BAD700]">
+                            <svg class="w-8 h-8 text-[#002845] group-has-[:checked]:text-[#BAD700] transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0zM13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1" />
+                            </svg>
+                            <span class="font-black text-sm">{text.modes.ground}</span>
+                        </div>
+                    </label>
+
+                    <!-- Door to Door -->
+                    <label class="cursor-pointer group">
+                        <input type="radio" name="Modo_de_Transporte" value="Door to Door" class="sr-only peer" data-qw-mode />
+                        <div class="h-full rounded-2xl border-2 border-stone-200 bg-[#E8ECEE]/50 p-4 text-center flex flex-col items-center justify-center gap-2.5 transition-all peer-checked:border-[#BAD700] peer-checked:bg-[#002845] peer-checked:text-white group-hover:border-[#BAD700]">
+                            <svg class="w-8 h-8 text-[#002845] group-has-[:checked]:text-[#BAD700] transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                            </svg>
+                            <span class="font-black text-sm">{text.modes.door}</span>
+                        </div>
+                    </label>
+                </div>
+                <p data-qw-mode-error class="hidden text-xs font-bold text-red-600 mt-2">{text.selectModeAlert}</p>
+            </div>
+
+            <!-- 2. Origen (País + Punto Dinámico con Autocompletado) -->
+            <div class="bg-[#E8ECEE]/45 rounded-2xl p-5 border border-stone-200/70 space-y-4">
+                <p data-qw-origin-group-label class="text-xs font-black text-[#002845] uppercase tracking-wider">
+                    {text.originDynamic.default} <span class="text-red-500">{text.requiredTag}</span>
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label for={`${uid}-origin-country`} class="block text-[11px] font-bold text-slate-600 mb-1.5 uppercase">
+                            {text.originCountryLabel} <span class="text-red-500">{text.requiredTag}</span>
+                        </label>
+                        <input
+                            type="text"
+                            id={`${uid}-origin-country`}
+                            list={`${uid}-countries`}
+                            placeholder={text.originCountryPh}
+                            required
+                            data-qw-origin-country
+                            class="w-full bg-white border-2 border-stone-200 rounded-xl px-4 py-3 text-sm text-slate-700 focus:border-[#BAD700] outline-none transition-all"
+                        />
+                    </div>
+                    <div>
+                        <label for={`${uid}-origin-place`} data-qw-origin-place-label class="block text-[11px] font-bold text-slate-600 mb-1.5 uppercase">
+                            {text.originDynamic.default} <span class="text-red-500">{text.requiredTag}</span>
+                        </label>
+                        <input
+                            type="text"
+                            id={`${uid}-origin-place`}
+                            list={`${uid}-cities`}
+                            placeholder={text.originPlacePh.default}
+                            required
+                            data-qw-origin-place
+                            class="w-full bg-white border-2 border-stone-200 rounded-xl px-4 py-3 text-sm text-slate-700 focus:border-[#BAD700] outline-none transition-all"
+                        />
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. Destino (País + Punto Dinámico con Autocompletado) -->
+            <div class="bg-[#E8ECEE]/45 rounded-2xl p-5 border border-stone-200/70 space-y-4">
+                <p data-qw-dest-group-label class="text-xs font-black text-[#002845] uppercase tracking-wider">
+                    {text.destDynamic.default} <span class="text-red-500">{text.requiredTag}</span>
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label for={`${uid}-dest-country`} class="block text-[11px] font-bold text-slate-600 mb-1.5 uppercase">
+                            {text.destCountryLabel} <span class="text-red-500">{text.requiredTag}</span>
+                        </label>
+                        <input
+                            type="text"
+                            id={`${uid}-dest-country`}
+                            list={`${uid}-countries`}
+                            placeholder={text.destCountryPh}
+                            required
+                            data-qw-dest-country
+                            class="w-full bg-white border-2 border-stone-200 rounded-xl px-4 py-3 text-sm text-slate-700 focus:border-[#BAD700] outline-none transition-all"
+                        />
+                    </div>
+                    <div>
+                        <label for={`${uid}-dest-place`} data-qw-dest-place-label class="block text-[11px] font-bold text-slate-600 mb-1.5 uppercase">
+                            {text.destDynamic.default} <span class="text-red-500">{text.requiredTag}</span>
+                        </label>
+                        <input
+                            type="text"
+                            id={`${uid}-dest-place`}
+                            list={`${uid}-cities`}
+                            placeholder={text.destPlacePh.default}
+                            required
+                            data-qw-dest-place
+                            class="w-full bg-white border-2 border-stone-200 rounded-xl px-4 py-3 text-sm text-slate-700 focus:border-[#BAD700] outline-none transition-all"
+                        />
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. INCOTERM (Opcional con Tooltip) -->
+            <div>
+                <div class="flex items-center gap-2 mb-2">
+                    <label for={`${uid}-incoterm`} class="text-xs font-bold text-[#002845] uppercase tracking-wide">
+                        {text.incotermLabel} <span class="text-gray-400 font-normal normal-case">{text.optionalTag}</span>
+                    </label>
+                    <div class="relative group inline-flex items-center">
+                        <button
+                            type="button"
+                            aria-label={text.incotermTooltip}
+                            class="w-5 h-5 rounded-full bg-[#002845] text-[#BAD700] font-black text-xs inline-flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-[#BAD700]"
+                        >
+                            i
+                        </button>
+                        <div class="pointer-events-none opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-200 absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-60 bg-[#002845] text-white text-xs rounded-xl py-2 px-3 shadow-xl z-30 text-center">
+                            {text.incotermTooltip}
+                        </div>
+                    </div>
+                </div>
+                <select
+                    id={`${uid}-incoterm`}
+                    data-qw-incoterm
+                    class="w-full bg-[#E8ECEE] border-2 border-transparent rounded-xl px-4 py-3 text-slate-700 focus:border-[#BAD700] focus:bg-white outline-none transition-all"
+                >
+                    <option value="">{text.incotermBlankOption}</option>
+                    <option value="EXW">EXW — Ex Works (En Fábrica)</option>
+                    <option value="FCA">FCA — Free Carrier (Franco Transportista)</option>
+                    <option value="FAS">FAS — Free Alongside Ship (Franco al Costado del Buque)</option>
+                    <option value="FOB">FOB — Free On Board (Franco a Bordo)</option>
+                    <option value="CFR">CFR — Cost and Freight (Costo y Flete)</option>
+                    <option value="CIF">CIF — Cost, Insurance & Freight (Costo, Seguro y Flete)</option>
+                    <option value="CPT">CPT — Carriage Paid To (Transporte Pagado Hasta)</option>
+                    <option value="CIP">CIP — Carriage and Insurance Paid To (Transporte y Seguro Pagados)</option>
+                    <option value="DAP">DAP — Delivered at Place (Entregado en Lugar)</option>
+                    <option value="DPU">DPU — Delivered at Place Unloaded (Entregado en Lugar Descargado)</option>
+                    <option value="DDP">DDP — Delivered Duty Paid (Entregado Derechos Pagados)</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- ========================================================= -->
+        <!-- PASO 3: MODALIDAD Y EQUIPAMIENTO (SOLO MARÍTIMO)          -->
+        <!-- ========================================================= -->
+        <div data-qw-step="3" class="hidden space-y-6">
+            <div class="border-b border-stone-100 pb-4">
+                <h3 class="text-xl font-black text-[#002845]">{text.s3Title}</h3>
+                <p class="text-xs text-gray-500 mt-1">{text.s3Sub}</p>
+            </div>
+
+            <!-- Modalidad (Radio Buttons) -->
+            <div>
+                <span class="block text-xs font-bold text-[#002845] mb-3 uppercase tracking-wide">
+                    {text.modalityLabel} <span class="text-red-500">{text.requiredTag}</span>
+                </span>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <label class="cursor-pointer group">
+                        <input type="radio" name="Modalidad_Maritima" value="FCL" class="sr-only peer" data-qw-modality />
+                        <div class="rounded-2xl border-2 border-stone-200 bg-[#E8ECEE]/50 p-4 transition-all peer-checked:border-[#BAD700] peer-checked:bg-[#002845] peer-checked:text-white group-hover:border-[#BAD700]">
+                            <div class="flex items-center justify-between mb-1">
+                                <span class="font-black text-base">{text.modalities.fcl.title}</span>
+                                <span class="w-4 h-4 rounded-full border-2 border-current inline-block"></span>
+                            </div>
+                            <p class="text-xs opacity-75">{text.modalities.fcl.desc}</p>
+                        </div>
+                    </label>
+
+                    <label class="cursor-pointer group">
+                        <input type="radio" name="Modalidad_Maritima" value="LCL" class="sr-only peer" data-qw-modality />
+                        <div class="rounded-2xl border-2 border-stone-200 bg-[#E8ECEE]/50 p-4 transition-all peer-checked:border-[#BAD700] peer-checked:bg-[#002845] peer-checked:text-white group-hover:border-[#BAD700]">
+                            <div class="flex items-center justify-between mb-1">
+                                <span class="font-black text-base">{text.modalities.lcl.title}</span>
+                                <span class="w-4 h-4 rounded-full border-2 border-current inline-block"></span>
+                            </div>
+                            <p class="text-xs opacity-75">{text.modalities.lcl.desc}</p>
+                        </div>
+                    </label>
+
+                    <label class="cursor-pointer group">
+                        <input type="radio" name="Modalidad_Maritima" value="Carga Suelta (Breakbulk)" class="sr-only peer" data-qw-modality />
+                        <div class="rounded-2xl border-2 border-stone-200 bg-[#E8ECEE]/50 p-4 transition-all peer-checked:border-[#BAD700] peer-checked:bg-[#002845] peer-checked:text-white group-hover:border-[#BAD700]">
+                            <div class="flex items-center justify-between mb-1">
+                                <span class="font-black text-base">{text.modalities.breakbulk.title}</span>
+                                <span class="w-4 h-4 rounded-full border-2 border-current inline-block"></span>
+                            </div>
+                            <p class="text-xs opacity-75">{text.modalities.breakbulk.desc}</p>
+                        </div>
+                    </label>
+                </div>
+                <p data-qw-modality-error class="hidden text-xs font-bold text-red-600 mt-2">{text.selectModalityAlert}</p>
+            </div>
+
+            <!-- Sub-condición FCL: Contadores de Tipo de Equipo -->
+            <div data-qw-fcl-equipment-box class="hidden bg-[#E8ECEE]/50 rounded-2xl p-5 border border-stone-200 space-y-4">
+                <span class="block text-xs font-black text-[#002845] uppercase tracking-wider">
+                    {text.equipmentLabel} <span class="text-red-500">{text.requiredTag}</span>
+                </span>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                    {text.equipments.map((eq) => (
+                        <div class="bg-white rounded-xl p-3.5 border border-stone-200 flex items-center justify-between shadow-xs" data-qw-eq-item={eq.key}>
+                            <div>
+                                <span class="block font-black text-sm text-[#002845]">{eq.label}</span>
+                                <span class="block text-[11px] text-gray-400">{eq.group}</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <button
+                                    type="button"
+                                    data-qw-eq-dec
+                                    aria-label={`Restar ${eq.label}`}
+                                    class="w-7 h-7 rounded-lg bg-[#E8ECEE] text-[#002845] font-black hover:bg-[#BAD700] transition-colors"
+                                >
+                                    −
+                                </button>
+                                <span data-qw-eq-count class="w-6 text-center font-black text-sm text-[#002845]">0</span>
+                                <button
+                                    type="button"
+                                    data-qw-eq-inc
+                                    aria-label={`Sumar ${eq.label}`}
+                                    class="w-7 h-7 rounded-lg bg-[#002845] text-white font-black hover:bg-[#BAD700] hover:text-[#002845] transition-colors"
+                                >
+                                    +
+                                </button>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+                <p data-qw-equipment-error class="hidden text-xs font-bold text-red-600">{text.equipmentError}</p>
+            </div>
+        </div>
+
+        <!-- ========================================================= -->
+        <!-- PASO 4: DETALLES DE LA MERCANCÍA Y CARGA                  -->
+        <!-- ========================================================= -->
+        <div data-qw-step="4" class="hidden space-y-6">
+            <div class="border-b border-stone-100 pb-4">
+                <h3 class="text-xl font-black text-[#002845]">{text.s4Title}</h3>
+                <p class="text-xs text-gray-500 mt-1">{text.s4Sub}</p>
+            </div>
+
+            <!-- 1. Tipo de Producto y 2. Embalaje -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label for={`${uid}-product`} class="block text-xs font-bold text-[#002845] mb-2 uppercase tracking-wide">
+                        {text.productLabel} <span class="text-red-500">{text.requiredTag}</span>
+                    </label>
+                    <input
+                        type="text"
+                        id={`${uid}-product`}
+                        name="Tipo_de_Producto"
+                        placeholder={text.productPh}
+                        required
+                        class="w-full bg-[#E8ECEE] border-2 border-transparent rounded-xl px-4 py-3 text-slate-700 focus:border-[#BAD700] focus:bg-white outline-none transition-all"
+                    />
+                </div>
+
+                <div>
+                    <label for={`${uid}-packaging`} class="block text-xs font-bold text-[#002845] mb-2 uppercase tracking-wide">
+                        {text.packagingLabel} <span class="text-red-500">{text.requiredTag}</span>
+                    </label>
+                    <select
+                        id={`${uid}-packaging`}
+                        name="Embalaje"
+                        required
+                        data-qw-packaging
+                        class="w-full bg-[#E8ECEE] border-2 border-transparent rounded-xl px-4 py-3 text-slate-700 focus:border-[#BAD700] focus:bg-white outline-none transition-all"
+                    >
+                        <option value="" disabled selected>{text.packagingPlaceholder}</option>
+                        {text.packagings.map((pkg) => (
+                            <option value={pkg.value}>{pkg.label}</option>
+                        ))}
+                    </select>
+                </div>
+            </div>
+
+            <!-- Sub-campo obligatorio si Embalaje == Otro -->
+            <div data-qw-packaging-other-box class="hidden">
+                <label for={`${uid}-packaging-other`} class="block text-xs font-bold text-[#002845] mb-2 uppercase tracking-wide">
+                    {text.packagingOtherLabel} <span class="text-red-500">{text.requiredTag}</span>
+                </label>
+                <input
+                    type="text"
+                    id={`${uid}-packaging-other`}
+                    name="Embalaje_Especificado"
+                    placeholder={text.packagingOtherPh}
+                    data-qw-packaging-other
+                    class="w-full bg-[#E8ECEE] border-2 border-transparent rounded-xl px-4 py-3 text-slate-700 focus:border-[#BAD700] focus:bg-white outline-none transition-all"
+                />
+            </div>
+
+            <!-- 3A. Medidas para FCL (Solo Cantidad de Contenedores y Peso Total) -->
+            <div data-qw-fcl-metrics class="hidden bg-[#E8ECEE]/45 rounded-2xl p-5 border border-stone-200/70 space-y-4">
+                <p data-qw-fcl-badge class="text-xs font-bold text-[#002845] bg-[#BAD700]/25 inline-block px-3 py-1 rounded-full"></p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label for={`${uid}-containers-count`} class="block text-xs font-bold text-[#002845] mb-2 uppercase tracking-wide">
+                            {text.containersCountLabel} <span class="text-red-500">{text.requiredTag}</span>
+                        </label>
+                        <input
+                            type="number"
+                            id={`${uid}-containers-count`}
+                            min="1"
+                            step="1"
+                            data-qw-containers-count
+                            class="w-full bg-white border-2 border-stone-200 rounded-xl px-4 py-3 text-slate-700 focus:border-[#BAD700] outline-none"
+                        />
+                    </div>
+                    <div>
+                        <label for={`${uid}-fcl-weight`} class="block text-xs font-bold text-[#002845] mb-2 uppercase tracking-wide">
+                            {text.totalWeightLabel} <span class="text-red-500">{text.requiredTag}</span>
+                        </label>
+                        <div class="flex gap-2">
+                            <input
+                                type="number"
+                                id={`${uid}-fcl-weight`}
+                                min="0.01"
+                                step="any"
+                                placeholder="Ej: 18500"
+                                data-qw-fcl-weight
+                                class="w-full bg-white border-2 border-stone-200 rounded-xl px-4 py-3 text-slate-700 focus:border-[#BAD700] outline-none"
+                            />
+                            <select
+                                aria-label="Unidad de peso FCL"
+                                data-qw-fcl-weight-unit
+                                class="bg-[#002845] text-white font-bold rounded-xl px-3 py-3 text-sm outline-none"
+                            >
+                                <option value="Kg">Kg</option>
+                                <option value="Ton">Ton</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3B. Medidas para LCL, Aéreo, Terrestre, Door to Door o Carga Suelta -->
+            <div data-qw-lcl-metrics class="bg-[#E8ECEE]/45 rounded-2xl p-5 border border-stone-200/70 space-y-4">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                        <label for={`${uid}-packages`} class="block text-xs font-bold text-[#002845] mb-2 uppercase tracking-wide">
+                            {text.packagesCountLabel} <span class="text-red-500">{text.requiredTag}</span>
+                        </label>
+                        <input
+                            type="number"
+                            id={`${uid}-packages`}
+                            min="1"
+                            step="1"
+                            placeholder="Ej: 10"
+                            data-qw-packages
+                            class="w-full bg-white border-2 border-stone-200 rounded-xl px-4 py-3 text-slate-700 focus:border-[#BAD700] outline-none"
+                        />
+                    </div>
+
+                    <div>
+                        <label for={`${uid}-lcl-weight`} class="block text-xs font-bold text-[#002845] mb-2 uppercase tracking-wide">
+                            {text.totalWeightLabel} <span class="text-red-500">{text.requiredTag}</span>
+                        </label>
+                        <div class="flex gap-2">
+                            <input
+                                type="number"
+                                id={`${uid}-lcl-weight`}
+                                min="0.01"
+                                step="any"
+                                placeholder="Ej: 450"
+                                data-qw-lcl-weight
+                                class="w-full bg-white border-2 border-stone-200 rounded-xl px-4 py-3 text-slate-700 focus:border-[#BAD700] outline-none"
+                            />
+                            <select
+                                aria-label="Unidad de peso"
+                                data-qw-lcl-weight-unit
+                                class="bg-[#002845] text-white font-bold rounded-xl px-3 py-3 text-sm outline-none"
+                            >
+                                <option value="Kg">Kg</option>
+                                <option value="Ton">Ton</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for={`${uid}-cbm`} class="block text-xs font-bold text-[#002845] mb-2 uppercase tracking-wide">
+                            {text.volumeCbmLabel} <span class="text-red-500">{text.requiredTag}</span>
+                        </label>
+                        <input
+                            type="number"
+                            id={`${uid}-cbm`}
+                            min="0.001"
+                            step="any"
+                            placeholder="Ej: 2.45"
+                            data-qw-cbm
+                            class="w-full bg-white border-2 border-stone-200 rounded-xl px-4 py-3 text-slate-700 focus:border-[#BAD700] outline-none"
+                        />
+                    </div>
+                </div>
+
+                <!-- Botón desplegable para dimensiones por bulto (Largo x Ancho x Alto) -->
+                <div>
+                    <button
+                        type="button"
+                        data-qw-dim-toggle
+                        class="text-xs font-black text-[#002845] hover:text-[#6e8000] underline underline-offset-4 transition-colors cursor-pointer"
+                    >
+                        {text.calcToggleBtn}
+                    </button>
+
+                    <div data-qw-dim-box class="hidden mt-4 pt-4 border-t border-stone-200/80 space-y-3">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                            <span class="text-xs font-bold text-[#002845]">{text.dimUnitLabel}:</span>
+                            <select
+                                data-qw-dim-unit
+                                class="bg-white border border-stone-300 rounded-lg px-3 py-1.5 text-xs font-bold text-[#002845] outline-none"
+                            >
+                                <option value="in" selected>{text.dimUnitIn}</option>
+                                <option value="cm">{text.dimUnitCm}</option>
+                            </select>
+                        </div>
+
+                        <div class="grid grid-cols-3 gap-3">
+                            <div>
+                                <label class="block text-[11px] font-bold text-slate-600 mb-1">{text.dimLength}</label>
+                                <input type="number" min="0" step="any" placeholder="0" data-qw-dim-l class="w-full bg-white border border-stone-200 rounded-xl px-3 py-2 text-sm outline-none focus:border-[#BAD700]" />
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-bold text-slate-600 mb-1">{text.dimWidth}</label>
+                                <input type="number" min="0" step="any" placeholder="0" data-qw-dim-w class="w-full bg-white border border-stone-200 rounded-xl px-3 py-2 text-sm outline-none focus:border-[#BAD700]" />
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-bold text-slate-600 mb-1">{text.dimHeight}</label>
+                                <input type="number" min="0" step="any" placeholder="0" data-qw-dim-h class="w-full bg-white border border-stone-200 rounded-xl px-3 py-2 text-sm outline-none focus:border-[#BAD700]" />
+                            </div>
+                        </div>
+                        <p class="text-[11px] text-gray-500">{text.dimCalcHint}</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. Carga Peligrosa (IMO) Toggle Switch + MSDS -->
+            <div class="bg-[#E8ECEE]/45 rounded-2xl p-5 border border-stone-200/70 space-y-4">
+                <div class="flex items-center justify-between gap-4">
+                    <div>
+                        <span class="block text-sm font-black text-[#002845]">{text.imoQuestion}</span>
+                        <span class="block text-xs text-gray-500">{text.imoSub}</span>
+                    </div>
+                    <label class="relative inline-flex items-center cursor-pointer shrink-0">
+                        <input type="checkbox" class="sr-only peer" data-qw-imo-toggle />
+                        <div class="w-14 h-8 bg-stone-300 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-[#BAD700] rounded-full peer peer-checked:after:translate-x-6 after:content-[''] after:absolute after:top-1 after:left-1 after:bg-white after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-[#002845]"></div>
+                        <span data-qw-imo-label class="ml-2.5 text-xs font-black uppercase text-[#002845] w-6">{text.imoNo}</span>
+                    </label>
+                </div>
+
+                <!-- Adjunto opcional MSDS al activar IMO -->
+                <div data-qw-msds-box class="hidden pt-3 border-t border-stone-200/80">
+                    <label for={`${uid}-msds`} class="block text-xs font-bold text-[#002845] mb-1.5 uppercase tracking-wide">
+                        {text.msdsLabel} <span class="text-gray-400 font-normal normal-case">{text.optionalTag}</span>
+                    </label>
+                    <input
+                        type="file"
+                        id={`${uid}-msds`}
+                        name="MSDS_Adjunto"
+                        accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
+                        data-qw-msds-input
+                        class="w-full text-xs text-slate-600 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-[#002845] file:text-white hover:file:bg-[#BAD700] hover:file:text-[#002845] transition-all cursor-pointer"
+                    />
+                    <p class="text-[11px] text-gray-400 mt-1">{text.msdsHint}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========================================================= -->
+        <!-- PASO 5: CIERRE Y COMENTARIOS ADICIONALES                  -->
+        <!-- ========================================================= -->
+        <div data-qw-step="5" class="hidden space-y-6">
+            <div class="border-b border-stone-100 pb-4">
+                <h3 class="text-xl font-black text-[#002845]">{text.s5Title}</h3>
+                <p class="text-xs text-gray-500 mt-1">{text.s5Sub}</p>
+            </div>
+
+            <!-- Resumen automático -->
+            <div class="bg-[#002845] text-white rounded-2xl p-5 space-y-2 text-xs">
+                <p class="font-black text-[#BAD700] uppercase tracking-wider">{text.summaryTitle}</p>
+                <div data-qw-summary-body class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-stone-200"></div>
+            </div>
+
+            <!-- Comentarios Adicionales -->
+            <div>
+                <label for={`${uid}-comments`} class="block text-xs font-bold text-[#002845] mb-2 uppercase tracking-wide">
+                    {text.commentsLabel} <span class="text-gray-400 font-normal normal-case">{text.optionalTag}</span>
+                </label>
+                <textarea
+                    id={`${uid}-comments`}
+                    name="Comentarios_Adicionales"
+                    rows="4"
+                    placeholder={text.commentsPh}
+                    class="w-full bg-[#E8ECEE] border-2 border-transparent rounded-xl px-4 py-3 text-slate-700 focus:border-[#BAD700] focus:bg-white outline-none resize-none transition-all"
+                ></textarea>
+            </div>
+
+            <!-- Aceptación de privacidad -->
+            <div class="flex items-start gap-3">
+                <input type="checkbox" id={`${uid}-terms`} class="mt-1 accent-[#BAD700] w-4 h-4 cursor-pointer" required />
+                <label for={`${uid}-terms`} class="text-xs text-gray-500 cursor-pointer">
+                    {text.termsLabel} <span class="text-red-500">{text.requiredTag}</span>
+                </label>
+            </div>
+        </div>
+
+        <!-- ========================================================= -->
+        <!-- CONTROLES DE NAVEGACIÓN DEL WIZARD                        -->
+        <!-- ========================================================= -->
+        <div class="flex items-center justify-between gap-4 pt-4 border-t border-stone-100">
+            <button
+                type="button"
+                data-qw-prev
+                class="hidden px-6 py-3.5 rounded-xl bg-[#E8ECEE] text-[#002845] font-bold text-sm hover:bg-stone-300 transition-colors cursor-pointer"
+            >
+                {text.prevBtn}
+            </button>
+
+            <button
+                type="button"
+                data-qw-next
+                class="ml-auto px-8 py-3.5 rounded-xl bg-[#002845] text-white font-bold text-sm hover:bg-[#BAD700] hover:text-[#002845] transition-colors shadow-md cursor-pointer"
+            >
+                {text.nextBtn}
+            </button>
+
+            <button
+                type="submit"
+                data-qw-submit
+                class="hidden ml-auto w-full sm:w-auto px-10 py-4 rounded-xl bg-[#BAD700] text-[#002845] font-black text-base hover:bg-[#002845] hover:text-white transition-colors shadow-lg cursor-pointer"
+            >
+                {text.submitBtn}
+            </button>
+        </div>
+
+        <!-- Confirmación visual en línea -->
+        <div data-qw-success class="hidden p-5 rounded-2xl bg-[#BAD700]/20 border border-[#BAD700] text-[#002845]" role="status">
+            <p class="font-black text-base">{text.successTitle}</p>
+            <p class="text-sm mt-1 text-slate-700">{text.successMsg}</p>
+        </div>
+    </form>
+</div>
+
+<script>
+    function initQuoteWizards() {
+        document.querySelectorAll<HTMLElement>('[data-quote-wizard]').forEach((root) => {
+            if (root.dataset.initialized === 'true') return;
+            root.dataset.initialized = 'true';
+
+            const uid = root.dataset.uid || '';
+            const lang = (root.dataset.lang || 'es') as 'es' | 'en';
+            const t = JSON.parse(root.dataset.strings || '{}');
+
+            const form = root.querySelector<HTMLFormElement>('[data-qw-form]')!;
+            const hiddenIframe = root.querySelector<HTMLIFrameElement>('[data-qw-iframe]');
+            const stepper = root.querySelector<HTMLElement>('[data-qw-stepper]')!;
+            const progressBar = root.querySelector<HTMLElement>('[data-qw-progress-bar]')!;
+            const stepPanels = Array.from(root.querySelectorAll<HTMLElement>('[data-qw-step]'));
+
+            const prevBtn = root.querySelector<HTMLButtonElement>('[data-qw-prev]')!;
+            const nextBtn = root.querySelector<HTMLButtonElement>('[data-qw-next]')!;
+            const submitBtn = root.querySelector<HTMLButtonElement>('[data-qw-submit]')!;
+            const successBox = root.querySelector<HTMLElement>('[data-qw-success]')!;
+
+            // Inputs & dynamic elements
+            const modeInputs = Array.from(root.querySelectorAll<HTMLInputElement>('[data-qw-mode]'));
+            const modeError = root.querySelector<HTMLElement>('[data-qw-mode-error]')!;
+
+            const originGroupLabel = root.querySelector<HTMLElement>('[data-qw-origin-group-label]')!;
+            const originPlaceLabel = root.querySelector<HTMLElement>('[data-qw-origin-place-label]')!;
+            const originCountryInput = root.querySelector<HTMLInputElement>('[data-qw-origin-country]')!;
+            const originPlaceInput = root.querySelector<HTMLInputElement>('[data-qw-origin-place]')!;
+
+            const destGroupLabel = root.querySelector<HTMLElement>('[data-qw-dest-group-label]')!;
+            const destPlaceLabel = root.querySelector<HTMLElement>('[data-qw-dest-place-label]')!;
+            const destCountryInput = root.querySelector<HTMLInputElement>('[data-qw-dest-country]')!;
+            const destPlaceInput = root.querySelector<HTMLInputElement>('[data-qw-dest-place]')!;
+
+            const incotermSelect = root.querySelector<HTMLSelectElement>('[data-qw-incoterm]')!;
+
+            // Step 3 (Maritime)
+            const modalityInputs = Array.from(root.querySelectorAll<HTMLInputElement>('[data-qw-modality]'));
+            const modalityError = root.querySelector<HTMLElement>('[data-qw-modality-error]')!;
+            const fclEquipmentBox = root.querySelector<HTMLElement>('[data-qw-fcl-equipment-box]')!;
+            const eqItems = Array.from(root.querySelectorAll<HTMLElement>('[data-qw-eq-item]'));
+            const equipmentError = root.querySelector<HTMLElement>('[data-qw-equipment-error]')!;
+
+            // Step 4 (Cargo)
+            const packagingSelect = root.querySelector<HTMLSelectElement>('[data-qw-packaging]')!;
+            const packagingOtherBox = root.querySelector<HTMLElement>('[data-qw-packaging-other-box]')!;
+            const packagingOtherInput = root.querySelector<HTMLInputElement>('[data-qw-packaging-other]')!;
+
+            const fclMetrics = root.querySelector<HTMLElement>('[data-qw-fcl-metrics]')!;
+            const fclBadge = root.querySelector<HTMLElement>('[data-qw-fcl-badge]')!;
+            const containersCountInput = root.querySelector<HTMLInputElement>('[data-qw-containers-count]')!;
+            const fclWeightInput = root.querySelector<HTMLInputElement>('[data-qw-fcl-weight]')!;
+            const fclWeightUnit = root.querySelector<HTMLSelectElement>('[data-qw-fcl-weight-unit]')!;
+
+            const lclMetrics = root.querySelector<HTMLElement>('[data-qw-lcl-metrics]')!;
+            const packagesInput = root.querySelector<HTMLInputElement>('[data-qw-packages]')!;
+            const lclWeightInput = root.querySelector<HTMLInputElement>('[data-qw-lcl-weight]')!;
+            const lclWeightUnit = root.querySelector<HTMLSelectElement>('[data-qw-lcl-weight-unit]')!;
+            const cbmInput = root.querySelector<HTMLInputElement>('[data-qw-cbm]')!;
+
+            const dimToggle = root.querySelector<HTMLButtonElement>('[data-qw-dim-toggle]')!;
+            const dimBox = root.querySelector<HTMLElement>('[data-qw-dim-box]')!;
+            const dimUnit = root.querySelector<HTMLSelectElement>('[data-qw-dim-unit]')!;
+            const dimL = root.querySelector<HTMLInputElement>('[data-qw-dim-l]')!;
+            const dimW = root.querySelector<HTMLInputElement>('[data-qw-dim-w]')!;
+            const dimH = root.querySelector<HTMLInputElement>('[data-qw-dim-h]')!;
+
+            const imoToggle = root.querySelector<HTMLInputElement>('[data-qw-imo-toggle]')!;
+            const imoLabel = root.querySelector<HTMLElement>('[data-qw-imo-label]')!;
+            const msdsBox = root.querySelector<HTMLElement>('[data-qw-msds-box]')!;
+            const msdsInput = root.querySelector<HTMLInputElement>('[data-qw-msds-input]')!;
+
+            // Step 5
+            const summaryBody = root.querySelector<HTMLElement>('[data-qw-summary-body]')!;
+
+            // Hidden submission inputs
+            const hiddenOrigin = root.querySelector<HTMLInputElement>('[data-qw-hidden-origin]')!;
+            const hiddenDest = root.querySelector<HTMLInputElement>('[data-qw-hidden-dest]')!;
+            const hiddenIncoterm = root.querySelector<HTMLInputElement>('[data-qw-hidden-incoterm]')!;
+            const hiddenModality = root.querySelector<HTMLInputElement>('[data-qw-hidden-modality]')!;
+            const hiddenDimensions = root.querySelector<HTMLInputElement>('[data-qw-hidden-dimensions]')!;
+            const hiddenImo = root.querySelector<HTMLInputElement>('[data-qw-hidden-imo]')!;
+
+            let currentStep = 1;
+            const equipmentCounts: Record<string, number> = {};
+            eqItems.forEach((item) => {
+                const key = item.dataset.qwEqItem || '';
+                equipmentCounts[key] = 0;
+            });
+
+            const getSelectedMode = () => modeInputs.find((i) => i.checked)?.value || '';
+            const getSelectedModality = () => modalityInputs.find((i) => i.checked)?.value || '';
+            const isMaritime = () => getSelectedMode() === 'Marítimo';
+            const isFCL = () => isMaritime() && getSelectedModality() === 'FCL';
+
+            const getActiveSteps = () => (isMaritime() ? [1, 2, 3, 4, 5] : [1, 2, 4, 5]);
+
+            const updateRouteLabels = () => {
+                const mode = getSelectedMode();
+                let key: 'ocean' | 'air' | 'ground' | 'default' = 'default';
+                let listId = `${uid}-cities`;
+
+                if (mode === 'Marítimo') {
+                    key = 'ocean';
+                    listId = `${uid}-ports`;
+                } else if (mode === 'Aéreo') {
+                    key = 'air';
+                    listId = `${uid}-airports`;
+                } else if (mode === 'Terrestre' || mode === 'Door to Door') {
+                    key = 'ground';
+                    listId = `${uid}-cities`;
+                }
+
+                originGroupLabel.innerHTML = `${t.originDynamic[key]} <span class="text-red-500">${t.requiredTag}</span>`;
+                originPlaceLabel.innerHTML = `${t.originDynamic[key]} <span class="text-red-500">${t.requiredTag}</span>`;
+                originPlaceInput.placeholder = t.originPlacePh[key];
+                originPlaceInput.setAttribute('list', listId);
+
+                destGroupLabel.innerHTML = `${t.destDynamic[key]} <span class="text-red-500">${t.requiredTag}</span>`;
+                destPlaceLabel.innerHTML = `${t.destDynamic[key]} <span class="text-red-500">${t.requiredTag}</span>`;
+                destPlaceInput.placeholder = t.destPlacePh[key];
+                destPlaceInput.setAttribute('list', listId);
+            };
+
+            const getEquipmentSummary = () => {
+                return Object.entries(equipmentCounts)
+                    .filter(([, count]) => count > 0)
+                    .map(([key, count]) => `${count}x ${key}`)
+                    .join(', ');
+            };
+
+            const getTotalContainers = () => {
+                return Object.values(equipmentCounts).reduce((acc, val) => acc + val, 0);
+            };
+
+            const syncCargoMetricsVisibility = () => {
+                if (isFCL()) {
+                    fclMetrics.classList.remove('hidden');
+                    lclMetrics.classList.add('hidden');
+
+                    containersCountInput.required = true;
+                    fclWeightInput.required = true;
+                    packagesInput.required = false;
+                    lclWeightInput.required = false;
+                    cbmInput.required = false;
+
+                    const totalEq = getTotalContainers();
+                    if (totalEq > 0) {
+                        containersCountInput.value = String(totalEq);
+                    }
+                    fclBadge.textContent = `${t.fclEquipmentSummaryPrefix} ${getEquipmentSummary() || '-'}`;
+                } else {
+                    fclMetrics.classList.add('hidden');
+                    lclMetrics.classList.remove('hidden');
+
+                    containersCountInput.required = false;
+                    fclWeightInput.required = false;
+                    packagesInput.required = true;
+                    lclWeightInput.required = true;
+                    cbmInput.required = true;
+                }
+            };
+
+            const calculateCBM = () => {
+                const qty = parseFloat(packagesInput.value) || 0;
+                const l = parseFloat(dimL.value) || 0;
+                const w = parseFloat(dimW.value) || 0;
+                const h = parseFloat(dimH.value) || 0;
+
+                if (qty > 0 && l > 0 && w > 0 && h > 0) {
+                    const divisor = dimUnit.value === 'in' ? 61023.744 : 1000000;
+                    const cbm = (l * w * h * qty) / divisor;
+                    cbmInput.value = cbm.toFixed(3);
+                }
+            };
+
+            const buildSummaryAndHiddenFields = () => {
+                const mode = getSelectedMode();
+                const originFull = `${originCountryInput.value.trim()} — ${originPlaceInput.value.trim()}`;
+                const destFull = `${destCountryInput.value.trim()} — ${destPlaceInput.value.trim()}`;
+                const incotermVal = incotermSelect.value ? incotermSelect.value : t.incotermDefaultNote;
+
+                let modalityStr = lang === 'es' ? 'N/A (Aplica solo Marítimo)' : 'N/A (Maritime only)';
+                if (isMaritime()) {
+                    const mod = getSelectedModality();
+                    modalityStr = mod === 'FCL' ? `FCL (${getEquipmentSummary()})` : mod;
+                }
+
+                let dimensionsStr = '';
+                if (isFCL()) {
+                    dimensionsStr = `${containersCountInput.value} ${lang === 'es' ? 'Contenedor(es)' : 'Container(s)'} | ${lang === 'es' ? 'Peso Total' : 'Total Weight'}: ${fclWeightInput.value} ${fclWeightUnit.value}`;
+                } else {
+                    const l = parseFloat(dimL.value) || 0;
+                    const w = parseFloat(dimW.value) || 0;
+                    const h = parseFloat(dimH.value) || 0;
+                    const dimDetail = (!dimBox.classList.contains('hidden') && l > 0 && w > 0 && h > 0)
+                        ? ` | Dim: ${l}x${w}x${h} ${dimUnit.value}`
+                        : '';
+                    dimensionsStr = `${packagesInput.value} ${lang === 'es' ? 'Bultos' : 'Packages'} | ${lang === 'es' ? 'Peso' : 'Weight'}: ${lclWeightInput.value} ${lclWeightUnit.value} | CBM: ${cbmInput.value}${dimDetail}`;
+                }
+
+                const attachedFile = msdsInput.files && msdsInput.files.length > 0 ? msdsInput.files[0] : null;
+                const imoStr = imoToggle.checked
+                    ? (attachedFile
+                        ? (lang === 'es' ? `SÍ (Carga Peligrosa IMO — MSDS adjunto: ${attachedFile.name})` : `YES (IMO Dangerous Goods — MSDS attached: ${attachedFile.name})`)
+                        : (lang === 'es' ? 'SÍ (Carga Peligrosa IMO — Sin MSDS adjunto)' : 'YES (IMO Dangerous Goods — No MSDS attached)'))
+                    : 'No';
+
+                hiddenOrigin.value = originFull;
+                hiddenDest.value = destFull;
+                hiddenIncoterm.value = incotermVal;
+                hiddenModality.value = modalityStr;
+                hiddenDimensions.value = dimensionsStr;
+                hiddenImo.value = imoStr;
+
+                const productInput = root.querySelector<HTMLInputElement>(`#${uid}-product`);
+                const pkgVal = packagingSelect.value === 'Otro' || packagingSelect.value === 'Other'
+                    ? `${packagingSelect.value} (${packagingOtherInput.value.trim()})`
+                    : packagingSelect.value;
+
+                summaryBody.innerHTML = `
+                    <div><span class="text-stone-400">${t.modeLabel}:</span> <strong>${mode}</strong></div>
+                    <div><span class="text-stone-400">Incoterm:</span> <strong>${incotermSelect.value || 'FOB / FCA'}</strong></div>
+                    <div><span class="text-stone-400">${lang === 'es' ? 'Origen' : 'Origin'}:</span> <strong>${originFull}</strong></div>
+                    <div><span class="text-stone-400">${lang === 'es' ? 'Destino' : 'Destination'}:</span> <strong>${destFull}</strong></div>
+                    <div><span class="text-stone-400">${t.productLabel}:</span> <strong>${productInput?.value || '-'} (${pkgVal})</strong></div>
+                    <div><span class="text-stone-400">${lang === 'es' ? 'Carga' : 'Metrics'}:</span> <strong>${dimensionsStr}</strong></div>
+                `;
+            };
+
+            const renderStepper = () => {
+                const steps = getActiveSteps();
+                const currentPos = steps.indexOf(currentStep);
+                const pct = Math.round(((currentPos + 1) / steps.length) * 100);
+                progressBar.style.width = `${pct}%`;
+
+                stepper.innerHTML = steps.map((stepNum, idx) => {
+                    const isDone = idx < currentPos;
+                    const isCurrent = stepNum === currentStep;
+                    let label = '';
+                    if (stepNum === 1) label = t.stepLabels.personal;
+                    else if (stepNum === 2) label = t.stepLabels.route;
+                    else if (stepNum === 3) label = t.stepLabels.modality;
+                    else if (stepNum === 4) label = `${idx + 1}. ${t.stepLabels.cargo}`;
+                    else if (stepNum === 5) label = `${idx + 1}. ${t.stepLabels.closing}`;
+
+                    const badgeClass = isCurrent
+                        ? 'bg-[#002845] text-[#BAD700] font-black shadow-sm'
+                        : isDone
+                            ? 'bg-[#BAD700]/30 text-[#002845] font-bold'
+                            : 'bg-[#E8ECEE] text-gray-400 font-semibold';
+
+                    return `<span class="text-[11px] px-3 py-1 rounded-full transition-all ${badgeClass}">${label}</span>`;
+                }).join('');
+            };
+
+            const goToStep = (targetStep: number) => {
+                currentStep = targetStep;
+                stepPanels.forEach((panel) => {
+                    const s = Number(panel.dataset.qwStep);
+                    panel.classList.toggle('hidden', s !== currentStep);
+                });
+
+                if (currentStep === 4) syncCargoMetricsVisibility();
+                if (currentStep === 5) buildSummaryAndHiddenFields();
+
+                prevBtn.classList.toggle('hidden', currentStep === 1);
+                nextBtn.classList.toggle('hidden', currentStep === 5);
+                submitBtn.classList.toggle('hidden', currentStep !== 5);
+
+                renderStepper();
+            };
+
+            const validateCurrentStep = (): boolean => {
+                const panel = root.querySelector<HTMLElement>(`[data-qw-step="${currentStep}"]`);
+                if (!panel) return true;
+
+                if (currentStep === 2) {
+                    const hasMode = Boolean(getSelectedMode());
+                    modeError.classList.toggle('hidden', hasMode);
+                    if (!hasMode) return false;
+                }
+
+                if (currentStep === 3 && isMaritime()) {
+                    const mod = getSelectedModality();
+                    modalityError.classList.toggle('hidden', Boolean(mod));
+                    if (!mod) return false;
+
+                    if (mod === 'FCL') {
+                        const totalEq = getTotalContainers();
+                        equipmentError.classList.toggle('hidden', totalEq > 0);
+                        if (totalEq <= 0) return false;
+                    }
+                }
+
+                const fields = Array.from(panel.querySelectorAll<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>('input, select, textarea'))
+                    .filter((el) => !el.disabled && el.offsetParent !== null);
+
+                for (const field of fields) {
+                    if (!field.checkValidity()) {
+                        field.reportValidity();
+                        return false;
+                    }
+                }
+
+                return true;
+            };
+
+            const handleSuccessUI = () => {
+                if (typeof (window as any).gtag === 'function') {
+                    (window as any).gtag('event', 'generate_lead', {
+                        'event_category': 'formulario_asesoria',
+                        'event_label': lang === 'es' ? 'solicitud_cotizacion' : 'solicitud_cotizacion_en',
+                        'value': 1
+                    });
+                }
+
+                form.reset();
+                Object.keys(equipmentCounts).forEach((k) => (equipmentCounts[k] = 0));
+                eqItems.forEach((item) => {
+                    const c = item.querySelector('[data-qw-eq-count]');
+                    if (c) c.textContent = '0';
+                });
+                fclEquipmentBox.classList.add('hidden');
+                packagingOtherBox.classList.add('hidden');
+                msdsBox.classList.add('hidden');
+                imoLabel.textContent = t.imoNo;
+                updateRouteLabels();
+                goToStep(1);
+
+                successBox.classList.remove('hidden');
+                successBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            };
+
+            // Event Listeners
+            modeInputs.forEach((input) => {
+                input.addEventListener('change', () => {
+                    modeError.classList.add('hidden');
+                    updateRouteLabels();
+                    renderStepper();
+                });
+            });
+
+            modalityInputs.forEach((input) => {
+                input.addEventListener('change', () => {
+                    modalityError.classList.add('hidden');
+                    const isFclSelected = input.value === 'FCL';
+                    fclEquipmentBox.classList.toggle('hidden', !isFclSelected);
+                });
+            });
+
+            eqItems.forEach((item) => {
+                const key = item.dataset.qwEqItem || '';
+                const countEl = item.querySelector<HTMLElement>('[data-qw-eq-count]')!;
+                item.querySelector('[data-qw-eq-dec]')?.addEventListener('click', () => {
+                    if (equipmentCounts[key] > 0) {
+                        equipmentCounts[key]--;
+                        countEl.textContent = String(equipmentCounts[key]);
+                    }
+                });
+                item.querySelector('[data-qw-eq-inc]')?.addEventListener('click', () => {
+                    equipmentCounts[key]++;
+                    countEl.textContent = String(equipmentCounts[key]);
+                    equipmentError.classList.add('hidden');
+                });
+            });
+
+            packagingSelect.addEventListener('change', () => {
+                const isOther = packagingSelect.value === 'Otro' || packagingSelect.value === 'Other';
+                packagingOtherBox.classList.toggle('hidden', !isOther);
+                packagingOtherInput.required = isOther;
+                if (!isOther) packagingOtherInput.value = '';
+            });
+
+            dimToggle.addEventListener('click', () => {
+                const isHidden = dimBox.classList.toggle('hidden');
+                dimToggle.textContent = isHidden ? t.calcToggleBtn : t.calcHideBtn;
+                if (!isHidden) calculateCBM();
+            });
+
+            [packagesInput, dimL, dimW, dimH, dimUnit].forEach((el) => {
+                el.addEventListener('input', calculateCBM);
+                el.addEventListener('change', calculateCBM);
+            });
+
+            imoToggle.addEventListener('change', () => {
+                const active = imoToggle.checked;
+                imoLabel.textContent = active ? t.imoYes : t.imoNo;
+                msdsBox.classList.toggle('hidden', !active);
+                if (!active) msdsInput.value = '';
+            });
+
+            nextBtn.addEventListener('click', () => {
+                if (!validateCurrentStep()) return;
+                const steps = getActiveSteps();
+                const idx = steps.indexOf(currentStep);
+                if (idx >= 0 && idx < steps.length - 1) {
+                    goToStep(steps[idx + 1]);
+                }
+            });
+
+            prevBtn.addEventListener('click', () => {
+                const steps = getActiveSteps();
+                const idx = steps.indexOf(currentStep);
+                if (idx > 0) {
+                    goToStep(steps[idx - 1]);
+                }
+            });
+
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                if (!validateCurrentStep()) return;
+
+                buildSummaryAndHiddenFields();
+
+                const attachedFile = msdsInput.files && msdsInput.files.length > 0 ? msdsInput.files[0] : null;
+
+                if (attachedFile && attachedFile.size > 5 * 1024 * 1024) {
+                    alert(t.msdsSizeError);
+                    return;
+                }
+
+                submitBtn.disabled = true;
+                submitBtn.textContent = t.sendingBtn;
+
+                // Rama 1: Con archivo adjunto -> POST multipart nativo hacia iframe oculto
+                if (attachedFile && hiddenIframe) {
+                    let completed = false;
+                    const finishUpload = () => {
+                        if (completed) return;
+                        completed = true;
+                        form.removeAttribute('target');
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = t.submitBtn;
+                        handleSuccessUI();
+                    };
+
+                    hiddenIframe.addEventListener('load', finishUpload, { once: true });
+                    setTimeout(finishUpload, 4500);
+
+                    form.target = `${uid}-upload-frame`;
+                    HTMLFormElement.prototype.submit.call(form);
+                    return;
+                }
+
+                // Rama 2: Sin archivo adjunto -> AJAX directo
+                const ajaxUrl = form.dataset.ajaxUrl;
+                if (!ajaxUrl) return;
+
+                try {
+                    const formData = new FormData(form);
+                    formData.delete('MSDS_Adjunto');
+
+                    const response = await fetch(ajaxUrl, {
+                        method: 'POST',
+                        headers: { 'Accept': 'application/json' },
+                        body: formData
+                    });
+
+                    if (response.ok) {
+                        handleSuccessUI();
+                    } else {
+                        alert(t.errorMsg);
+                    }
+                } catch {
+                    alert(t.connErrorMsg);
+                } finally {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = t.submitBtn;
+                }
+            });
+
+            // Estado inicial
+            updateRouteLabels();
+            goToStep(1);
+        });
+    }
+
+    initQuoteWizards();
+    document.addEventListener('astro:page-load', initQuoteWizards);
+</script>

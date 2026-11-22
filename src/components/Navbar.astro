@@ -1,4 +1,4 @@
----
+﻿---
 // src/components/Navbar.astro
 import QEmblem from './QEmblem.astro';
 
@@ -7,7 +7,7 @@ const { lang = 'es' } = Astro.props;
 // Diccionario de traducciones para elementos de interfaz fijos del Navbar
 const i18n = {
     es: {
-        homeAria: "Ir al inicio - Quality Freight Service",
+        homeAria: "Ir al inicio - Quality Freight Service, C.A.",
         bcvLabel: "BCV",
         bcvMobileTitle: "Tasas BCV Oficiales",
         loading: "Cargando...",
@@ -15,7 +15,7 @@ const i18n = {
         menuBtnAlt: "Abrir menú"
     },
     en: {
-        homeAria: "Go to home - Quality Freight Service",
+        homeAria: "Go to home - Quality Freight Service, C.A.",
         bcvLabel: "BCV",
         bcvMobileTitle: "Official BCV Rates",
         loading: "Loading...",
@@ -64,7 +64,7 @@ const enSwitchUrl = currentPath.startsWith('/infoquality') ? '/en/infoquality' :
     <div class="max-w-7xl mx-auto flex flex-col gap-2">
         <div class="flex justify-between items-center bg-white/90 backdrop-blur-md rounded-full px-4 sm:px-6 py-3 shadow-sm border border-white">
             
-            <!-- Emblema Oficial Quality Freight Service -->
+            <!-- Emblema Oficial Quality Freight Service, C.A. -->
             <a href={lang === 'es' ? '/' : '/en/'} aria-label={t.homeAria} class="flex items-center gap-2 group shrink-0">
                 <QEmblem 
                     class="w-10 h-10 object-contain group-hover:scale-105 transition-transform duration-300" 

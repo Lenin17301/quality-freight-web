@@ -1,4 +1,4 @@
----
+﻿---
 // src/components/TeamCarousel.astro
 import QEmblem from './QEmblem.astro';
 
@@ -32,7 +32,7 @@ const labels = {
     prev: lang === 'es' ? 'Integrante anterior' : 'Previous team member',
     next: lang === 'es' ? 'Siguiente integrante' : 'Next team member',
     carousel: lang === 'es' ? 'Carrusel del equipo de trabajo' : 'Team members carousel',
-    atCompany: lang === 'es' ? 'en Quality Freight Service' : 'at Quality Freight Service',
+    atCompany: lang === 'es' ? 'en Quality Freight Service, C.A.' : 'at Quality Freight Service, C.A.',
 };
 ---
 
@@ -83,7 +83,7 @@ const labels = {
                             ) : (
                                 <div class="flex flex-col items-center justify-center text-center p-6">
                                     <QEmblem class="w-20 h-20 object-contain opacity-60 mb-2" decorative={true} widths={[80, 160]} />
-                                    <span class="text-[11px] font-bold uppercase tracking-widest text-[#002845]/40">Quality Freight Service</span>
+                                    <span class="text-[11px] font-bold uppercase tracking-widest text-[#002845]/40">Quality Freight Service, C.A.</span>
                                 </div>
                             )}
                         </div>

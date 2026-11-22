@@ -1,9 +1,10 @@
----
+﻿---
 // src/pages/asesoria.astro
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
 import QEmblem from '../components/QEmblem.astro';
+import QuoteWizard from '../components/QuoteWizard.astro';
 
 // Reemplaza este correo por tu Gmail para pruebas o por el buzón definitivo de Quality
 const destinationEmail = "lceballos17301@gmail.com";
@@ -25,7 +26,7 @@ const schemaData = {
 
 <BaseLayout 
     lang="es" 
-    title="Asesoría en Comercio Internacional | Quality Freight Service" 
+    title="Asesoría en Comercio Internacional | Quality Freight Service, C.A." 
     description="Asesoría especializada en importación, exportación, cumplimiento normativo y optimización de costos logísticos." 
 >
     <div slot="header">
@@ -79,7 +80,7 @@ const schemaData = {
                     <div class="absolute -top-10 -right-10 w-64 h-64 bg-[#E8ECEE] rounded-full z-0 pointer-events-none"></div>
                     <img 
                         src="https://images.pexels.com/photos/7734158/pexels-photo-7734158.jpeg?auto=compress&cs=tinysrgb&w=800" 
-                        alt="Consultoría logística y comercio exterior Quality Freight Service" 
+                        alt="Consultoría logística y comercio exterior Quality Freight Service, C.A." 
                         width="800"
                         height="533"
                         fetchpriority="high"
@@ -154,88 +155,17 @@ const schemaData = {
             </div>
         </section>
 
-        <!-- FORMULARIO DE COTIZACIÓN (ANCLA #cotizador) -->
+        <!-- FORMULARIO DE COTIZACIÓN POR PASOS (ANCLA #cotizador) -->
         <section id="cotizador" class="py-16 px-6 scroll-mt-28">
             <div class="max-w-4xl mx-auto bg-white rounded-[3rem] p-8 md:p-12 shadow-[0_20px_50px_rgba(0,40,69,0.1)] border border-stone-100 relative overflow-hidden">
                 <div class="absolute top-0 right-0 w-32 h-32 bg-[#BAD700] rounded-bl-[100%] opacity-20 pointer-events-none"></div>
                 
-                <div class="text-center mb-10 relative z-10">
+                <div class="text-center mb-8 relative z-10">
                     <h2 class="text-3xl font-black text-[#002845] mb-2">Solicitar Cotización</h2>
-                    <p class="text-gray-500 text-sm">Complete el formulario y le contactaremos con una propuesta a medida.</p>
+                    <p class="text-gray-500 text-sm">Complete los pasos para recibir una propuesta adaptada a su operación logística.</p>
                 </div>
 
-                <form 
-                    id="quote-form" 
-                    action={`https://formsubmit.co/${destinationEmail}`} 
-                    method="POST"
-                    data-ajax-url={`https://formsubmit.co/ajax/${destinationEmail}`}
-                    class="space-y-6 relative z-10"
-                >
-                    <input type="hidden" name="_subject" value="Nueva solicitud de cotización - Quality Freight Service" />
-                    <input type="hidden" name="_template" value="table" />
-                    <input type="hidden" name="_captcha" value="false" />
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <label for="quote_nombre" class="block text-xs font-bold text-[#002845] mb-2 uppercase tracking-wide">Nombre y Apellido</label>
-                            <input type="text" id="quote_nombre" name="Nombre_y_Apellido" class="w-full bg-[#E8ECEE] border-none rounded-xl px-4 py-3 text-slate-700 focus:ring-2 focus:ring-[#BAD700] outline-none transition-shadow" required />
-                        </div>
-                        <div>
-                            <label for="quote_empresa" class="block text-xs font-bold text-[#002845] mb-2 uppercase tracking-wide">Empresa</label>
-                            <input type="text" id="quote_empresa" name="Empresa" class="w-full bg-[#E8ECEE] border-none rounded-xl px-4 py-3 text-slate-700 focus:ring-2 focus:ring-[#BAD700] outline-none transition-shadow" required />
-                        </div>
-                    </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <label for="quote_email" class="block text-xs font-bold text-[#002845] mb-2 uppercase tracking-wide">Correo Corporativo</label>
-                            <input type="email" id="quote_email" name="email" class="w-full bg-[#E8ECEE] border-none rounded-xl px-4 py-3 text-slate-700 focus:ring-2 focus:ring-[#BAD700] outline-none transition-shadow" required />
-                        </div>
-                        <div>
-                            <label for="quote_telefono" class="block text-xs font-bold text-[#002845] mb-2 uppercase tracking-wide">Teléfono</label>
-                            <input type="tel" id="quote_telefono" name="Telefono" class="w-full bg-[#E8ECEE] border-none rounded-xl px-4 py-3 text-slate-700 focus:ring-2 focus:ring-[#BAD700] outline-none transition-shadow" required />
-                        </div>
-                    </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <label for="quote_transporte" class="block text-xs font-bold text-[#002845] mb-2 uppercase tracking-wide">Tipo de Transporte</label>
-                            <select id="quote_transporte" name="Tipo_de_Transporte" class="w-full bg-[#E8ECEE] border-none rounded-xl px-4 py-3 text-slate-700 focus:ring-2 focus:ring-[#BAD700] outline-none" required>
-                                <option value="" disabled selected>Seleccione...</option>
-                                <option value="Marítimo">Marítimo</option>
-                                <option value="Aéreo">Aéreo</option>
-                                <option value="Terrestre">Terrestre</option>
-                                <option value="Agenciamiento Aduanal">Agenciamiento Aduanal</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label for="quote_carga" class="block text-xs font-bold text-[#002845] mb-2 uppercase tracking-wide">Tipo de Carga</label>
-                            <select id="quote_carga" name="Tipo_de_Carga" class="w-full bg-[#E8ECEE] border-none rounded-xl px-4 py-3 text-slate-700 focus:ring-2 focus:ring-[#BAD700] outline-none" required>
-                                <option value="" disabled selected>Seleccione...</option>
-                                <option value="Contenedor Completo (FCL)">Contenedor Completo (FCL)</option>
-                                <option value="Carga Consolidada (LCL)">Carga Consolidada (LCL)</option>
-                                <option value="Carga Suelta / Breakbulk">Carga Suelta / Breakbulk</option>
-                                <option value="Carga Peligrosa (IMO)">Carga Peligrosa (IMO)</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div>
-                        <label for="quote_detalles" class="block text-xs font-bold text-[#002845] mb-2 uppercase tracking-wide">Detalles del Envío</label>
-                        <textarea id="quote_detalles" name="Detalles_del_Envio" rows="4" placeholder="Describa volumen, dimensiones, puertos de origen y destino..." class="w-full bg-[#E8ECEE] border-none rounded-xl px-4 py-3 text-slate-700 focus:ring-2 focus:ring-[#BAD700] outline-none resize-none transition-shadow" required></textarea>
-                    </div>
-                    <div class="flex items-start gap-3">
-                        <input type="checkbox" id="terms" class="mt-1 accent-[#BAD700] w-4 h-4 cursor-pointer" required />
-                        <label for="terms" class="text-xs text-gray-500 cursor-pointer">Acepto que mis datos sean almacenados para contacto comercial y envío de cotizaciones.</label>
-                    </div>
-                    
-                    <button type="submit" id="quote-submit-btn" class="w-full bg-[#002845] text-white font-bold text-lg py-4 rounded-xl hover:bg-[#001c30] transition-colors shadow-lg mt-4 cursor-pointer">
-                        Enviar Solicitud
-                    </button>
-
-                    <!-- Confirmación visual en línea -->
-                    <div id="quote-success-msg" class="hidden p-5 rounded-2xl bg-[#BAD700]/20 border border-[#BAD700] text-[#002845]" role="status">
-                        <p class="font-black text-base">¡Solicitud enviada con éxito!</p>
-                        <p class="text-sm mt-1 text-slate-700">Hemos recibido los detalles de tu carga. Un especialista de Quality Freight Service te enviará tu cotización a la brevedad.</p>
-                    </div>
-                </form>
+                <QuoteWizard lang="es" destinationEmail={destinationEmail} />
             </div>
         </section>
 
@@ -247,7 +177,6 @@ const schemaData = {
 </BaseLayout>
 
 <script>
-    // 1. Desplazamiento garantizado al llegar con #cotizador desde otra página
     function jumpToCotizador() {
         if (window.location.hash === '#cotizador') {
             const target = document.getElementById('cotizador');
@@ -260,53 +189,4 @@ const schemaData = {
     }
     document.addEventListener('DOMContentLoaded', jumpToCotizador);
     document.addEventListener('astro:page-load', jumpToCotizador);
-
-    // 2. Envío AJAX por FormSubmit + evento de conversión GA4
-    const form = document.getElementById('quote-form') as HTMLFormElement | null;
-    const submitBtn = document.getElementById('quote-submit-btn') as HTMLButtonElement | null;
-    const successMsg = document.getElementById('quote-success-msg');
-
-    if (form && submitBtn) {
-        form.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const ajaxUrl = form.dataset.ajaxUrl;
-            if (!ajaxUrl) return;
-
-            submitBtn.disabled = true;
-            submitBtn.textContent = 'Enviando solicitud...';
-
-            try {
-                const formData = new FormData(form);
-                const response = await fetch(ajaxUrl, {
-                    method: 'POST',
-                    headers: { 'Accept': 'application/json' },
-                    body: formData
-                });
-
-                if (response.ok) {
-                    if (typeof (window as any).gtag === 'function') {
-                        (window as any).gtag('event', 'generate_lead', {
-                            'event_category': 'formulario_asesoria',
-                            'event_label': 'solicitud_cotizacion',
-                            'value': 1
-                        });
-                    }
-                    form.reset();
-                    if (successMsg) {
-                        successMsg.classList.remove('hidden');
-                        successMsg.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-                    }
-                    form.reset();
-                    successMsg?.classList.remove('hidden');
-                } else {
-                    alert('Hubo un problema al enviar tu solicitud. Por favor intenta de nuevo.');
-                }
-            } catch {
-                alert('Error de conexión. Verifica tu internet e intenta de nuevo.');
-            } finally {
-                submitBtn.disabled = false;
-                submitBtn.textContent = 'Enviar Solicitud';
-            }
-        });
-    }
 </script>

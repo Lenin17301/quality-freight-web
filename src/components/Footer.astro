@@ -1,4 +1,4 @@
----
+﻿---
 // src/components/Footer.astro
 import QEmblem from './QEmblem.astro';
 
@@ -6,7 +6,7 @@ const { lang = 'es' } = Astro.props;
 
 const content = {
     es: {
-        homeAria: "Ir al inicio - Quality Freight Service",
+        homeAria: "Ir al inicio - Quality Freight Service, C.A.",
         about: "Quality Freight Service, C.A. es su aliado estratégico en soluciones logísticas globales, garantizando seguridad y eficiencia en cada envío.",
         navTitle: "Navegación",
         links: [
@@ -19,12 +19,12 @@ const content = {
         ],
         contact: "Contacto",
         address: "Caracas, Venezuela",
-        rights: "© 2026 Quality Freight Service. Todos los derechos reservados.",
+        rights: "© 2026 Quality Freight Service, C.A. Todos los derechos reservados.",
         privacy: "Política de Privacidad",
         terms: "Términos de Servicio"
     },
     en: {
-        homeAria: "Go to home - Quality Freight Service",
+        homeAria: "Go to home - Quality Freight Service, C.A.",
         about: "Quality Freight Service, C.A. is your strategic partner in global logistics solutions, ensuring security and efficiency in every shipment.",
         navTitle: "Navigation",
         links: [
@@ -37,7 +37,7 @@ const content = {
         ],
         contact: "Contact",
         address: "Caracas, Venezuela",
-        rights: "© 2026 Quality Freight Service. All rights reserved.",
+        rights: "© 2026 Quality Freight Service, C.A. All rights reserved.",
         privacy: "Privacy Policy",
         terms: "Terms of Service"
     }
@@ -46,26 +46,26 @@ const content = {
 const t = content[lang] || content.es;
 ---
 
-<footer class="bg-[#002845] text-white pt-20 pb-10 px-6 rounded-t-[3rem] mt-10">
-    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+<footer class="bg-[#002845] text-white pt-10 pb-6 px-6 rounded-t-[2rem] mt-8">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
         
         <!-- Logo y descripción -->
         <div class="md:col-span-2">
-            <a href={lang === 'es' ? '/' : '/en/'} aria-label={t.homeAria} class="inline-flex items-center gap-3 mb-6 group">
+            <a href={lang === 'es' ? '/' : '/en/'} aria-label={t.homeAria} class="inline-flex items-center gap-2.5 mb-3 group">
                 <QEmblem 
-                    class="w-11 h-11 object-contain group-hover:scale-105 transition-transform duration-300" 
+                    class="w-9 h-9 object-contain group-hover:scale-105 transition-transform duration-300" 
                     decorative={false} 
-                    widths={[88, 132]}
+                    widths={[72, 108]}
                 />
-                <span class="font-bold text-xl tracking-tight text-white">Quality Freight</span>
+                <span class="font-bold text-lg tracking-tight text-white">Quality Freight Service, C.A.</span>
             </a>
-            <p class="text-stone-400 text-sm max-w-sm leading-relaxed">{t.about}</p>
+            <p class="text-stone-400 text-xs max-w-sm leading-relaxed">{t.about}</p>
         </div>
 
         <!-- Links -->
         <div>
-            <h3 class="font-black text-[#BAD700] mb-6 uppercase tracking-widest text-sm">{t.navTitle}</h3>
-            <ul class="space-y-4">
+            <h3 class="font-black text-[#BAD700] mb-3 uppercase tracking-widest text-xs">{t.navTitle}</h3>
+            <ul class="space-y-2 text-xs">
                 {t.links.map(link => (
                     <li><a href={link.url} class="text-stone-300 hover:text-[#BAD700] transition-colors">{link.name}</a></li>
                 ))}
@@ -74,8 +74,8 @@ const t = content[lang] || content.es;
 
         <!-- Contacto -->
         <div>
-            <h3 class="font-black text-[#BAD700] mb-6 uppercase tracking-widest text-sm">{t.contact}</h3>
-            <ul class="space-y-4 text-stone-300 text-sm">
+            <h3 class="font-black text-[#BAD700] mb-3 uppercase tracking-widest text-xs">{t.contact}</h3>
+            <ul class="space-y-2 text-stone-300 text-xs">
                 <li>📍 {t.address}</li>
                 <li>
                     <a href="mailto:info@qualityfs.com.ve" class="hover:text-[#BAD700] transition-colors">
@@ -92,9 +92,9 @@ const t = content[lang] || content.es;
     </div>
 
     <!-- Barra inferior -->
-    <div class="max-w-7xl mx-auto border-t border-[#BAD700]/20 pt-8 text-center md:text-left flex flex-col md:flex-row justify-between items-center gap-4">
+    <div class="max-w-7xl mx-auto border-t border-[#BAD700]/20 pt-5 text-center md:text-left flex flex-col md:flex-row justify-between items-center gap-3">
         <p class="text-stone-500 text-xs">{t.rights}</p>
-        <div class="flex gap-6">
+        <div class="flex gap-5">
             <a href="#" class="text-stone-400 hover:text-white transition-colors text-xs">{t.privacy}</a>
             <a href="#" class="text-stone-400 hover:text-white transition-colors text-xs">{t.terms}</a>
         </div>
